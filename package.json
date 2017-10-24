@@ -1,22 +1,22 @@
 {
-  "name": "prosjekt4",
+  "name": "meanauthapp",
   "version": "1.0.0",
-  "description": "project 4 - a mean webapplication",
+  "description": "MEAN stack authentication app",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
   },
-  "author": "Ole Jakob Schjoeth",
-  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.2",
-    "cors": "^2.8.4",
-    "express": "^4.16.2",
-    "jsonwebtoken": "^8.1.0",
-    "mongoose": "^4.12.4",
-    "passport": "^0.4.0",
-    "passport-jwt": "^3.0.0"
-  }
+    "express": "*",
+    "mongoose": "*",
+    "bcryptjs": "*",
+    "cors": "*",
+    "jsonwebtoken": "*",
+    "body-parser": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "Alexander Melo",
+  "license": "ISC"
 }

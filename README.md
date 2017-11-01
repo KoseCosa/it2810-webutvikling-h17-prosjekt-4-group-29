@@ -8,7 +8,7 @@ Det er deltagelse i denne evalueringen som teller.  Evaluering av arkitektur og 
 (det er deltagelse i evalueringen som teller og i sluttevalueringen blir det sjekket om dere følger relevante råd).
 
 
-In this project we are using the following technologies:
+In this project we are using the following technologies in a MVC (Model View Controller), client-server architecchture:
 - mongoDB
 - Node.js
   * Express
@@ -17,8 +17,6 @@ In this project we are using the following technologies:
   * connect-mongo
   * body-parser
 - Angular
-
-We are using MVC (Model View Controller) in a client-server architecchture. 
 
 ## Backend
 

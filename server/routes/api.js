@@ -1,16 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const ObjectID = require('mongodb').ObjectID;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var logger = require('../../logs/logger.js');
 
-// Connect
-const connection = (closure) => {
-    return MongoClient.connect('mongodb://localhost:27017/mean', (err, db) => {
-        if (err) return console.log(err);
+// Connection URL
+var url = 'mongodb://localhost:27017/project4';
+mongoose.connect(url, {useMongoClient:true});
 
-        closure(db);
-    });
-};
+// On Connection
+mongoose.connection.on('connected', () => {
+  logger.info('Connected to database '+ url);
+});
+
+// On Error
+mongoose.connection.on('error', (err) => {
+  logger.info('Database error!');
+});
+
+// Model definition
+var MyUser = mongoose.model('User', new Schema({ name: String }));
 
 // Error handling
 const sendError = (err, res) => {
@@ -28,18 +37,14 @@ let response = {
 
 // Get users
 router.get('/users', (req, res) => {
-    connection((db) => {
-        db.collection('users')
-            .find()
-            .toArray()
-            .then((users) => {
-                response.data = users;
-                res.json(response);
-            })
-            .catch((err) => {
-                sendError(err, res);
-            });
-    });
+  logger.info('Inside router.get');
+  MyUser.find({},function (err, user) {
+    if (err) throw err;
+    logger.info('Possible error'+err);
+    logger.info('User object'+ user);
+    response.data.push(user);
+    res.json(response);
+  });
 });
 
 module.exports = router;

@@ -22,11 +22,10 @@ let response = {
 
 // Get users
 router.get('/users', (req, res,next) => {
-  var users = [];
   User.getAllUsers(function (err, user) {
     console.log(user);
     if (err) throw err;
-    res.json({user:user});
+    res.json({user});
   });
 });
 

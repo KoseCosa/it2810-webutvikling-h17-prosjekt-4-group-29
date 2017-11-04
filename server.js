@@ -2,8 +2,27 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
+var mongoose = require('mongoose');
 const app = express();
 var logger = require('./logs/logger.js');
+
+// Connection URL
+var url = 'mongodb://localhost:27017/project4';
+mongoose.connect(url, {useMongoClient:true});
+
+// On Connection
+mongoose.connection.on('connected', () => {
+  logger.info('Connected to database '+ url);
+});
+
+// On Error
+mongoose.connection.on('error', (err) => {
+  logger.info('Database error!');
+});
+
+
+
+
 
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');

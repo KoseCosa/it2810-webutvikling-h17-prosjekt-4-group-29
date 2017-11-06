@@ -24,8 +24,9 @@ let response = {
 router.get('/users', (req, res,next) => {
   User.getAllUsers(function (err, user) {
     console.log(user);
+    console.log(typeof(user));
     if (err) throw err;
-    res.json({user});
+    res.json({user:user});
   });
 });
 

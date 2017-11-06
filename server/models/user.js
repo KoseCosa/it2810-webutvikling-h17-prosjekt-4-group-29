@@ -7,5 +7,5 @@ const User = module.exports = mongoose.model('User', new Schema({ name: String }
 
 
 module.exports.getAllUsers = function(callback){
-  User.findOne(callback);
+  User.findOne(callback).lean();
 }

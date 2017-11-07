@@ -35,14 +35,24 @@ router.get('/users', (req, res,next) => {
 });
 
 router.get('/products', (req, res,next) => {
-  Product.getOneProduct(function (err, product) {  // the "user" parameter returns array with JS objects
-    console.log(product);
-    console.log(typeof(product));
+  Product.getOneProduct(function (err, product) {// the "user" parameter returns array with JS objects
     if (err) {
       res.status(501).send(err);
       throw err;
     }
     res.json({product});
+  });
+});
+
+router.get('/specificProducts', (req, res,next) => {
+  Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}),function (err, products) {
+    console.log(products);
+    console.log(typeof(products));
+    if (err) {
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({products});
   });
 });
 

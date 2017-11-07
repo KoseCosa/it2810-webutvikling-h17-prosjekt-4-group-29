@@ -12,3 +12,12 @@
   <li>{{ product.Varenavn }}</li>
 </ul>
 </div>
+
+<div *ngIf="reqeusted_product">
+<p> HELLO THERE</p>
+<ul *ngFor="let product of reqeusted_product">
+  <li>{{ product.Varenummer }}</li>
+  <li>{{ product._id }}</li>
+  <li>{{ product.Varenavn }}</li>
+</ul>
+</div>

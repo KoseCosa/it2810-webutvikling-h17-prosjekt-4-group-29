@@ -19,5 +19,4 @@ On the server side we are using Node.js with express.js. We use several of the p
 
 ## Frontend
 
-We are using angular v4 from www.angular.io as frontend-application. For styling the app will use the css framework bootstrap Sandstone. The app allows the user to browse different products in the database, select their favorites, and save them to their user. 
-
+We are using angular v4 from www.angular.io as frontend-application. For styling the app will use the css framework bootstrap Sandstone. The main components will be a product list with options for filtering and search, a user page with a list of favourites and some other functions depending on time.

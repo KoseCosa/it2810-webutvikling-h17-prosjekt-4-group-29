@@ -1,5 +1,7 @@
 <h1>Out MongoDB is working!</h1>
-
-<ul>
-  <li *ngFor="let user of users">{{ user.name }}</li>
+<div *ngIf="users">
+<ul *ngFor="let user of users">
+  <li>{{ user.name }}</li>
+  <li>{{ user._id }}</li>
 </ul>
+</div>

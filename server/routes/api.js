@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const ObjectID = require('mongodb').ObjectID;
+const User = require('../models/user');
+var logger = require('../../logs/logger.js');
+const mongoose = require('mongoose');
 
-// Connect
-const connection = (closure) => {
-    return MongoClient.connect('mongodb://localhost:27017/mean', (err, db) => {
-        if (err) return console.log(err);
 
-        closure(db);
-    });
-};
 
 // Error handling
 const sendError = (err, res) => {
@@ -27,19 +21,20 @@ let response = {
 };
 
 // Get users
-router.get('/users', (req, res) => {
-    connection((db) => {
-        db.collection('users')
-            .find()
-            .toArray()
-            .then((users) => {
-                response.data = users;
-                res.json(response);
-            })
-            .catch((err) => {
-                sendError(err, res);
-            });
-    });
+router.get('/users', (req, res,next) => {
+  User.getAllUsers(function (err, user) {  // the "user" parameter returns array with JS objects
+    console.log(user);
+    console.log(typeof(user));
+    if (err) {
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({user});
+  });
 });
+
+/* router.post('/registerUser', (req,res,next) => {
+  
+} */
 
 module.exports = router;

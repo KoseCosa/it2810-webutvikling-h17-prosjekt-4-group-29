@@ -27,6 +27,7 @@ router.get('/users', (req, res,next) => {
     console.log(user);
     console.log(typeof(user));
     if (err) {
+      logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
       throw err;
     }
@@ -37,6 +38,7 @@ router.get('/users', (req, res,next) => {
 router.get('/products', (req, res,next) => {
   Product.getOneProduct(function (err, product) {// the "user" parameter returns array with JS objects
     if (err) {
+      logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
       throw err;
     }
@@ -44,24 +46,20 @@ router.get('/products', (req, res,next) => {
   });
 });
 
+
+// TODO: Modify the query to be req.querySearch
 router.get('/specificProducts', (req, res,next) => {
   Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}),function (err, products) {
     console.log(products);
     console.log(typeof(products));
     if (err) {
+      logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
       throw err;
     }
     res.json({products});
   });
 });
-
-
-
-
-
-
-
 
 
 

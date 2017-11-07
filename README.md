@@ -24,9 +24,18 @@ On the server side we are using Node.js with express.js. We use several of the p
 We are using angular v4 from (www.angular.io) as frontend-application. For styling the app will use the css framework bootstrap Sandstone (https://bootswatch.com/sandstone). 
 
 The main components will be 
+- Register User
+- Login page
 - product list 
   * Filtering 
   * Search
   * Word cloud based product categories
 - User page 
   * Favorites
+  
+Some of the services we will be using are built-in services in Angular, but we will also make some custom services:
+  * Validation service (from input fields etc.)
+  * Authorization service (related to session handling)
+  * Data service (retrival of data from database)
+
+For the authorization part, we have also made a diagram to illustrate how it works,[You can see here](https://1drv.ms/i/s!AqjtP2lzmVt9j7hH3qjDt3_AWXSMKQ)

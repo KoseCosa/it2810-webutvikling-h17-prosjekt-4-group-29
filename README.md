@@ -1,12 +1,5 @@
-# it2810-webutvikling-h17-prosjekt-4-group-29
-it2810-webutvikling-h17-prosjekt-4-group-29-1 created by GitHub Classroom
-
-
-Legg ut dokumentasjon av det planlagte systemet innen 8/11 på GitHub. Beskriv applikasjonen, data, planlagt implementasjon,
-valg av løsning etc.  Dette skal brukes for å evaluere/gi tilbakemeldinger på arkitektur og overordent design.
-Det er deltagelse i denne evalueringen som teller.  Evaluering av arkitektur og design av systemet gjøres 9/11
-(det er deltagelse i evalueringen som teller og i sluttevalueringen blir det sjekket om dere følger relevante råd).
-
+# iDrink
+## it2810-webutvikling-h17-prosjekt-4-group-29
 
 In this project we are using the following technologies in a MVC (Model View Controller), client-server architecchture:
 - mongoDB

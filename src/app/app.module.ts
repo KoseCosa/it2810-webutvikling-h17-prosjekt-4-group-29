@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
 import { DataService } from './data.service';
-import { AuthService } from './data.service';
+import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({

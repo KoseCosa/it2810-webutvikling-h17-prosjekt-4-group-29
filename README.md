@@ -25,9 +25,9 @@ We are using angular v4 from (www.angular.io) as frontend-application. For styli
 
 The main components will be 
 - product list 
- * filtering 
- * search
- * Word cloud based product categories
+  * Filtering 
+  * Search
+  * Word cloud based product categories
 - user page 
- * favourites
+  * Favourites
 possible other components:

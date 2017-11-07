@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-var logger = require('../../logs/logger.js');
+var logger = require('../../logger.js');
 const mongoose = require('mongoose');
 
 

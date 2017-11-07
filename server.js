@@ -6,7 +6,7 @@ var mongoose = require('mongoose'); // Database connection and object-mapping
 const session = require('express-session'); // Session handling server side
 const MongoStore = require('connect-mongo')(session); // Storing session in mongo-db
 const app = express(); 
-var logger = require('./logs/logger.js');  // Usage of winston logger.
+var logger = require('./logger.js');  // Usage of winston logger.
 
 // Connection URL
 var url = 'mongodb://localhost:27017/project4';

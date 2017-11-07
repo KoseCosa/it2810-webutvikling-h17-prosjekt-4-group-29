@@ -1,4 +1,6 @@
 # iDrink
+An alcohol pr. price calculator and Vinmonopolet product browser.
+
 ## it2810-webutvikling-h17-prosjekt-4-group-29
 
 In this project we are using the following technologies in a MVC (Model View Controller), client-server architecchture:

@@ -1,5 +1,5 @@
 # iDrink
-An alcohol pr. price calculator and Vinmonopolet product browser.
+An alcohol per NOK calculator and Vinmonopolet product browser.
 
 ## it2810-webutvikling-h17-prosjekt-4-group-29
 

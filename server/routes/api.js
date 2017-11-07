@@ -6,24 +6,9 @@ var logger = require('../../logger.js');
 const mongoose = require('mongoose');
 
 
-
-// Error handling
-const sendError = (err, res) => {
-    response.status = 501;
-    response.message = typeof err == 'object' ? err.message : err;
-    res.status(501).json(response);
-};
-
-// Response handling
-let response = {
-    status: 200,
-    data: [],
-    message: null
-};
-
 // Get users
 router.get('/users', (req, res,next) => {
-  User.getAllUsers(function (err, user) {  // the "user" parameter returns array with JS objects
+  User.getSpecificUser(function (err, user) {  // the "user" parameter returns array with JS objects
     console.log(user);
     console.log(typeof(user));
     if (err) {
@@ -35,8 +20,9 @@ router.get('/users', (req, res,next) => {
   });
 });
 
+
 router.get('/products', (req, res,next) => {
-  Product.getOneProduct(function (err, product) {// the "user" parameter returns array with JS objects
+  Product.getOneProduct(function (err, product) {
     if (err) {
       logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
@@ -47,7 +33,7 @@ router.get('/products', (req, res,next) => {
 });
 
 
-// TODO: Modify the query to be req.querySearch
+// TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
 router.get('/specificProducts', (req, res,next) => {
   Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}),function (err, products) {
     console.log(products);
@@ -62,9 +48,22 @@ router.get('/specificProducts', (req, res,next) => {
 });
 
 
-
-/* router.post('/registerUser', (req,res,next) => {
-  
-} */
+router.post('/registerUser', (req,res,next) => {
+  let account = new User({
+    name = req.body.name,
+    email = req.body.email,
+    password = req.body.password,
+    username = req.body.username
+  });
+  User.InsertUser(account,(error,success) => {
+    if error {
+      logger.error("Something went wrong inserting user:" + error);
+      throw error;
+    }
+    else{
+      res.json({success: true, message:'User registered'});
+    }
+  });
+});
 
 module.exports = router;

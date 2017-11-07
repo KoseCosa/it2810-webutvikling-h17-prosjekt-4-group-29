@@ -6,7 +6,7 @@
 /dist
 /tmp
 /app/**/*.js
-         /app/**/*.js.map
+/app/**/*.js.map
 
 # dependencies
 /node_modules
@@ -257,3 +257,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows,angular,webstorm,notepadpp,sublimetext
+
+data/

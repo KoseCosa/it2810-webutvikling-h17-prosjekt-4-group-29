@@ -19,7 +19,5 @@ On the server side we are using Node.js with express.js. We use several of the p
 
 ## Frontend
 
-We are using angular v4 from www.angular.io as frontend-application. Internally in the frontend application its utilizes the MVC- architecture aswell as internal routing.
-
-
+We are using angular v4 from www.angular.io as frontend-application. For styling the app will use the css framework bootstrap Sandstone. The app allows the user to browse different products in the database, select their favorites, and save them to their user. 
 

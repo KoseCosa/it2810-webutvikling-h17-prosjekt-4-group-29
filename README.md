@@ -28,6 +28,5 @@ The main components will be
   * Filtering 
   * Search
   * Word cloud based product categories
-- user page 
+- User page 
   * Favourites
-possible other components:

@@ -8,7 +8,7 @@ import { DataService } from './data.service';
 })
 export class AppComponent {
 
-  users: Object;
+  users: Array<any>;
 
   constructor(private _dataService: DataService) {
 

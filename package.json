@@ -21,13 +21,15 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+	"connect-mongo": "^2.0.0",
+	"express-session": "^1.15.6",
     "body-parser": "^1.17.2",
     "core-js": "^2.4.1",
     "express": "^4.15.4",
-	"mongoose": "^4.12.6",
+    "mongoose": "^4.12.6",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.14",
-	"winston": "^3.0.0-rc1"
+    "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
     "@angular/cli": "1.2.7",
@@ -37,6 +39,8 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.0.1",
+    "connect-mongo": "^2.0.0",
+    "express-session": "^1.15.6",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",

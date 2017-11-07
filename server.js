@@ -1,10 +1,12 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const http = require('http');
-var mongoose = require('mongoose');
-const app = express();
-var logger = require('./logs/logger.js');
+const express = require('express');  //Middleware framework
+const bodyParser = require('body-parser');  //Middleware
+const path = require('path');  // Node support module for filepaths
+const http = require('http');  // Node support http module
+var mongoose = require('mongoose'); // Database connection and object-mapping
+const session = require('express-session'); // Session handling server side
+const MongoStore = require('connect-mongo')(session); // Storing session in mongo-db
+const app = express(); 
+var logger = require('./logs/logger.js');  // Usage of winston logger.
 
 // Connection URL
 var url = 'mongodb://localhost:27017/project4';
@@ -12,17 +14,13 @@ mongoose.connect(url, {useMongoClient:true});
 
 // On Connection
 mongoose.connection.on('connected', () => {
-  logger.info('Connected to database '+ url);
+  logger.info('Connected to database on '+ url);
 });
 
 // On Error
 mongoose.connection.on('error', (err) => {
-  logger.info('Database error!');
+  logger.error('Database error:' + err);
 });
-
-
-
-
 
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');
@@ -35,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 
-// Add headers to avoid Cross-origin requests issues.
+// Add headers to avoid Cross-origin requests issues. Use this or CORS. 
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
@@ -71,4 +69,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(port, () => {
+  console.log(`Running on localhost:${port}`);
+  logger.info(`Running on localhost:${port}`);
+});

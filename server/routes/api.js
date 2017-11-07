@@ -22,12 +22,19 @@ let response = {
 
 // Get users
 router.get('/users', (req, res,next) => {
-  User.getAllUsers(function (err, user) {
+  User.getAllUsers(function (err, user) {  // the "user" parameter returns array with JS objects
     console.log(user);
     console.log(typeof(user));
-    if (err) throw err;
-    res.json({user:user});
+    if (err) {
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({user});
   });
 });
+
+/* router.post('/registerUser', (req,res,next) => {
+  
+} */
 
 module.exports = router;

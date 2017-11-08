@@ -67,21 +67,9 @@ module.exports.checkUsernameTaken = function(query,callback){
   });
 }
 
-
-
-
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if(err) throw err;
     callback(null, isMatch);
   });
 }
-
-
-
-
-//TODO: Authentication with user. Function below doesnt work atm (07/11/2017)
-/* module.exports.getUserByName = function(name, callback){
-  User.findOne({name: name},callback)).lean();
-});
- */

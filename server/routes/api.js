@@ -6,9 +6,9 @@ var logger = require('../../logger.js');
 const mongoose = require('mongoose');
 
 
-// Get users
+// Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res,next) => {
-  User.getSpecificUser(function (err, user) {  // the "user" parameter returns array with JS objects
+  User.getAllUsers(function (err, user) {  // the "user" parameter returns array with JS objects
     console.log(user);
     console.log(typeof(user));
     if (err) {
@@ -20,7 +20,7 @@ router.get('/users', (req, res,next) => {
   });
 });
 
-
+// Useful to get one product. No query thought (can be added later if needed)
 router.get('/products', (req, res,next) => {
   Product.getOneProduct(function (err, product) {
     if (err) {
@@ -47,23 +47,62 @@ router.get('/specificProducts', (req, res,next) => {
   });
 });
 
-
+// User registration process + making sure the username isnt taken
 router.post('/registerUser', (req,res,next) => {
-  let account = new User({
-    name = req.body.name,
-    email = req.body.email,
-    password = req.body.password,
-    username = req.body.username
-  });
-  User.InsertUser(account,(error,success) => {
-    if error {
-      logger.error("Something went wrong inserting user:" + error);
-      throw error;
+if (req.body.email &&
+  req.body.username &&
+  req.body.password &&
+  req.body.password){
+    let account = new User({
+      name : req.body.name,
+      email : req.body.email,
+      password : req.body.password,
+      username : req.body.username
+    });
+    if (User.checkUsernameTaken(({username: account.username}),callback) != false){
+      User.InsertUser(account,function(error,success){
+        if (error) {
+          logger.error("Something went wrong inserting user to db :" + error);
+          throw error;
+        }
+        else{
+          return res.json({success: true, message:'User registered'});
+        }
+      });
     }
-    else{
-      res.json({success: true, message:'User registered'});
+    else {
+      return res.json({succes: false, message: 'There is allready another user with that username'});
     }
-  });
+  }
 });
 
+
+// Authentication process 
+router.post('/authenticate',(req,res,next) =>{
+  const password = reg.body.password;
+  const username = req.body.username;
+  User.getSpecificUser(({username:username}),function(error,user){
+    if (error) {
+      logger.error("Something went wrong authenticathing user: " + username +
+                   ". This error happened:" +  error);
+      throw err;
+    }
+    if (!user){
+      return res.json({success:false, msg: "Username not found"});
+    }
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(error) {
+        logger.error("Error comparing password hashes: " + error);
+        throw error;
+      }
+      if(isMatch){
+        // TODO here: Give session if success!
+        // Return statement needed here
+      }
+      else {
+        return res.json({success:false, msg: "Wrong password!"});
+      }
+    });
+  });
+});
 module.exports = router;

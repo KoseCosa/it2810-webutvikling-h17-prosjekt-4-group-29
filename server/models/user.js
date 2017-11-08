@@ -31,20 +31,21 @@ module.exports.getSpecificUser = function(query,callback){
   User.findOne(query,callback).lean();
 }
 
+
 module.exports.insertUser =function(user,callback){
   bcrypt.genSalt(15, function(error, salt) {
-    if error {
+    if (error) {
       logger.error('Something went wrong generating salt:' + error);
       throw error;
     }
     else {
       bcrypt.hash(user.password, salt, function(err, hash) {
         // Store hash in your password DB.
-        if err {
+        if (err) {
           logger.error('Something went wrong generating hash:' + err);
           throw err;
         }
-        else {
+        if (hash) {
           user.password = hash;
           user.save(callback);
         }
@@ -53,6 +54,21 @@ module.exports.insertUser =function(user,callback){
 
   });
 }
+
+module.exports.checkUsernameTaken = function(query,callback){
+  User.findOne(({username:query}),function(error,success){
+    if (error){
+      logger.error("Something went finding one username in db:"+ error);
+      throw error;
+    }
+    if(success){
+      return false;
+    }
+  });
+}
+
+
+
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {

@@ -27,5 +27,5 @@ export class AppComponent {
     // Get queried products, possibly more than one.
     this._dataService.getSpecificProduct()
       .subscribe(res => {this.reqeusted_product = res.products;console.log(this.reqeusted_product);});
-       }
+  }
 }

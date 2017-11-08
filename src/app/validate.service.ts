@@ -18,10 +18,10 @@ export class ValidateService {
     user.name == undefined){
       return false;
     }
-    if (!validateEmail(user.email)){
+    if (!this.validateEmail(user.email)){
       return false;
     }
-    if (!validatePassword(user.password)){
+    if (!this.validatePassword(user.password)){
       return false;
     }
     else{
@@ -30,21 +30,23 @@ export class ValidateService {
   }
   
   validateEmail(email){
-    var patt = new RegExp("^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>"+
+/*     var patt = new RegExp("^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>"+
                           "()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$", "i");
-    return patt.test(email);
+    return patt.test(email); */
+    return true;
   }
   
   validateSearchField(search){
     if (search.text == undefined){
       return false;
     }
-    var patt = new RegExp(^[A-Za-z]*[A-Za-z][A-Za-z]*$);
-    return patt.test(search);
+/*     var patt = new RegExp(^[A-Za-z]*[A-Za-z][A-Za-z]*$);
+    return patt.test(search); */
   }
   
   validatePassword(password){
-     var patt = new RegExp(^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d).*$);
-     return patt.test(password);
+/*      var patt = new RegExp(^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d).*$);
+     return patt.test(password); */
+    return true;
   }
 }

@@ -8,8 +8,10 @@ import { Router, RoutesRecognized } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
 
+  isCollapsed:Boolean;
   constructor() { }
 
   ngOnInit() {
+    this.isCollapsed = true;
   }
 }

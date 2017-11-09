@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CollapseModule } from 'ngx-bootstrap';
 
 // Custom-made services imports
 import { DataService } from './data.service';
@@ -43,7 +44,8 @@ const appRoutes: Routes =  [
     RouterModule.forRoot(
       appRoutes
       ),
-    FormsModule
+    FormsModule,
+    CollapseModule
   ],
   providers: [DataService,AuthService,ValidateService],
   bootstrap: [AppComponent]

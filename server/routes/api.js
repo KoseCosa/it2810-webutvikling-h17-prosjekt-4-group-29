@@ -59,7 +59,7 @@ if (req.body.email &&
       if (err){
         res.json({success:false, msg:"Username is allready taken"});
         res.send();
-        throw err;}
+      }
       if (callback){
         res.json({success: true, msg: "user registered"});
       }

@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
+var logger = require('../../logger.js');
 
 const User = module.exports = mongoose.model('User', new Schema({ 
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   email: {
     type: String,
@@ -32,36 +34,47 @@ module.exports.getSpecificUser = function(query,callback){
 }
 
 
-module.exports.insertUser =function(user,callback){
+module.exports.insertUser = function(user,callback){
+  let account = new User({
+    name : user.name,
+    email : user.email,
+    password : user.password,
+    username : user.username
+  });
   bcrypt.genSalt(15, function(error, salt) {
     if (error) {
       logger.error('Something went wrong generating salt:' + error);
       throw error;
     }
     else {
-      bcrypt.hash(user.password, salt, function(err, hash) {
+      bcrypt.hash(account.password, salt, function(err, hash) {
         // Store hash in your password DB.
         if (err) {
           logger.error('Something went wrong generating hash:' + err);
           throw err;
         }
         if (hash) {
-          user.password = hash;
-          user.save(callback);
+          account.password = hash;
+          account.save(callback);
         }
       });
     }
-
   });
 }
+
 
 module.exports.checkUsernameTaken = function(query,callback){
   User.findOne(({username:query}),function(error,success){
     if (error){
-      logger.error("Something went finding one username in db:"+ error);
+      logger.error("Something went wrong finding one username in db:"+ error);
       throw error;
     }
-    if(success){
+    if(!success){
+      console.log('NOT SUCCESS!');
+      return true;
+    }
+    else{
+      console.log('SUCCESS esxist!');
       return false;
     }
   });
@@ -69,7 +82,9 @@ module.exports.checkUsernameTaken = function(query,callback){
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
-    if(err) throw err;
+    if(err) {
+      throw err;
+    }
     callback(null, isMatch);
   });
 }

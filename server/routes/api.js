@@ -8,9 +8,7 @@ const mongoose = require('mongoose');
 
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res,next) => {
-  User.getAllUsers(function (err, user) {  // the "user" parameter returns array with JS objects
-    console.log(user);
-    console.log(typeof(user));
+  User.getAllUsers(function (err, user) {
     if (err) {
       logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
@@ -36,8 +34,6 @@ router.get('/products', (req, res,next) => {
 // TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
 router.get('/specificProducts', (req, res,next) => {
   Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}),function (err, products) {
-    console.log(products);
-    console.log(typeof(products));
     if (err) {
       logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
@@ -59,20 +55,16 @@ if (req.body.email &&
       password : req.body.password,
       username : req.body.username
     });
-    if (User.checkUsernameTaken(({username: account.username}),callback) != false){
-      User.InsertUser(account,function(error,success){
-        if (error) {
-          logger.error("Something went wrong inserting user to db :" + error);
-          throw error;
-        }
-        else{
-          return res.json({success: true, message:'User registered'});
-        }
-      });
-    }
-    else {
-      return res.json({succes: false, message: 'There is allready another user with that username'});
-    }
+    User.insertUser((account),function(err,callback){
+      if (err){
+        res.json({success:false, msg:"Username is allready taken"});
+        res.send();
+        throw err;}
+      if (callback){
+        res.json({success: true, msg: "user registered"});
+      }
+    });
+
   }
 });
 

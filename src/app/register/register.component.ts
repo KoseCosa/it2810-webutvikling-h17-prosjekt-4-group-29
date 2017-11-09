@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   onSubmitClick(){
     const user = {
       name: this.name,
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       username: this.username,
       password: this.password
     }
-  
+
     // Validation of fields
     if(!this.validateService.validateRegisterFields(user)){
       return false;

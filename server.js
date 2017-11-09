@@ -5,11 +5,11 @@ const http = require('http');  // Node support http module
 var mongoose = require('mongoose'); // Database connection and object-mapping
 const session = require('express-session'); // Session handling server side
 const MongoStore = require('connect-mongo')(session); // Storing session in mongo-db
-const app = express(); 
+const app = express();
 var logger = require('./logger.js');  // Usage of winston logger.
 
 // Connection URL
-var url = 'mongodb://localhost:27017/project4';
+var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
 mongoose.connect(url, {useMongoClient:true});
 
 // On Connection
@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 
-// Add headers to avoid Cross-origin requests issues. Use this or CORS. 
+// Add headers to avoid Cross-origin requests issues. Use this or CORS.
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect

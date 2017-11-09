@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server",
+    "serve": "ng build && open http://localhost:3000 & node server",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

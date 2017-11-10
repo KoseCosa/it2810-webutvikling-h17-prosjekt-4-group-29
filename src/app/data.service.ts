@@ -13,23 +13,29 @@ export class DataService {
   constructor(private _http: Http) { }
 
   getUsers() {
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this._http.get("http://localhost:3000/api/users", {headers: headers})
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/users', {headers: headers})
       .map(result => this.result = result.json());
   }
-  
+
+  getUser() {
+    const headers = new Headers();
+    headers.append('content-type', 'applcation/json');
+    return this._http.get('http://localhost:3000/');
+  }
+
   getProduct() {
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this._http.get("http://localhost:3000/api/products", {headers: headers})
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/products', {headers: headers})
       .map(result2 => this.result2 = result2.json());
   }
-  
+
   getSpecificProduct() {
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this._http.get("http://localhost:3000/api/specificProducts", {headers: headers})
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/specificProducts', {headers: headers})
       .map(result3 => this.result3 = result3.json());
   }
 

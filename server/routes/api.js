@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const Product = require('../models/product');
 var logger = require('../../logger.js');
-const mongoose = require('mongoose');
+
 
 
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
@@ -71,9 +71,13 @@ if (req.body.email &&
 
 // Authentication process 
 router.post('/authenticate',(req,res,next) =>{
-  const password = reg.body.password;
+  logger.error("Auth");
+  const password = req.body.password;
+  logger.error("got pass");
   const username = req.body.username;
+  logger.error("got pass");
   User.getSpecificUser(({username:username}),function(error,user){
+    logger.error("get user");
     if (error) {
       logger.error("Something went wrong authenticathing user: " + username +
                    ". This error happened:" +  error);
@@ -88,6 +92,9 @@ router.post('/authenticate',(req,res,next) =>{
         throw error;
       }
       if(isMatch){
+        logger.error('user login');
+        req.session.save();
+        return res.json({success: true, msg: "login successful"})
         // TODO here: Give session if success!
         // Return statement needed here
       }

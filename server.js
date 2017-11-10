@@ -9,7 +9,8 @@ const app = express();
 var logger = require('./logger.js');  // Usage of winston logger.
 
 // Connection URL
-var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
+//var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
+var url  = 'mongodb://localhost:27017/project4';
 mongoose.connect(url, {useMongoClient:true});
 
 // On Connection
@@ -37,7 +38,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    //res.setHeader('Access-Control-Allow-Origin', ['http://localhost:4200', 'http://127.0.0.1:4200']);
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

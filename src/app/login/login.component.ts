@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         this.authService.login(user).subscribe(response => {
             console.log('aClick');
             if (response.success) {
+                // hh
                 console.log('sussessu');
                 this.router.navigate(['/mypage']);
             } else {

@@ -15,7 +15,7 @@ export class DataService {
   getUsers() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get('http://localhost:3000/api/users', {headers: headers})
+    return this._http.get('http://localhost:3000/api/users', {headers: headers, withCredentials: true})
       .map(result => this.result = result.json());
   }
 

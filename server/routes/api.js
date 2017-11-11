@@ -4,7 +4,9 @@ const User = require('../models/user');
 const Product = require('../models/product');
 var logger = require('../../logger.js');
 
-
+const session = require('express-session'); // Session handling server side
+const MongoStore = require('connect-mongo')(session); // Storing session in mongo-db
+var mongoose = require('mongoose'); // Database connection and object-mapping
 
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res,next) => {
@@ -71,11 +73,11 @@ if (req.body.email &&
 
 // Authentication process 
 router.post('/authenticate',(req,res,next) =>{
-  logger.error("Auth");
+  //if(req.session.auth = true) {
+    //console.log("logined");
+  //}
   const password = req.body.password;
-  logger.error("got pass");
   const username = req.body.username;
-  logger.error("got pass");
   User.getSpecificUser(({username:username}),function(error,user){
     logger.error("get user");
     if (error) {
@@ -88,12 +90,16 @@ router.post('/authenticate',(req,res,next) =>{
     }
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(error) {
-        logger.error("Error comparing password hashes: " + error);
         throw error;
       }
       if(isMatch){
-        logger.error('user login');
+        console.log('try sesion create...')
+        req.session.auth = true;
         req.session.save();
+        console.log(req.session.auth)
+        console.log('session created succesce')
+        console.log(req.session);
+        //req.session.save();
         return res.json({success: true, msg: "login successful"})
         // TODO here: Give session if success!
         // Return statement needed here

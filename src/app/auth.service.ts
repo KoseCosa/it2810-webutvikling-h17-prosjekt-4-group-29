@@ -23,7 +23,14 @@ export class AuthService {
         console.log('auth');
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this._http.post('http://localhost:3000/api/authenticate', user, {headers: headers})
+        return this._http.post('http://localhost:3000/api/authenticate', user, {headers: headers, withCredentials: true})
+            .map(res => res.json());
+    }
+
+    loggedIn () {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this._http.get('http://localhost:3000/api/loggedIn', {headers: headers, withCredentials: true})
             .map(res => res.json());
     }
 

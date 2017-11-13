@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RoutesRecognized } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,10 +9,15 @@ import { Router, RoutesRecognized } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
 
-  isCollapsed:Boolean;
-  constructor() { }
+    isCollapsed: Boolean;
+
+    constructor(private authService: AuthService,
+    ) { }
 
   ngOnInit() {
     this.isCollapsed = true;
+    this.authService.loggedIn().subscribe( response => {
+        console.log(response);
+    });
   }
 }

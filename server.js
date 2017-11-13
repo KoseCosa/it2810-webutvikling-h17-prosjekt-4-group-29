@@ -57,16 +57,15 @@ app.use(function (req, res, next) {
 
 app.use(session({
   secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
   cookie: { secure: false, maxAge:null }
 }));
 
 app.get('/api/authenticate', function(req, res, next) {
-  req.session.auth = false;
+  req.session.auth = true;
 });
-
 
 // API location
 app.use('/api', api);

@@ -20,9 +20,11 @@ router.get('/users', (req, res) => {
 });
 
 // Useful to get one product. No query thought (can be added later if needed)
-router.get('/products', (req, res) => {
-    Product.getOneProduct(function (err, product) {
+
+router.get('/products', (req, res,next) => {
+    Product.getProducts(req.query.search, function (err, product) {
         if (err) {
+            logger.error('Error querrying the database:' + err);
             res.status(501).send(err);
             throw err;
         }

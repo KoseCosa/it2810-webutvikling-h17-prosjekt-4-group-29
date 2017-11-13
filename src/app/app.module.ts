@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { MyPageComponent } from './my-page/my-page.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes =  [

@@ -13,6 +13,7 @@ export class FrontPageComponent implements OnInit {
     loggedInUser: any;
     users: Array<any>;
     product: Object;  // Change to array <any> if retrieving multiple products
+    reqeusted_product: Array<any>;
 
     constructor(
         private dataService: DataService,

@@ -20,7 +20,7 @@ router.get('/users', (req, res,next) => {
 
 // Useful to get one product. No query thought (can be added later if needed)
 router.get('/products', (req, res,next) => {
-  Product.getOneProduct(function (err, product) {
+  Product.getProducts(req.query.search, function (err, product) {
     if (err) {
       logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
@@ -69,7 +69,7 @@ if (req.body.email &&
 });
 
 
-// Authentication process 
+// Authentication process
 router.post('/authenticate',(req,res,next) =>{
   const password = reg.body.password;
   const username = req.body.username;

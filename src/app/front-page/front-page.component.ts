@@ -13,7 +13,7 @@ export class FrontPageComponent implements OnInit {
   reqeusted_product: Array<any>;
 
   constructor(private _dataService: DataService) { }
-    
+
   ngOnInit() {
    // Get users
    this._dataService.getUsers().subscribe(res => {

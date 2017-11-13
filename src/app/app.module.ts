@@ -19,13 +19,15 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MyPageComponent } from './my-page/my-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const appRoutes: Routes =  [
-  {path:'', component: FrontPageComponent},
-  {path:'register', component: RegisterComponent},
-  {path:'login', component: LoginComponent}, // TODO auth: canActivate:[AuthGuard]
+  { path: '', component: FrontPageComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent }, // TODO auth: canActivate:[AuthGuard]
   { path: 'mypage', component: MyPageComponent },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'products', component: ProductListComponent },
+  { path: '**', component: ProductListComponent }
 ];
 
 @NgModule({
@@ -36,7 +38,8 @@ const appRoutes: Routes =  [
     PageNotFoundComponent,
     FrontPageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ const appRoutes: Routes =  [
     FormsModule,
     CollapseModule
   ],
-  providers: [DataService,AuthService,ValidateService],
+  providers: [DataService, AuthService, ValidateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

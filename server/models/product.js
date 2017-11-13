@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 var SchemaTypes = mongoose.Schema.Types;
 var Int32 = require('mongoose-int32');
 
-const Product = module.exports = mongoose.model('Product', new Schema({ 
+const Product = module.exports = mongoose.model('Product', new Schema({
   Datotid : String,
   Varenummer: Number,
   Varenavn : String,
@@ -37,7 +37,7 @@ const Product = module.exports = mongoose.model('Product', new Schema({
   Lagringsgrad : String,
   Produsent : String,
   Grossist : String,
-  Distributor : String,
+  Distributor: String,
   Emballasjetype : String,
   Korktype : String,
   Vareurl : String
@@ -45,11 +45,27 @@ const Product = module.exports = mongoose.model('Product', new Schema({
 
 module.exports.getOneProduct = function(callback){
   Product.findOne(callback).lean();
-}
-module.exports.getAllProducts = function(callback){
-  Product.find(callback).lean();
-}
+};
 
-module.exports.getSpecificProducts= function(query,callback){
-  Product.find(query,callback).lean();
-}
+module.exports.getAllProducts = function(callback){
+  Product.find({ Varenavn: { $ne: null } }, callback).sort('Varenavn').limit(25).lean();
+};
+
+module.exports.getProductsInRange = function(callback){
+  Product.find({ Varenavn: { $ne: null } }, callback).sort('Varenavn').limit(25).lean();
+};
+
+module.exports.getProducts = function(search, callback) {
+  search = JSON.parse(search)
+  const searchRegEx = new RegExp(search.value, "i")
+  Product
+    .find(callback)
+    .or([
+      {Varenavn: { $regex: searchRegEx }},
+      {Varetype: { $regex: searchRegEx }},
+      {Land: { $regex: searchRegEx }}])
+    .sort('Varenavn')
+    .limit(21)
+    .skip(search.startIndex)
+    .lean();
+};

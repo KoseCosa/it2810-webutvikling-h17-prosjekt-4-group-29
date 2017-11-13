@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthService } from '../auth.service';
 import { ValidateService } from '../validate.service';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
     loggedInUser: any;
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.authService.currentUser.subscribe(observedUser => this.loggedInUser = observedUser);
-        if (this.loggedInUser != null){
+        if (this.loggedInUser != null) {
             this.router.navigate(['/mypage']);
         }
     }

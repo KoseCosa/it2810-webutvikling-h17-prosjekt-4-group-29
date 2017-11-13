@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-page-not-found',
-  templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.css']
+    selector: 'app-page-not-found',
+    templateUrl: './page-not-found.component.html',
+    styleUrls: ['./page-not-found.component.css']
 })
 export class PageNotFoundComponent implements OnInit {
 
-  loggedInUser: any;
+    loggedInUser: any;
 
-  constructor(
-    private authService: AuthService
-  ) { }
+    constructor(
+        private authService: AuthService
+    ) { }
 
-  ngOnInit() {
-    this.authService.currentUser.subscribe(observedUser =>
-      this.loggedInUser = observedUser);
-  }
-
+    ngOnInit() {
+        this.authService.currentUser.subscribe(observedUser =>
+            this.loggedInUser = observedUser);
+    }
 }

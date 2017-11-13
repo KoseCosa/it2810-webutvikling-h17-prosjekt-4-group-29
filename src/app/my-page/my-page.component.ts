@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+
 import { AuthService } from '../auth.service';
+import { DataService } from '../data.service';
 
 @Component({
     selector: 'app-my-page',
@@ -21,7 +22,7 @@ export class MyPageComponent implements OnInit {
             this.users = res.user;
         });
         this.authService.currentUser.subscribe(observedUser =>
-             this.loggedInUser = observedUser);
+            this.loggedInUser = observedUser);
     }
 
 }

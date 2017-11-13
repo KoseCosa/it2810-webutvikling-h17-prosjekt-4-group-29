@@ -9,6 +9,8 @@ import {Router} from '@angular/router';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+    loggedInUser: any;
     username: String;
     password: String;
 
@@ -18,10 +20,13 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.authService.currentUser.subscribe(observedUser => this.loggedInUser = observedUser);
+        if (this.loggedInUser != null){
+            this.router.navigate(['/mypage']);
+        }
     }
 
     onSubmitClick() {
-        console.log('click');
         const user = {
             username: this.username,
             password: this.password
@@ -33,10 +38,8 @@ export class LoginComponent implements OnInit {
         }
 
         this.authService.login(user).subscribe(response => {
-            console.log('aClick');
             if (response.success) {
-                // hh
-                console.log('sussessu');
+                this.authService.changeUser(response.user);
                 this.router.navigate(['/mypage']);
             } else {
                 console.log('error');

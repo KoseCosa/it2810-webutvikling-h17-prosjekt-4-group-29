@@ -10,8 +10,10 @@ import { AuthService } from '../auth.service';
 export class NavBarComponent implements OnInit {
 
     isCollapsed: Boolean;
+    loggedInUser: object;
 
-    constructor(private authService: AuthService,
+    constructor(
+      private authService: AuthService
     ) { }
 
   ngOnInit() {
@@ -19,5 +21,11 @@ export class NavBarComponent implements OnInit {
     this.authService.loggedIn().subscribe( response => {
         console.log(response);
     });
+    this.authService.currentUser.subscribe(observedUser =>
+       this.loggedInUser = observedUser);
+  }
+
+  onLogout(){
+
   }
 }

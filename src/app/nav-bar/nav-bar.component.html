@@ -13,10 +13,10 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!loggedInUser">
         <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="loggedInUser">
         <a class="nav-link" routerLink="/logout" routerLinkActive="active">Logout</a>
       </li>
       <li class="nav-item">

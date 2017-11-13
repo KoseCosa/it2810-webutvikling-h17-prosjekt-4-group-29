@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService {
 
-    user: any;
+    private user = new BehaviorSubject<any>(null);
+    currentUser = this.user.asObservable();
 
     constructor(
         private _http: Http
     ) { }
+
+    changeUser(newUser: any) {
+        console.log('New user beeing added:' + newUser);
+        this.user.next(newUser);
+    }
 
     register(user) {
         const headers = new Headers();

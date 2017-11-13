@@ -94,7 +94,7 @@ router.post('/authenticate',(req,res,next) =>{
         //req.session.save();
         console.log('session created succesce')
         console.log(req.session);
-        return res.json({success: true, msg: "login successful"})
+        return res.json({success: true, msg: "login successful", user: user})
         // TODO here: Give session if success!
         // Return statement needed here
       }

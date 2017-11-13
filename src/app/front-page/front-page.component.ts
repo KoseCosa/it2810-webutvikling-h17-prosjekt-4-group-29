@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-front-page',
@@ -8,17 +9,23 @@ import { DataService } from '../data.service';
 })
 export class FrontPageComponent implements OnInit {
 
+  loggedInUser: any;
   users: Array<any>;
   product: Object;  // Change to array <any> if retrieving multiple products
   reqeusted_product: Array<any>;
 
-  constructor(private _dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private authService: AuthService
+  ) { }
     
   ngOnInit() {
    // Get users
-   this._dataService.getUsers().subscribe(res => {
+    this.dataService.getUsers().subscribe(res => {
       this.users = res.user;
     });
+    this.authService.currentUser.subscribe(observedUser =>
+      this.loggedInUser = observedUser);
 
     /* // Get ONE product
     this._dataService.getProduct().subscribe(res => {

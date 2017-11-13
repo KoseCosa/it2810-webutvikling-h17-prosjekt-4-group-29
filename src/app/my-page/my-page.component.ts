@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-my-page',
@@ -8,14 +9,19 @@ import { DataService } from '../data.service';
 })
 export class MyPageComponent implements OnInit {
     users: Array<any>;
+    loggedInUser: any;
 
-    constructor(private _dataService: DataService) { }
+    constructor(
+        private dataService: DataService,
+        private authService: AuthService
+    ) { }
 
     ngOnInit() {
-        this._dataService.getUsers().subscribe(res => {
+        this.dataService.getUsers().subscribe(res => {
             this.users = res.user;
         });
-
+        this.authService.currentUser.subscribe(observedUser =>
+             this.loggedInUser = observedUser);
     }
 
 }

@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap';
 
@@ -10,6 +10,7 @@ import { CollapseModule } from 'ngx-bootstrap';
 import { DataService } from './data.service';
 import { AuthService } from './auth.service';
 import { ValidateService } from './validate.service';
+import { NavSearchService } from './nav-search.service';
 
 // Custom-made component imports
 import { AppComponent } from './app.component';
@@ -50,7 +51,7 @@ const appRoutes: Routes =  [
     FormsModule,
     CollapseModule
   ],
-  providers: [DataService, AuthService, ValidateService],
+  providers: [DataService, AuthService, ValidateService, NavSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -80,6 +80,7 @@ module.exports.getAutoComplete = function(search, callback) {
       {Varetype: { $regex: searchRegEx }},
       {Land: { $regex: searchRegEx }}])
     .sort('Varenavn')
-    -limit(5)
+    .limit(5)
+    .skip(search.startIndex)
     .lean();
 };

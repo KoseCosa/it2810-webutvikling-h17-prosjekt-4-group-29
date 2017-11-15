@@ -37,9 +37,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnInit() {
-    this.loadMore();
-  }
+  ngOnInit() { }
 
   loadMore(): void {
     if (this.dataAvailable && !this.loadingMore) {

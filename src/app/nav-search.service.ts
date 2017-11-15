@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class NavSearchService {
-  private searchValue: Subject<string> = new Subject<string>();
+  private searchValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   setSearchValue(value: string) {
     this.searchValue.next(value);

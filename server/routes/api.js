@@ -43,6 +43,17 @@ router.get('/specificProducts', (req, res,next) => {
   });
 });
 
+router.get('/autocomplete', (req, res,next) => {
+  Product.getAutoComplete(req.query.search, function (err, product) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({product});
+  });
+});
+
 // User registration process + making sure the username isnt taken
 router.post('/registerUser', (req,res,next) => {
 if (req.body.email &&

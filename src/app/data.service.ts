@@ -23,7 +23,7 @@ export class DataService {
     let params = new URLSearchParams();
 
     headers.append('Content-Type','application/json');
-    params.set('search', JSON.stringify(search))
+    params.set('search', JSON.stringify(search));
 
     return this._http.get('http://localhost:3000/api/products', {headers: headers, params: params})
       .map(res => res.json());
@@ -35,6 +35,17 @@ export class DataService {
     headers.append('Content-Type','application/json');
 
     return this._http.get('http://localhost:3000/api/specificProducts', {headers: headers})
+      .map(res => res.json());
+  }
+
+  getAutoComplete(search) {
+    let headers = new Headers();
+    let params = new URLSearchParams();
+
+    headers.append('Content-Type','application/json');
+    params.set('search', JSON.stringify(search));
+
+    return this._http.get('http://localhost:3000/api/autocomplete', {headers: headers, params: params})
       .map(res => res.json());
   }
 

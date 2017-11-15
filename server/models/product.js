@@ -69,3 +69,17 @@ module.exports.getProducts = function(search, callback) {
     .skip(search.startIndex)
     .lean();
 };
+
+module.exports.getAutoComplete = function(search, callback) {
+  search = JSON.parse(search)
+  const searchRegEx = new RegExp(search.value, "i")
+  Product
+    .find(callback)
+    .or([
+      {Varenavn: { $regex: searchRegEx }},
+      {Varetype: { $regex: searchRegEx }},
+      {Land: { $regex: searchRegEx }}])
+    .sort('Varenavn')
+    -limit(5)
+    .lean();
+};

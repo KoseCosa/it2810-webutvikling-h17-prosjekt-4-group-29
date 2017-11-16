@@ -1,22 +1,30 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavSearchService } from '../nav-search.service';
 import { DataService } from '../data.service';
+import { AuthService } from '../auth.service';
+import { NavSearchService } from '../nav-search.service';
+
 import { Subscription } from 'rxjs/Subscription';
 
+
+
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit, OnDestroy {
 
-  isCollapsed:Boolean;
-  value:string;
+  isCollapsed: Boolean;
+  value: string;
   navSubscription: Subscription;
   autoCompleteResults = [];
 
-  constructor(private navSearchService: NavSearchService, private dataService: DataService, private router: Router) {
+  constructor(
+    private navSearchService: NavSearchService,
+    private dataService: DataService,
+    private router: Router
+    ) {
     this.navSubscription  = this.navSearchService
       .getSearchValue()
       .subscribe(value => {

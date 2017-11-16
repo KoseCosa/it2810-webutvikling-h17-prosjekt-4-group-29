@@ -1,25 +1,28 @@
 const express = require('express');  //Middleware framework
-const bodyParser = require('body-parser');  //Middleware
-const path = require('path');  // Node support module for filepaths
 const http = require('http');  // Node support http module
-var mongoose = require('mongoose'); // Database connection and object-mapping
+const path = require('path');  // Node support module for filepaths
+
+const bodyParser = require('body-parser');  //Middleware
 const session = require('express-session'); // Session handling server side
+const mongoose = require('mongoose'); // Database connection and object-mapping
 const MongoStore = require('connect-mongo')(session); // Storing session in mongo-db
+
 const app = express();
 var logger = require('./logger.js');  // Usage of winston logger.
 
 // Connection URL
 var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
+//var url  = 'mongodb://localhost:27017/project4';
 mongoose.connect(url, {useMongoClient:true});
 
 // On Connection
 mongoose.connection.on('connected', () => {
-  logger.info('Connected to database on '+ url);
+    logger.info('Connected to database on '+ url);
 });
 
 // On Error
 mongoose.connection.on('error', (err) => {
-  logger.error('Database error:' + err);
+    logger.error('Database error:' + err);
 });
 
 // API file for interacting with MongoDB
@@ -38,6 +41,7 @@ app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    //res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -54,13 +58,16 @@ app.use(function (req, res, next) {
 });
 
 app.use(session({
-  secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
-  resave: true,
-  saveUninitialized: true,
-  store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
-  cookie: { secure: false, maxAge:null }
+    secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
+    cookie: { secure: false, maxAge:null }
 }));
 
+app.get('/api/authenticate', function(req, res, next) {
+    req.session.auth = true;
+});
 
 // API location
 app.use('/api', api);
@@ -77,6 +84,6 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => {
-  console.log(`Running on localhost:${port}`);
-  logger.info(`Running on localhost:${port}`);
+    console.log(`Running on localhost:${port}`);
+    logger.info(`Running on localhost:${port}`);
 });

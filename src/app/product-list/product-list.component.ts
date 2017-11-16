@@ -17,7 +17,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   autoCompleteResults = [];
   navSubscription: Subscription;
 
-   constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
+  constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
     this.navSubscription  = this.navSearchService
       .getSearchValue()
       .subscribe(value => {

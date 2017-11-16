@@ -1,11 +1,10 @@
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-import { Http, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataService {
-
 
   constructor(private _http: Http) { }
 
@@ -14,7 +13,7 @@ export class DataService {
 
     headers.append('Content-Type','application/json');
 
-    return this._http.get("http://localhost:3000/api/users", {headers: headers})
+    return this._http.get('http://localhost:3000/api/users', {headers: headers})
       .map(res => res.json());
   }
 
@@ -48,5 +47,4 @@ export class DataService {
     return this._http.get('http://localhost:3000/api/autocomplete', {headers: headers, params: params})
       .map(res => res.json());
   }
-
 }

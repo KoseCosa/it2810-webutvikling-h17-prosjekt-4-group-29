@@ -10,6 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { ValidateService } from './validate.service';
+import { NavSearchService } from './nav-search.service';
 
 // Custom-made component imports
 import { AppComponent } from './app.component';
@@ -37,7 +38,8 @@ const appRoutes: Routes =  [
         PageNotFoundComponent,
         FrontPageComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        ProductListComponent
     ],
     imports: [
         BrowserModule,
@@ -48,7 +50,7 @@ const appRoutes: Routes =  [
         FormsModule,
         CollapseModule
     ],
-    providers: [DataService, AuthService, ValidateService],
+    providers: [DataService, AuthService, ValidateService, NavSearchService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

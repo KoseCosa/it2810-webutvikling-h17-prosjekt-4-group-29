@@ -3,7 +3,7 @@
   <div class="card">
     <h2 class="card-header">Product Search</h2>
     <form class="card-body form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" [(ngModel)]="searchValue" name="searchValue"><button class="btn btn-primary my-2 my-sm-0"(click)="search()">Search</button>
+      <input class="form-control mr-sm-2" [(ngModel)]="searchValue" name="searchValue" placeholder="Search"><button class="btn btn-primary my-2 my-sm-0"(click)="search();updateNav()">Search</button>
     </form>
   </div>
   <br>
@@ -16,17 +16,17 @@
             <h3 class="card-header">{{product.Varenavn}}</h3>
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-9">
                   <h5 class="card-title">Varetype:</h5>
                   <h6 class="card-subtitle text-muted">{{product.Varetype}}</h6>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-9">
                   <h5 class="card-title">Land:</h5>
                   <h6 class="card-subtitle text-muted">{{product.Land}}</h6>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-9">
                   <h5 class="card-title">Pris:</h5>
-                  <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}}</h6>
+                  <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
                 </div>
               </div>
             </div>

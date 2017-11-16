@@ -5,46 +5,46 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataService {
-    result: any;
-    result2: any;
-    result3: any;
 
-    constructor(private _http: Http) { }
+  constructor(private _http: Http) { }
 
-    getUsers() {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this._http.get('http://localhost:3000/api/users', {headers: headers, withCredentials: true})
-            .map(result => this.result = result.json());
-    }
+  getUsers() {
+    let headers = new Headers();
 
-    getUser() {
-        const headers = new Headers();
-        headers.append('content-type', 'applcation/json');
-        return this._http.get('http://localhost:3000/');
-    }
+    headers.append('Content-Type','application/json');
 
-    getProduct() {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this._http.get('http://localhost:3000/api/products', {headers: headers})
-            .map(result2 => this.result2 = result2.json());
-    }
-    getProducts(search) {
-        const headers = new Headers();
-        const params = new URLSearchParams();
+    return this._http.get('http://localhost:3000/api/users', {headers: headers})
+      .map(res => res.json());
+  }
 
-        headers.append('Content-Type', 'application/json');
-        params.set('search', JSON.stringify(search))
+  getProducts(search) {
+    let headers = new Headers();
+    let params = new URLSearchParams();
 
-        return this._http.get('http://localhost:3000/api/products', {headers: headers, params: params})
-            .map(res => res.json());
-    }
+    headers.append('Content-Type','application/json');
+    params.set('search', JSON.stringify(search));
 
-    getSpecificProduct() {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this._http.get('http://localhost:3000/api/specificProducts', {headers: headers})
-            .map(result3 => this.result3 = result3.json());
-    }
+    return this._http.get('http://localhost:3000/api/products', {headers: headers, params: params})
+      .map(res => res.json());
+  }
+
+  getSpecificProduct() {
+    let headers = new Headers();
+
+    headers.append('Content-Type','application/json');
+
+    return this._http.get('http://localhost:3000/api/specificProducts', {headers: headers})
+      .map(res => res.json());
+  }
+
+  getAutoComplete(search) {
+    let headers = new Headers();
+    let params = new URLSearchParams();
+
+    headers.append('Content-Type','application/json');
+    params.set('search', JSON.stringify(search));
+
+    return this._http.get('http://localhost:3000/api/autocomplete', {headers: headers, params: params})
+      .map(res => res.json());
+  }
 }

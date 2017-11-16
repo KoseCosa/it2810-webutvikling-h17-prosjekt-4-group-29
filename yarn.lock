@@ -3339,9 +3339,9 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ngx-bootstrap@^2.0.0-beta.8:
-  version "2.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-2.0.0-beta.8.tgz#3209c818e89a4b4ea88c7c45fc53cebf000c0699"
+ngx-bootstrap@^2.0.0-beta.7:
+  version "2.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-2.0.0-beta.7.tgz#2941774b12dc7776ddac24a856a77ffd835ed00d"
 
 no-case@^2.2.0:
   version "2.3.2"

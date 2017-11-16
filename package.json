@@ -31,7 +31,7 @@
     "mongoose": "^4.12.6",
     "mongoose-double": "0.0.1",
     "mongoose-int32": "^0.2.0",
-    "ngx-bootstrap": "^2.0.0-beta.8",
+    "ngx-bootstrap": "^2.0.0-beta.7",
     "rxjs": "^5.4.1",
     "winston": "^3.0.0-rc1",
     "zone.js": "^0.8.14"

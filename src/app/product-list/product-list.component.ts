@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   searchValue = '';
   loadingMore = false;
   dataAvailable = true;
+  autoCompleteResults = [];
   navSubscription: Subscription;
 
    constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
@@ -60,6 +61,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   search(): void {
+    this.autoCompleteResults = [];
     const searchObject = {
       value: this.searchValue,
       startIndex: 0
@@ -75,6 +77,28 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   updateNav() {
     this.navSearchService.setSearchValue(this.searchValue);
+  }
+
+  handleKeyUp(value, event) {
+    this.searchValue = value;
+    const eventKey = event ? event.key : '';
+
+    this.searchValue.length > 2 && eventKey !== 'Enter' ?
+      this._dataService
+        .getAutoComplete({value: this.searchValue, startIndex: 0})
+        .subscribe(result => {
+          this.autoCompleteResults = result.product;
+        })
+    : this.autoCompleteResults = [];
+  }
+
+  handleListEvent(event) {
+    this.searchValue = event.target.innerText;
+    this.search();
+  }
+
+  getProductListClass(): string {
+    return this.products.length > 1 ? 'col-sm-4' : 'col-sm-12';
   }
 
   ngOnDestroy() {

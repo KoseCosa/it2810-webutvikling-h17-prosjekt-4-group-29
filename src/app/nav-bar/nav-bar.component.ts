@@ -29,12 +29,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.value = '';
   }
 
-  // Should be used to show search suggestions
-  handleKeyUp(value){
+  handleKeyUp(value, event) {
     this.value = value;
-    this.value.length > 2 ? 
+    const eventKey = event ? event.key : '';
+
+    value.length > 2 && eventKey !== 'Enter' ?
       this.dataService
-        .getAutoComplete({value: this.value, startIndex: 0})
+        .getAutoComplete({value: value, startIndex: 0})
         .subscribe(result => {
           this.autoCompleteResults = result.product;
         })
@@ -44,13 +45,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
   getProducts(query: string) {
     query = query || this.value;
     this.navSearchService.setSearchValue(query);
+    this.autoCompleteResults = [];
     this.router.navigate(['/products']);
   }
 
-  handleListEvent(event){
+  handleListEvent(event) {
     this.value = event.target.innerText;
     this.getProducts(this.value);
-    this.autoCompleteResults = [];
   }
 
   ngOnDestroy() {

@@ -23,9 +23,9 @@
         <a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" (submit)="getProducts()">
-      <div id="autocomplete">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" [value]="value" #search (click)="handleKeyUp(search.value)" (keyup)="handleKeyUp(search.value)">
+    <form class="form-inline my-2 my-lg-0" autocomplete="off" (submit)="getProducts()">
+        <div class="dropdown">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" [value]="value" #search (click)="handleKeyUp(search.value)" (keyup)="handleKeyUp(search.value, $event)">
         <ul class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">
           <li class="list-group-item action mr-sm-2" *ngFor="let result of autoCompleteResults" type="submit" (click)="handleListEvent($event)">
             {{ result.Varenavn }}

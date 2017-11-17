@@ -125,9 +125,10 @@ router.get('/logout', (req,res) =>{
 
 router.post('/addFavorites', (req, res) => {
   console.log("HEY HO");
-  const userID = req.body.user._id;
-  console.log(req.body.user);
-  User.updateFav(userID, req.body.user.favorites, function(err) {
+  console.log(req.body)
+  const userID = req.body[0]._id;
+  console.log(req.body);
+  User.updateFav(userID, req.body[1], function(err) {
     console.log(err)
   });
 });

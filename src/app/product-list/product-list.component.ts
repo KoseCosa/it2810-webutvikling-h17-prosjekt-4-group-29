@@ -118,7 +118,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
       const tempUser = this.loggedInUser;
       tempUser['favorites'].push(newObjectID);
       this.authService.changeUser(tempUser);
-      this.authService.updateRemoteUser(tempUser); // is subscribe really nescesarry ?
+      const updateValues = [tempUser, newObjectID];
+      this.authService.updateRemoteUser(updateValues); // is subscribe really nescesarry ?
     }
   }
 

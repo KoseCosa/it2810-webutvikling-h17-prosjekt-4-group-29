@@ -22,7 +22,7 @@ const User = module.exports = mongoose.model('User', new Schema({
     type: String,
     required: true
   },
-  favorites: [[]]
+  favorites: []
 }));
 
 

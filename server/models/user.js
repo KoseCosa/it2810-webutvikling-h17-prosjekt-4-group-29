@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
-var logger = require('../../logger.js');
+const bcrypt = require('bcrypt');
 
-const User = module.exports = mongoose.model('User', new Schema({ 
+const logger = require('../../logger.js');
+
+const User = module.exports = mongoose.model('User', new Schema({
   name: {
     type: String,
     required: true,
@@ -26,12 +27,12 @@ const User = module.exports = mongoose.model('User', new Schema({
 
 module.exports.getAllUsers = function(callback){
   User.find(callback).lean();
-}
+};
 
 
 module.exports.getSpecificUser = function(query,callback){
   User.findOne(query,callback).lean();
-}
+};
 
 
 module.exports.insertUser = function(user,callback){
@@ -41,6 +42,7 @@ module.exports.insertUser = function(user,callback){
     password : user.password,
     username : user.username
   });
+
   bcrypt.genSalt(15, function(error, salt) {
     if (error) {
       logger.error('Something went wrong generating salt:' + error);
@@ -60,7 +62,7 @@ module.exports.insertUser = function(user,callback){
       });
     }
   });
-}
+};
 
 
 module.exports.checkUsernameTaken = function(query,callback){
@@ -78,7 +80,7 @@ module.exports.checkUsernameTaken = function(query,callback){
       return false;
     }
   });
-}
+};
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
@@ -87,4 +89,4 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
     callback(null, isMatch);
   });
-}
+};

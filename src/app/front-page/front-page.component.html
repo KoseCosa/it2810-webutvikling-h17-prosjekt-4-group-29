@@ -22,3 +22,8 @@
     <li>{{ product.Varenavn }}</li>
   </ul>
 </div>
+
+<div *ngIf="loggedInUser">
+  <p> Here the logged in users name etc can be listed: </p>
+  <li>{{ loggedInUser.username }}</li>
+</div>

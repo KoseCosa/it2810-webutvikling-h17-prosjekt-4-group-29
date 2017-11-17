@@ -1,0 +1,51 @@
+<br>
+<div class="container-fluid">
+  <div class="card">
+    <h2 class="card-header">Product Search</h2>
+    <form class="card-body form-inline my-2 my-lg-0" autocomplete="off" (sumbit)="handleListEvent($event)">
+      <div class="dropdown">
+        <input class="form-control mr-sm-2" type="text" name="searchValue" placeholder="Search" [(ngModel)]="searchValue" (click)="handleKeyUp(searchValue)" (keyup)="handleKeyUp(searchValue, $event)">
+        <ul class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">
+          <li class="list-group-item action mr-sm-2" *ngFor="let result of autoCompleteResults" type="submit" (click)="handleListEvent($event)">
+            {{ result.Varenavn }}
+          </li>
+        </ul>
+      </div>
+      <button class="btn btn-primary my-2 my-sm-0" type="submit" (click)="updateNav()">Search</button>
+    </form>
+  </div>
+  <br>
+  <div class="card">
+    <h2 class="card-header">Product List</h2>
+    <div class="card-body">
+      <div class="row">
+        <div [class]="getProductListClass()" *ngFor="let product of products">
+          <div class="card">
+            <h3 class="card-header">{{product.Varenavn}}</h3>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-9">
+                  <h5 class="card-title">Varetype:</h5>
+                  <h6 class="card-subtitle text-muted">{{product.Varetype}}</h6>
+                </div>
+                <div class="col-sm-9">
+                  <h5 class="card-title">Land:</h5>
+                  <h6 class="card-subtitle text-muted">{{product.Land}}</h6>
+                </div>
+                <div class="col-sm-9">
+                  <h5 class="card-title">Pris:</h5>
+                  <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="row justify-content-md-center" *ngIf="dataAvailable">
+        <button class="btn btn-primary" (click)="loadMore()">Load More</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>

@@ -120,4 +120,11 @@ router.get('/logout', (req,res) =>{
   res.json({success:true, msg:'User logged out'});
 });
 
+router.get('/addFavorite', (req, res) => {
+  const userID = req.session.user._id;
+  User.updateFav(userID, req.session.user.favorites, function(err) {
+    console.log(err)
+  });
+});
+
 module.exports = router;

@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataService {
-
   constructor(private _http: Http) { }
 
   getUsers() {
@@ -30,9 +29,7 @@ export class DataService {
 
   getSpecificProduct() {
     const headers = new Headers();
-
     headers.append('Content-Type', 'application/json');
-
     return this._http.get('http://localhost:3000/api/specificProducts', {headers: headers})
       .map(res => res.json());
   }

@@ -60,7 +60,7 @@ app.use(function (req, res, next) {
 app.use(session({
   secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
   cookie: { secure: false, maxAge:null }
 }));

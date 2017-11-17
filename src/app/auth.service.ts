@@ -38,8 +38,11 @@ export class AuthService {
   loggedIn () {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get('http://localhost:3000/api/loggedIn', {headers: headers,
-      withCredentials: true})
-      .map(res => res.json());
+    const return_value = this._http.get('http://localhost:3000/api/loggedIn', {headers: headers,
+      withCredentials: true}).subscribe(data => {
+        this.user.next(data.json().user);
+      }
+    );
+    return return_value;
   }
 }

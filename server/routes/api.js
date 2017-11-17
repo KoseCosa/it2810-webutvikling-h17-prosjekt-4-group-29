@@ -60,21 +60,21 @@ router.post('/registerUser', (req,res) => {
   if (req.body.email &&
     req.body.username &&
     req.body.password &&
-    req.body.password) {
+    req.body.password){
     let account = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        username: req.body.username
-      });
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      username: req.body.username
+    });
     User.insertUser((account),function(err,callback) {
-        if (err){
-            res.json({success:false, msg:"Username is allready taken"});
-            res.send();
-        }
-        if (callback){
-            res.json({success: true, msg: "user registered"});
-        }
+      if (err){
+        res.json({success:false, msg:"Username is allready taken"});
+        res.send();
+      }
+      if (callback){
+        res.json({success: true, msg: "user registered"});
+      }
     });
   }
 });
@@ -91,13 +91,13 @@ router.post('/authenticate',(req, res) => {
     if (!user){
       return res.json({success:false, msg: "Username not found"});
     }
-
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(error) {
         throw error;
       }
       if(isMatch){
         req.session.auth = true;
+        req.session.user = user;
         return res.json({success: true, msg: "login successful", user: user})
       }
       else {
@@ -109,9 +109,9 @@ router.post('/authenticate',(req, res) => {
 
 router.get('/loggedIn', (req, res) => {
   if (req.session.auth) {
-    return res.json({success: true, auth: req.session.auth});
+    return res.json({success: true, auth: req.session.auth, user: req.session.user});
   } else {
-    return res.json({success: true, msg: "No session found"});
+    return res.json({success: true, msg: "No session found", user: null});
   }
 });
 

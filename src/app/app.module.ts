@@ -23,34 +23,35 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes =  [
-    {path: '', component: FrontPageComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: 'login', component: LoginComponent}, // TODO auth: canActivate:[AuthGuard]
-    {path: 'mypage', component: MyPageComponent},
-    {path: '**', component: PageNotFoundComponent}
+  { path: '', component: FrontPageComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent }, // TODO auth: canActivate:[AuthGuard]
+  { path: 'mypage', component: MyPageComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: '**', component: ProductListComponent }
 ];
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavBarComponent,
-        MyPageComponent,
-        PageNotFoundComponent,
-        FrontPageComponent,
-        LoginComponent,
-        RegisterComponent,
-        ProductListComponent
-    ],
-    imports: [
-        BrowserModule,
-        HttpModule,
-        RouterModule.forRoot(
-            appRoutes
-        ),
-        FormsModule,
-        CollapseModule
-    ],
-    providers: [DataService, AuthService, ValidateService, NavSearchService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NavBarComponent,
+    MyPageComponent,
+    PageNotFoundComponent,
+    FrontPageComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProductListComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    RouterModule.forRoot(
+      appRoutes
+    ),
+    FormsModule,
+    CollapseModule
+  ],
+  providers: [DataService, AuthService, ValidateService, NavSearchService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

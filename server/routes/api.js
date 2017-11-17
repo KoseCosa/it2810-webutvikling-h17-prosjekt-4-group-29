@@ -22,7 +22,6 @@ router.get('/users', (req, res) => {
 // Useful to get one product. No query thought (can be added later if needed)
 
 router.get('/products', (req, res,next) => {
-  console.log("prod");
   Product.getProducts(req.query.search, function (err, product) {
     if (err) {
       logger.error('Error querrying the database:' + err);
@@ -42,6 +41,17 @@ router.get('/specificProducts', (req, res) => {
       throw err;
     }
     res.json({products});
+  });
+});
+
+router.get('/autocomplete', (req, res,next) => {
+  Product.getAutoComplete(req.query.search, function (err, product) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({product});
   });
 });
 
@@ -72,7 +82,6 @@ router.post('/registerUser', (req,res) => {
 
 // Authentication process
 router.post('/authenticate',(req, res) => {
-  console.log(req);
   const password = req.body.password;
   const username = req.body.username;
   User.getSpecificUser(({username: username}), function(error,user) {

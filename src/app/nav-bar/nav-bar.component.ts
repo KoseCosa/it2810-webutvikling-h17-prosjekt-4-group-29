@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy, OnChanges} from '@angular/core';
 import { Router } from '@angular/router';
-
-import { Subscription } from 'rxjs/Subscription';
-
+import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
 import { NavSearchService } from '../nav-search.service';
+
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-nav-bar',
@@ -17,11 +17,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
   value: string;
   navSubscription: Subscription;
   loggedInUser: object;
+  autoCompleteResults = [];
 
   constructor(
+    private authService: AuthService,
+    private dataService: DataService,
     private navSearchService: NavSearchService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {
     this.navSubscription  = this.navSearchService
       .getSearchValue()
@@ -42,14 +44,29 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   // Should be used to show search suggestions
-  handleKeyUp(value) {
+  handleKeyUp(value, event) {
     this.value = value;
+    const eventKey = event ? event.key : '';
+
+    value.length > 2 && eventKey !== 'Enter' ?
+      this.dataService
+        .getAutoComplete({value: value, startIndex: 0})
+        .subscribe(result => {
+          this.autoCompleteResults = result.product;
+        })
+      : this.autoCompleteResults = [];
   }
 
   getProducts(query: string) {
     query = query || this.value;
     this.navSearchService.setSearchValue(query);
+    this.autoCompleteResults = [];
     this.router.navigate(['/products']);
+  }
+
+  handleListEvent(event) {
+    this.value = event.target.innerText;
+    this.getProducts(this.value);
   }
 
   ngOnDestroy() {

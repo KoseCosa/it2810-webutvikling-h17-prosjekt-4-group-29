@@ -11,8 +11,8 @@ const app = express();
 var logger = require('./logger.js');  // Usage of winston logger.
 
 // Connection URL
-//var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
-var url  = 'mongodb://localhost:27017/project4';
+var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
+//var url  = 'mongodb://localhost:27017/project4';
 mongoose.connect(url, {useMongoClient:true});
 
 // On Connection

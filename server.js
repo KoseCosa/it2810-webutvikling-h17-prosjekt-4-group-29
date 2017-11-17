@@ -17,12 +17,12 @@ mongoose.connect(url, {useMongoClient:true});
 
 // On Connection
 mongoose.connection.on('connected', () => {
-    logger.info('Connected to database on '+ url);
+  logger.info('Connected to database on '+ url);
 });
 
 // On Error
 mongoose.connection.on('error', (err) => {
-    logger.error('Database error:' + err);
+  logger.error('Database error:' + err);
 });
 
 // API file for interacting with MongoDB
@@ -39,34 +39,34 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Add headers to avoid Cross-origin requests issues. Use this or CORS.
 app.use(function (req, res, next) {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    //res.setHeader('Access-Control-Allow-Origin', '*');
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  //res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
-    next();
+  // Pass to next layer of middleware
+  next();
 });
 
 app.use(session({
-    secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
-    cookie: { secure: false, maxAge:null }
+  secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
+  cookie: { secure: false, maxAge:null }
 }));
 
 app.get('/api/authenticate', function(req, res, next) {
-    req.session.auth = true;
+  req.session.auth = true;
 });
 
 // API location
@@ -74,7 +74,7 @@ app.use('/api', api);
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 //Set Port
@@ -84,6 +84,6 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => {
-    console.log(`Running on localhost:${port}`);
-    logger.info(`Running on localhost:${port}`);
+  console.log(`Running on localhost:${port}`);
+  logger.info(`Running on localhost:${port}`);
 });

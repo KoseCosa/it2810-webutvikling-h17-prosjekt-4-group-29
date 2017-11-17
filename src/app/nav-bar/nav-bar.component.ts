@@ -6,12 +6,10 @@ import { NavSearchService } from '../nav-search.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
-
-
 @Component({
-    selector: 'app-nav-bar',
-    templateUrl: './nav-bar.component.html',
-    styleUrls: ['./nav-bar.component.css']
+  selector: 'app-nav-bar',
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit, OnDestroy {
 

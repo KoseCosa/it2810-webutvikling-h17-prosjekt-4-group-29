@@ -53,4 +53,12 @@ export class AuthService {
       {headers: headers, withCredentials: true})
       .map(res => res.json());
   }
+
+  updateRemoteUser(user) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.post('http://localhost:3000/api/updateUser', user,
+      {headers: headers, withCredentials: true})
+      .map(res => res.json());
+  }
 }

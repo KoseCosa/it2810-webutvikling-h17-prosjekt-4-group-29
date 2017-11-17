@@ -98,6 +98,9 @@ router.post('/authenticate',(req, res) => {
       if(isMatch){
         req.session.auth = true;
         req.session.user = user;
+        if (!user.favorites) {
+          user.favorites = [];
+        }
         return res.json({success: true, msg: "login successful", user: user})
       }
       else {
@@ -120,9 +123,11 @@ router.get('/logout', (req,res) =>{
   res.json({success:true, msg:'User logged out'});
 });
 
-router.get('/addFavorite', (req, res) => {
-  const userID = req.session.user._id;
-  User.updateFav(userID, req.session.user.favorites, function(err) {
+router.post('/addFavorites', (req, res) => {
+  console.log("HEY HO");
+  const userID = req.body.user._id;
+  console.log(req.body.user);
+  User.updateFav(userID, req.body.user.favorites, function(err) {
     console.log(err)
   });
 });

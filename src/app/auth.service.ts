@@ -45,4 +45,12 @@ export class AuthService {
     );
     return return_value;
   }
+
+  logout() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/logout',
+      {headers: headers, withCredentials: true})
+      .map(res => res.json());
+  }
 }

@@ -72,4 +72,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.navSubscription.unsubscribe();
   }
+
+  onLogoutClick() {
+    this.authService.logout().subscribe(res => {
+      if (res.success) {
+        console.log('User logged out on serverside successfully');
+        this.authService.changeUser(null);
+        this.router.navigate(['/']);
+      }
+    } );
+  }
 }

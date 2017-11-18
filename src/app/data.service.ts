@@ -37,10 +37,10 @@ export class DataService {
       .map(res => res.json());
   }
 
-  getUserFavorites(user) {
+  getUserFavorites(userID) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    const params = {user: user};
+    const params = {user: userID};
 
     return this._http.get('http://localhost:3000/api/userFavorites', {headers: headers, params: params})
       .map(res => res.json());

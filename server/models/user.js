@@ -69,7 +69,7 @@ module.exports.insertUser = function(user,callback){
 module.exports.checkUsernameTaken = function(query,callback){
   User.findOne(({username:query}),function(error,success){
     if (error){
-      logger.error("Something went wrong finding one username in db:"+ error);
+      logger.error('Something went wrong finding one username in db:'+ error);
       throw error;
     }
     if(!success){
@@ -95,11 +95,19 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 module.exports.updateFavorites = function(_id, favorite, callback) {
   User.findByIdAndUpdate(
     {_id},
-    {$push: {"favorites": favorite}},
+    {$push: {'favorites': favorite}},
     function(err) {
       console.log(err);
     },
     callback(null)
+  )
+};
+
+module.exports.removeFavorites = function(_id, favorite, callback) {
+  User.findByIdAndUpdate(
+    {_id},
+    {$pull: {'favorites': favorite}},
+    callback
   )
 };
 

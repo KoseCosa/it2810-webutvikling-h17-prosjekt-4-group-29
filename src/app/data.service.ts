@@ -29,7 +29,6 @@ export class DataService {
 
   getProductsById(idList) {
     const headers = new Headers();
-    console.log(idList);
 
     headers.append('Content-Type', 'application/json');
     const params = {idList: idList};
@@ -45,6 +44,21 @@ export class DataService {
 
     return this._http.get('http://localhost:3000/api/userFavorites', {headers: headers, params: params})
       .map(res => res.json());
+  }
+
+  updateRemoteUser(updateValues) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this._http.post('http://localhost:3000/api/addFavorites', updateValues,
+      {headers: headers, withCredentials: true}).subscribe();
+  }
+
+  removeUserFavorite(updateValues) {
+    const headers = new Headers();
+    const params = {updateValues: updateValues};
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/removeFavorite',
+      {headers: headers, params: params, withCredentials: true});
   }
 
   getSpecificProduct() {

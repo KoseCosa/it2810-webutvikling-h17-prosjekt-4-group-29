@@ -45,8 +45,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-  this.authService.currentUser.subscribe(observedUser =>
-    this.loggedInUser = observedUser);
+  this.authService.currentUser.subscribe(observedUser => {
+      if (observedUser) {
+        this._dataService.getUserFavorites(observedUser._id).subscribe(userFavorites => {
+          observedUser['favorites'] = userFavorites.favorites.favorites;
+        });
+        this.loggedInUser = observedUser;
+      }
+    });
   }
 
   loadMore(): void {
@@ -116,7 +122,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     } else {
       const tempUser = this.loggedInUser;
       tempUser['favorites'].push(newObjectID);
-      this.authService.changeUser(tempUser);
       const updateValues = [tempUser, newObjectID];
       this._dataService.updateRemoteUser(updateValues);
     }

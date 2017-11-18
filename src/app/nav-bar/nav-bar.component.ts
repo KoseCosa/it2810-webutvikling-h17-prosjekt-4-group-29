@@ -39,8 +39,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.authService.loggedIn();
     this.authService.currentUser.subscribe(observedUser =>
       this.loggedInUser = observedUser);
-    console.log('this.loggedInUser');
-    console.log(this.loggedInUser);
   }
 
   // Should be used to show search suggestions

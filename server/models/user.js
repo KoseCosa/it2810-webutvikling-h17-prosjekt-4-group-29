@@ -96,10 +96,7 @@ module.exports.updateFavorites = function(_id, favorite, callback) {
   User.findByIdAndUpdate(
     {_id},
     {$push: {'favorites': favorite}},
-    function(err) {
-      console.log(err);
-    },
-    callback(null)
+    callback
   )
 };
 

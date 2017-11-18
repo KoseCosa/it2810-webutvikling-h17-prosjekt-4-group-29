@@ -1,9 +1,13 @@
 <h1>Out MongoDB is working!</h1>
 
 <div class="card">
-  <h2 class="card-header">Product List</h2>
+  <h2 class="card-header">Favorite List</h2>
   <div class="card-body">
     <div class="row">
+      <div *ngIf="products.length === 0">
+        <h3>You have no favorites yet</h3>
+        <p>Go to the Products page to add some</p>
+      </div>
       <div [class]="getProductListClass()" *ngFor="let product of products">
         <div class="card">
           <h3 class="card-header">{{product.Varenavn}}</h3>

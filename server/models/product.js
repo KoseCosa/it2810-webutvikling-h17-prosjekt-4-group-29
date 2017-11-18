@@ -84,9 +84,7 @@ module.exports.getAutoComplete = function(search, callback) {
 
 module.exports.getProductsById = function(idList, callback) {
   let queryList = [];
-  console.log(idList);
   for (var i = 0; i < idList.length; i++) {
-    console.log(idList[i]);
     queryList.push(mongoose.Types.ObjectId(idList[i]));
   }
 

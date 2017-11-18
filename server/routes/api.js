@@ -44,7 +44,6 @@ router.get('/productsById', (req, res, next) => {
 });
 
 router.get('/userFavorites', (req, res, next) => {
-  console.log(req.query.user);
   User.getFavorites(req.query.user, function (err, favorites) {
     if (err) {
       logger.error('Error querrying the database:' + err);
@@ -146,13 +145,21 @@ router.get('/logout', (req,res) =>{
 });
 
 router.post('/addFavorites', (req, res) => {
-  console.log("HEY HO");
-  console.log(req.body)
-  const userID = req.body[0]._id;
-  console.log(req.body);
-  User.updateFavorites(userID, req.body[1], function(err) {
-    console.log(err)
+  User.updateFavorites(req.body[0]._id, req.body[1], function(err) {
+    if (err) {
+      console.log(err);
+    }
   });
+});
+
+router.get('/removeFavorite', (req, res) => {
+  User.removeFavorites(req.query.updateValues[0], req.query.updateValues[1], function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      return res.json({success: true, msg: 'deleted entry'});
+    }
+  })
 });
 
 module.exports = router;

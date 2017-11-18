@@ -113,13 +113,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   onButtonClick(newObjectID) {
     if (this.loggedInUser['favorites'].includes(newObjectID)) {
       window.alert('This one is allready among your loved ones!');
-    }
-    else {
+    } else {
       const tempUser = this.loggedInUser;
       tempUser['favorites'].push(newObjectID);
       this.authService.changeUser(tempUser);
       const updateValues = [tempUser, newObjectID];
-      this.authService.updateRemoteUser(updateValues); // is subscribe really nescesarry ?
+      this._dataService.updateRemoteUser(updateValues);
     }
   }
 

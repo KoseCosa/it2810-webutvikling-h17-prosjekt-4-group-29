@@ -7,7 +7,6 @@
       <div [class]="getProductListClass()" *ngFor="let product of products">
         <div class="card">
           <h3 class="card-header">{{product.Varenavn}}</h3>
-          <button *ngIf="loggedInUser" (click)="onButtonClick(product._id)" >Remove</button>
           <div class="card-body">
             <div class="row">
               <div class="col-sm-9">
@@ -23,6 +22,10 @@
                 <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
               </div>
             </div>
+            <br>
+            <button *ngIf="loggedInUser" (click)="onButtonClick(product._id)" class="btn btn-sm btn-warning">
+              Remove
+            </button>
           </div>
         </div>
         <br>

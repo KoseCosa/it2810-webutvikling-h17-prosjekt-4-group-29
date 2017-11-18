@@ -43,7 +43,7 @@ export class MyPageComponent implements OnInit {
     if (!this.userFavorites.includes(objectID)) {
       window.alert('Something went wrong, this should not be here!?');
     } else {
-      const updateValues = [this.loggedInUser._id, objectID];
+      const updateValues = [this.loggedInUser, objectID];
       this._dataService.removeUserFavorite(updateValues).subscribe( res => {
         this.updateProductList();
       });

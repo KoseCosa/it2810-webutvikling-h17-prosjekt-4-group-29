@@ -153,7 +153,7 @@ router.post('/addFavorites', (req, res) => {
 });
 
 router.get('/removeFavorite', (req, res) => {
-  User.removeFavorites(req.query.updateValues[0], req.query.updateValues[1], function(err) {
+  User.removeFavorites(JSON.parse(req.query.updateValues[0])._id, req.query.updateValues[1], function(err) {
     if (err) {
       console.log(err);
     } else {

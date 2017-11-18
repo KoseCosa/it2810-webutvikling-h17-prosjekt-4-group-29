@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
+import { AuthService } from '../auth.service';
 import { NavSearchService } from '../nav-search.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
+  loggedInUser = Object;
   products = [];
   searchValue = '';
   loadingMore = false;
@@ -17,7 +19,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   autoCompleteResults = [];
   navSubscription: Subscription;
 
-  constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
+  constructor(
+    private _dataService: DataService,
+    private navSearchService: NavSearchService,
+    private authService: AuthService
+  ) {
     this.navSubscription  = this.navSearchService
       .getSearchValue()
       .subscribe(value => {
@@ -38,7 +44,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  this.authService.currentUser.subscribe(observedUser =>
+    this.loggedInUser = observedUser);
+  }
 
   loadMore(): void {
     if (this.dataAvailable && !this.loadingMore) {
@@ -99,6 +108,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   getProductListClass(): string {
     return this.products.length > 1 ? 'col-sm-4' : 'col-sm-12';
+  }
+
+  onButtonClick(newObjectID) {
+    if (this.loggedInUser['favorites'].includes(newObjectID)) {
+      window.alert('This one is allready among your loved ones!');
+    }
+    else {
+      const tempUser = this.loggedInUser;
+      tempUser['favorites'].push(newObjectID);
+      this.authService.changeUser(tempUser);
+      const updateValues = [tempUser, newObjectID];
+      this.authService.updateRemoteUser(updateValues); // is subscribe really nescesarry ?
+    }
   }
 
   ngOnDestroy() {

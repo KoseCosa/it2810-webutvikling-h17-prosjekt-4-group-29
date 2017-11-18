@@ -21,7 +21,8 @@ const User = module.exports = mongoose.model('User', new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  favorites: []
 }));
 
 
@@ -89,4 +90,19 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
     callback(null, isMatch);
   });
+};
+
+module.exports.updateFavorites = function(_id, favorite, callback) {
+  User.findByIdAndUpdate(
+    {_id},
+    {$push: {"favorites": favorite}},
+    function(err) {
+      console.log(err);
+    },
+    callback(null)
+  )
+};
+
+module.exports.getFavorites = function(id, callback) {
+  User.findOne({_id: id}).select('favorites').exec(callback);
 };

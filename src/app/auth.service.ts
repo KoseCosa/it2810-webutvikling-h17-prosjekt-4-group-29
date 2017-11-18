@@ -53,4 +53,13 @@ export class AuthService {
       {headers: headers, withCredentials: true})
       .map(res => res.json());
   }
+
+  updateRemoteUser(user) {
+    console.log("HEY HO FRONTEND BUG");
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    console.log(this._http.post('http://localhost:3000/api/addFavorites', user,
+      {headers: headers, withCredentials: true}).subscribe());
+    console.log("HEY HO FRONTEND BUG2");
+  }
 }

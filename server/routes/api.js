@@ -32,6 +32,28 @@ router.get('/products', (req, res,next) => {
   });
 });
 
+router.get('/productsById', (req, res, next) => {
+  Product.getProductsById(req.query.idList, function (err, product) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({product});
+  });
+});
+
+router.get('/userFavorites', (req, res, next) => {
+  console.log(req.query.user);
+  User.getFavorites(req.query.user, function (err, favorites) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({favorites});
+  });
+});
 
 // TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
 router.get('/specificProducts', (req, res) => {
@@ -98,6 +120,9 @@ router.post('/authenticate',(req, res) => {
       if(isMatch){
         req.session.auth = true;
         req.session.user = user;
+        if (!user.favorites) {
+          user.favorites = [];
+        }
         return res.json({success: true, msg: "login successful", user: user})
       }
       else {
@@ -118,6 +143,16 @@ router.get('/loggedIn', (req, res) => {
 router.get('/logout', (req,res) =>{
   req.session.destroy();
   res.json({success:true, msg:'User logged out'});
+});
+
+router.post('/addFavorites', (req, res) => {
+  console.log("HEY HO");
+  console.log(req.body)
+  const userID = req.body[0]._id;
+  console.log(req.body);
+  User.updateFavorites(userID, req.body[1], function(err) {
+    console.log(err)
+  });
 });
 
 module.exports = router;

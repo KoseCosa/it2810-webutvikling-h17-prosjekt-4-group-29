@@ -28,11 +28,15 @@ export class MyPageComponent implements OnInit {
   updateProductList() {
     if (this.loggedInUser) {
       this._dataService.getUserFavorites(this.loggedInUser._id).subscribe(result => {
-        this.userFavorites = result.favorites.favorites;
-        this._dataService.getProductsById(this.userFavorites).subscribe(products => {
-          this.products = products.product;
-          console.log(this.products);
-        });
+        console.log(result.favorites);
+        if (result.favorites.favorites.length !== 0) {
+          this.userFavorites = result.favorites.favorites;
+          console.log(this.userFavorites);
+          this._dataService.getProductsById(this.userFavorites).subscribe(products => {
+            this.products = products.product;
+            console.log(this.products);
+          });
+        }
       });
     }
   }

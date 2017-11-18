@@ -15,7 +15,6 @@ export class AuthService {
   ) { }
 
   changeUser(newUser: any) {
-    console.log('New user beeing added:' + newUser);
     this.user.next(newUser);
   }
 

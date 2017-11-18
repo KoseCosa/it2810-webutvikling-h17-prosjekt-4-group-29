@@ -18,7 +18,6 @@ export class MyPageComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
-    console.log('mypage stuff');
     this.authService.currentUser.subscribe(observedUser => {
       this.loggedInUser = observedUser;
       this.updateProductList();
@@ -28,15 +27,10 @@ export class MyPageComponent implements OnInit {
   updateProductList() {
     if (this.loggedInUser) {
       this._dataService.getUserFavorites(this.loggedInUser._id).subscribe(result => {
-        console.log(result.favorites);
-        if (result.favorites.favorites.length !== 0) {
-          this.userFavorites = result.favorites.favorites;
-          console.log(this.userFavorites);
-          this._dataService.getProductsById(this.userFavorites).subscribe(products => {
-            this.products = products.product;
-            console.log(this.products);
-          });
-        }
+        this.userFavorites = result.favorites.favorites;
+        this._dataService.getProductsById(this.userFavorites).subscribe(products => {
+          this.products = products.product;
+        });
       });
     }
   }

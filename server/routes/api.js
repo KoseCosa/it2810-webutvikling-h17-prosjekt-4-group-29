@@ -33,8 +33,6 @@ router.get('/products', (req, res,next) => {
 });
 
 router.get('/productsById', (req, res, next) => {
-  console.log(req.query.idList.typeOf);
-  console.log(req.query.idList);
   Product.getProductsById(req.query.idList, function (err, product) {
     if (err) {
       logger.error('Error querrying the database:' + err);

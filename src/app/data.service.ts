@@ -27,6 +27,26 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getProductsById(idList) {
+    const headers = new Headers();
+    console.log(idList);
+
+    headers.append('Content-Type', 'application/json');
+    const params = {idList: idList};
+
+    return this._http.get('http://localhost:3000/api/productsById', {headers: headers, params: params})
+      .map(res => res.json());
+  }
+
+  getUserFavorites(user) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const params = {user: user};
+
+    return this._http.get('http://localhost:3000/api/userFavorites', {headers: headers, params: params})
+      .map(res => res.json());
+  }
+
   getSpecificProduct() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

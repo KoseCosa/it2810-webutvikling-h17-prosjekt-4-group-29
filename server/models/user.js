@@ -92,7 +92,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
   });
 };
 
-module.exports.updateFav = function(_id, favorite, callback) {
+module.exports.updateFavorites = function(_id, favorite, callback) {
   User.findByIdAndUpdate(
     {_id},
     {$push: {"favorites": favorite}},
@@ -101,4 +101,8 @@ module.exports.updateFav = function(_id, favorite, callback) {
     },
     callback(null)
   )
+};
+
+module.exports.getFavorites = function(id, callback) {
+  User.findOne({_id: id}).select('favorites').exec(callback);
 };

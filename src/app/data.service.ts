@@ -28,12 +28,14 @@ export class DataService {
       .map(res => res.json());
   }
 
-  getSpecificProduct() {
+  getSpecificProduct(search) {
     const headers = new Headers();
+    const params = new URLSearchParams();
 
     headers.append('Content-Type', 'application/json');
+    params.set('search', JSON.stringify(search));
 
-    return this._http.get('http://localhost:3000/api/specificProducts', {headers: headers})
+    return this._http.get('http://localhost:3000/api/specificProduct', {headers: headers, params: params})
       .map(res => res.json());
   }
 

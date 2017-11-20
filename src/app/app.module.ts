@@ -21,6 +21,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
+import { SpecificProductComponent } from './specific-product/specific-product.component';
 
 const appRoutes: Routes =  [
   { path: '', component: FrontPageComponent },
@@ -28,6 +29,7 @@ const appRoutes: Routes =  [
   { path: 'login', component: LoginComponent }, // TODO auth: canActivate:[AuthGuard]
   { path: 'mypage', component: MyPageComponent },
   { path: 'products', component: ProductListComponent },
+  { path: 'products/:varenummer', component: SpecificProductComponent },
   { path: '**', component: ProductListComponent }
 ];
 
@@ -40,7 +42,8 @@ const appRoutes: Routes =  [
     FrontPageComponent,
     LoginComponent,
     RegisterComponent,
-    ProductListComponent
+    ProductListComponent,
+    SpecificProductComponent
   ],
   imports: [
     BrowserModule,

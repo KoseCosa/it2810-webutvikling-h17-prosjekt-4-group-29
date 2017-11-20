@@ -81,3 +81,8 @@ module.exports.getAutoComplete = function(search, callback) {
     .skip(search.startIndex)
     .lean();
 };
+
+module.exports.getProductByNumber = (search, callback) => {
+  search = parseInt(search);
+  Product.findOne({Varenummer: search}, callback).lean();
+};

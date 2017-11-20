@@ -36,7 +36,7 @@ export class MyPageComponent implements OnInit {
   }
 
   getProductListClass(): string {
-    return this.products.length > 1 ? 'col-sm-4' : 'col-sm-12';
+    return this.products.length > 1 ? 'col-sm-6' : 'col-sm-12';
   }
 
   onButtonClick(objectID) {

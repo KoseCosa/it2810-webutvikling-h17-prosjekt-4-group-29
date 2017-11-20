@@ -76,8 +76,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
       if (res.success) {
         console.log('User logged out on serverside successfully');
         this.authService.changeUser(null);
+        window.location.reload();
         this.router.navigate(['/']);
       }
-    } );
+    });
   }
 }

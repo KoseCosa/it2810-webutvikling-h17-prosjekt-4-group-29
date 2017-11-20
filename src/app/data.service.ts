@@ -27,6 +27,15 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getProductTypes() {
+    const headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+
+    return this._http.get('http://localhost:3000/api/producttypes', {headers: headers})
+      .map(res => res.json());
+  }
+
   getProductsById(idList) {
     const headers = new Headers();
 
@@ -60,7 +69,6 @@ export class DataService {
     return this._http.get('http://localhost:3000/api/removeFavorite',
       {headers: headers, params: params, withCredentials: true});
   }
-
   getSpecificProduct() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

@@ -51,7 +51,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
           observedUser['favorites'] = userFavorites.favorites.favorites;
         });
         this.loggedInUser = observedUser;
-        console.log(this.loggedInUser);
       }
     });
   }

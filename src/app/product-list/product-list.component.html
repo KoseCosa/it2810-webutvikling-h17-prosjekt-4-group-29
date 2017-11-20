@@ -4,17 +4,9 @@
     <form autocomplete="off" (sumbit)="handleListEvent($event)">
       <div class="row">
         <div class="dropdown col-md-3">
-          <div class="input-group">
-            <input class="form-control" type="text" name="searchValue" placeholder="Search" [(ngModel)]="searchValue" (click)="handleKeyUp(searchValue)" (keyup)="handleKeyUp(searchValue, $event)">
-            <div class="input-group-btn">
-              <button type="submit" class="btn btn-primary" (click)="updateNav()">Search</button>
-            </div>
-          </div>
-          <ul class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">
-            <li class="list-group-item action mr-sm-2" *ngFor="let result of autoCompleteResults" type="submit" (click)="handleListEvent($event)">
-              {{ result.Varenavn }}
-            </li>
-          </ul>
+          <button *ngIf="showFilters" class="btn btn-primary" (click)="setActiveFilters()">Apply Filters</button>
+          <button *ngIf="!showFilters" class="btn btn-primary" (click)="showFilters = !showFilters">Show Filters</button>
+          <button *ngIf="showFilters" class="btn btn-warning" (click)="showFilters = !showFilters">Hide Filters</button>
         </div>
         <div class="col-md-3 offset-md-6">
           <select class="form-control" name="selectedSortOption" [(ngModel)]="selectedSortOption" (change)="sort()">
@@ -25,11 +17,34 @@
         </div>
       </div>
       <div *ngIf="showFilters">
-        <div class="row">
-          <div class="col-md-3">
-            <b>Varetyper</b>
-            <div class="checkbox" *ngFor="let productType of productTypeFilters">
-              <label><input type="checkbox" [checked]="productType.state" (change)="productType.state = !productType.state">{{productType.name}}</label>
+        <br>
+        <div class="card" *ngIf="showFilters">
+          <div class="card-body row">
+            <div class="col-md-3">
+              <div class="align-middle cursor-pointer" (click)="showProductTypeFilters = !showProductTypeFilters">
+                <b>Varetyper</b>
+                <span class="align-middle badge badge-dark">{{productTypeFilters.length}}</span>
+                <span *ngIf="showProductTypeFilters">&#x25B2;</span>
+                <span *ngIf="!showProductTypeFilters">&#x25BC;</span>
+              </div>
+              <div *ngIf="showProductTypeFilters">
+                <div class="checkbox" *ngFor="let productType of productTypeFilters">
+                  <label><input type="checkbox" [checked]="productType.state" (change)="productType.state = !productType.state">{{productType.name}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="align-middle cursor-pointer" (click)="showCountriesFilters = !showCountriesFilters">
+                <b>Land</b>
+                <span class="align-middle badge badge-dark">{{countryFilters.length}}</span>
+                <span *ngIf="showCountriesFilters">&#x25B2;</span>
+                <span *ngIf="!showCountriesFilters">&#x25BC;</span>
+              </div>
+              <div *ngIf="showCountriesFilters">
+                <div class="checkbox" *ngFor="let country of countryFilters">
+                  <label><input type="checkbox" [checked]="country.state" (change)="country.state = !country.state">{{country.name}}</label>
+                </div>
+              </div>
             </div>
           </div>
         </div>

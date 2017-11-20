@@ -1,0 +1,12 @@
+.my-bg {
+  margin: auto;
+  padding-top: 10px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .my-bg {
+    width: 100%;
+  }
+}

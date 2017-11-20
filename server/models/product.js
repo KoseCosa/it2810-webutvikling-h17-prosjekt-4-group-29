@@ -92,3 +92,11 @@ module.exports.getAutoComplete = function(search, callback) {
     .skip(search.startIndex)
     .lean();
 };
+
+module.exports.getProductsById = function(idList, callback) {
+  Product.find({
+    '_id': {
+      $in: idList
+    }
+  }).exec(callback)
+};

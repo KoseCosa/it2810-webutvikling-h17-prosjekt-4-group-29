@@ -56,6 +56,18 @@
                 <h5 class="card-title">Pris:</h5>
                 <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
               </div>
+              <br>
+              <div *ngIf="loggedInUser['favorites'] && products.length !== 0">
+                <button *ngIf="!loggedInUser['favorites'].includes(product._id); else elseBlock"
+                        (click)="addFavorite(product._id)" class="btn btn-sm btn-success">
+                  Favorite
+                </button>
+                <ng-template #elseBlock>
+                  <button (click)="removeFavorite(product._id)" class="btn btn-sm btn-warning">
+                    Remove
+                  </button>
+                </ng-template>
+              </div>
             </div>
           </div>
         </div>

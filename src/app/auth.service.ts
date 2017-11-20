@@ -15,7 +15,6 @@ export class AuthService {
   ) { }
 
   changeUser(newUser: any) {
-    console.log('New user beeing added:' + newUser);
     this.user.next(newUser);
   }
 
@@ -53,4 +52,6 @@ export class AuthService {
       {headers: headers, withCredentials: true})
       .map(res => res.json());
   }
+
+
 }

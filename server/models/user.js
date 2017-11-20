@@ -21,7 +21,8 @@ const User = module.exports = mongoose.model('User', new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  favorites: []
 }));
 
 
@@ -68,7 +69,7 @@ module.exports.insertUser = function(user,callback){
 module.exports.checkUsernameTaken = function(query,callback){
   User.findOne(({username:query}),function(error,success){
     if (error){
-      logger.error("Something went wrong finding one username in db:"+ error);
+      logger.error('Something went wrong finding one username in db:'+ error);
       throw error;
     }
     if(!success){
@@ -89,4 +90,24 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
     callback(null, isMatch);
   });
+};
+
+module.exports.updateFavorites = function(_id, favorite, callback) {
+  User.findByIdAndUpdate(
+    {_id},
+    {$push: {'favorites': favorite}},
+    callback
+  )
+};
+
+module.exports.removeFavorites = function(_id, favorite, callback) {
+  User.findByIdAndUpdate(
+    {_id},
+    {$pull: {'favorites': favorite}},
+    callback
+  )
+};
+
+module.exports.getFavorites = function(id, callback) {
+  User.findOne({_id: id}).select('favorites').exec(callback);
 };

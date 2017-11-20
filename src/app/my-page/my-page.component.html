@@ -1,8 +1,39 @@
 <h1>Out MongoDB is working!</h1>
 
-<div *ngIf="users">
-  <ul *ngFor="let user of users">
-    <li>{{ user.name }}</li>
-    <li>{{ user._id }}</li>
-  </ul>
+<div class="card">
+  <h2 class="card-header">Favorite List</h2>
+  <div class="card-body">
+    <div class="row">
+      <div *ngIf="products.length === 0">
+        <h3>You have no favorites yet</h3>
+        <p>Go to the Products page to add some</p>
+      </div>
+      <div [class]="getProductListClass()" *ngFor="let product of products">
+        <div class="card">
+          <h3 class="card-header">{{product.Varenavn}}</h3>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-9">
+                <h5 class="card-title">Varetype:</h5>
+                <h6 class="card-subtitle text-muted">{{product.Varetype}}</h6>
+              </div>
+              <div class="col-sm-9">
+                <h5 class="card-title">Land:</h5>
+                <h6 class="card-subtitle text-muted">{{product.Land}}</h6>
+              </div>
+              <div class="col-sm-9">
+                <h5 class="card-title">Pris:</h5>
+                <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
+              </div>
+            </div>
+            <br>
+            <button *ngIf="loggedInUser" (click)="onButtonClick(product._id)" class="btn btn-sm btn-warning">
+              Remove
+            </button>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
+import { AuthService } from '../auth.service';
 import { NavSearchService } from '../nav-search.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -9,7 +10,8 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-
+  // User
+  loggedInUser = Object;
   // Search
   searchValue = '';
 
@@ -34,7 +36,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // GUI
   showFilters = false;
 
-  constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
+  constructor(
+    private _dataService: DataService,
+    private navSearchService: NavSearchService,
+    private authService: AuthService
+  ) {
     this.navSubscription  = this.navSearchService
       .getSearchValue()
       .subscribe(value => {
@@ -65,7 +71,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.currentUser.subscribe(observedUser => {
+      if (observedUser) {
+        this._dataService.getUserFavorites(observedUser._id).subscribe(userFavorites => {
+          observedUser['favorites'] = userFavorites.favorites.favorites;
+        });
+        this.loggedInUser = observedUser;
+      }
+    });
+  }
 
   loadMore(): void {
     if (this.dataAvailable && !this.loadingMore) {
@@ -79,13 +94,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
       };
 
       this._dataService
-      .getProducts(searchObject)
-      .subscribe(res => {
-        this.products = this.products.concat(res.product);
-        this.loadingMore = false;
-        // TODO: Implement dataAvailable update based on total query hits instead
-        this.dataAvailable = res.product.length < 21 ? false : true;
-      });
+        .getProducts(searchObject)
+        .subscribe(res => {
+          this.products = this.products.concat(res.product);
+          this.loadingMore = false;
+          // TODO: Implement dataAvailable update based on total query hits instead
+          this.dataAvailable = res.product.length < 21 ? false : true;
+        });
     }
   }
   sort(): void {
@@ -158,7 +173,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         .subscribe(result => {
           this.autoCompleteResults = result.product;
         })
-    : this.autoCompleteResults = [];
+      : this.autoCompleteResults = [];
   }
 
   handleListEvent(event) {
@@ -168,6 +183,30 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   getProductListClass(): string {
     return this.products.length > 1 ? 'col-md-4' : 'col-md-12';
+  }
+
+  addFavorite(newObjectID) {
+    if (this.loggedInUser['favorites'].includes(newObjectID)) {
+      window.alert('This one is allready among your loved ones!');
+    } else {
+      const tempUser = this.loggedInUser;
+      tempUser['favorites'].push(newObjectID);
+      const updateValues = [tempUser, newObjectID];
+      this._dataService.updateRemoteUser(updateValues);
+    }
+  }
+
+  removeFavorite(objectID) {
+    if (!this.loggedInUser['favorites'].includes(objectID)) {
+      window.alert('Something went wrong, this should not be here!?');
+    } else {
+      const tempUser = this.loggedInUser;
+      const removeIndex = tempUser['favorites'].indexOf(objectID);
+      tempUser['favorites'].splice(removeIndex, 1);
+      const updateValues = [tempUser, objectID];
+      this._dataService.removeUserFavorite(updateValues).subscribe( res => {
+      });
+    }
   }
 
   ngOnDestroy() {

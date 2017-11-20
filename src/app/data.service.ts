@@ -36,6 +36,39 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getProductsById(idList) {
+    const headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    const params = {idList: idList};
+
+    return this._http.get('http://localhost:3000/api/productsById', {headers: headers, params: params})
+      .map(res => res.json());
+  }
+
+  getUserFavorites(userID) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const params = {user: userID};
+
+    return this._http.get('http://localhost:3000/api/userFavorites', {headers: headers, params: params})
+      .map(res => res.json());
+  }
+
+  updateRemoteUser(updateValues) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this._http.post('http://localhost:3000/api/addFavorites', updateValues,
+      {headers: headers, withCredentials: true}).subscribe();
+  }
+
+  removeUserFavorite(updateValues) {
+    const headers = new Headers();
+    const params = {updateValues: updateValues};
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/removeFavorite',
+      {headers: headers, params: params, withCredentials: true});
+  }
   getSpecificProduct() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

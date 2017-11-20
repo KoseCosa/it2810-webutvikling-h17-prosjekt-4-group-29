@@ -23,7 +23,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes =  [
-  { path: '', component: FrontPageComponent },
+  { path: '', component: ProductListComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent }, // TODO auth: canActivate:[AuthGuard]
   { path: 'mypage', component: MyPageComponent },

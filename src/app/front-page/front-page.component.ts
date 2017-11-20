@@ -21,11 +21,6 @@ export class FrontPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Get users
-    this.dataService.getUsers().subscribe(res => {
-        this.users = res.user;
-    });
-    this.authService.currentUser.subscribe(observedUser =>
-        this.loggedInUser = observedUser);
+
   }
 }

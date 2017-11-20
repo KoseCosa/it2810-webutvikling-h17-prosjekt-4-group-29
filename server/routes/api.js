@@ -15,7 +15,15 @@ router.get('/producttypes', (req, res) => {
     res.json({productTypes});
   });
 });
-
+router.get('/countries', (req, res) => {
+  Product.getAllCountries(function (err, countries) {
+    if (err) {
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({countries});
+  });
+});
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res) => {
   User.getAllUsers(function (err, user) {

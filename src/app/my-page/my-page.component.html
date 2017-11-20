@@ -1,5 +1,3 @@
-<h1>Out MongoDB is working!</h1>
-
 <div class="card">
   <h2 class="card-header">Favorite List</h2>
   <div class="card-body">
@@ -8,31 +6,43 @@
         <h3>You have no favorites yet</h3>
         <p>Go to the Products page to add some</p>
       </div>
-      <div [class]="getProductListClass()" *ngFor="let product of products">
-        <div class="card">
-          <h3 class="card-header">{{product.Varenavn}}</h3>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-9">
-                <h5 class="card-title">Varetype:</h5>
-                <h6 class="card-subtitle text-muted">{{product.Varetype}}</h6>
-              </div>
-              <div class="col-sm-9">
-                <h5 class="card-title">Land:</h5>
-                <h6 class="card-subtitle text-muted">{{product.Land}}</h6>
-              </div>
-              <div class="col-sm-9">
-                <h5 class="card-title">Pris:</h5>
-                <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
+      <div class="container-fluid">
+        <div class="row row-eq-height">
+          <div [class]="getProductListClass()" *ngFor="let product of products">
+            <div class="card">
+              <h5 class="card-header">{{product.Varenavn}}</h5>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h5 class="card-title">Varetype:</h5>
+                    <h6 class="card-subtitle text-muted">{{product.Varetype}}</h6>
+                  </div>
+                  <div class="col-md-4">
+                    <h5 class="card-title">Land:</h5>
+                    <h6 class="card-subtitle text-muted">{{product.Land}}</h6>
+                  </div>
+                  <div class="col-md-4">
+                    <h5 class="card-title">Pris:</h5>
+                    <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
+                  </div>
+                  <div class="col-md-2 offset-md-10" *ngIf="loggedInUser['favorites'] && products.length !== 0">
+                    <button *ngIf="!loggedInUser['favorites'].includes(product._id); else elseBlock"
+                            (click)="addFavorite(product._id)" class="btn btn-sm btn-success">
+                      Favorite
+                    </button>
+                    <ng-template #elseBlock>
+                      <button (click)="removeFavorite(product._id)" class="btn btn-sm btn-warning">
+                        Remove
+                      </button>
+                    </ng-template>
+                  </div>
+                  <br>
+                </div>
               </div>
             </div>
             <br>
-            <button *ngIf="loggedInUser" (click)="onButtonClick(product._id)" class="btn btn-sm btn-warning">
-              Remove
-            </button>
           </div>
         </div>
-        <br>
       </div>
     </div>
   </div>

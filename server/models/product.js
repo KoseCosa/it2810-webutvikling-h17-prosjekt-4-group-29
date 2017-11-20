@@ -76,7 +76,7 @@ module.exports.getProducts = function(search, callback) {
     {Varetype: {$regex: searchRegEx}},
     {Land: {$regex: searchRegEx}}])
   .sort(search.sort ? search.sort : 'Varenavn')
-  .limit(search.limit ? search.limit : 21)
+  .limit(search.limit ? search.limit : 20)
   .skip(search.startIndex)
   .lean();
 };

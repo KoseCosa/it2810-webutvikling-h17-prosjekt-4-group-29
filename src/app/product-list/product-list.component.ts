@@ -9,13 +9,28 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-
+  // State
   products = [];
-  searchValue = '';
+  autoCompleteResults = [];
   loadingMore = false;
   dataAvailable = true;
-  autoCompleteResults = [];
+  showFilters = true;
   navSubscription: Subscription;
+
+  productTypeFilters = [];
+  activeFilters = {
+    productTypes: []
+  };
+
+  availableSortOptions = [
+    {label: 'Navn', value: 'Varenavn' },
+    {label: 'Pris', value: 'Pris'},
+    {label: 'Land', value: 'Land'}
+  ];
+
+  // Search Values
+  searchValue = '';
+  selectedSortOption = this.availableSortOptions[0];
 
   constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
     this.navSubscription  = this.navSearchService
@@ -24,6 +39,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.searchValue = value;
         this.search();
       });
+
+    // ScrollDetection
     window.onscroll = () => {
       const windowHeight = 'innerHeight' in window ? window.innerHeight
         : document.documentElement.offsetHeight;
@@ -36,9 +53,27 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.loadMore();
       }
     };
+
+    this._dataService
+    .getProductTypes()
+    .subscribe(res => {
+      this.productTypeFilters = res.productTypes.map(function(productType, index){
+        return {name: productType, state: false}
+      });
+    });
   }
 
   ngOnInit() { }
+
+  setActiveFilters(): void {
+    this.activeFilters = {
+      productTypes: this.productTypeFilters.filter(function(productType){
+        return productType.state;
+      }).map(function(producType){
+        return producType.name;
+      })
+    }
+  }
 
   loadMore(): void {
     if (this.dataAvailable && !this.loadingMore) {
@@ -46,7 +81,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
       const searchObject = {
         value: this.searchValue,
-        startIndex: this.products.length
+        startIndex: this.products.length,
+        sort: this.selectedSortOption.value,
+        filters: this.activeFilters
       };
 
       this._dataService
@@ -59,12 +96,52 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
     }
   }
+  sort(): void {
+    this.reload();
+  }
+
+  reload(): void {
+    this.setActiveFilters();
+
+    const searchObject = {
+      value: this.searchValue,
+      startIndex: 0,
+      skip: 0,
+      limit: this.products.length,
+      sort: this.selectedSortOption.value,
+      filters: this.activeFilters
+    };
+
+    this._dataService
+    .getProducts(searchObject)
+    .subscribe(res => {
+      this.products = res.product;
+      this.loadingMore = false;
+      // TODO: Implement dataAvailable update based on total query hits instead
+      this.dataAvailable = res.product.length < 21 ? false : true;
+    });
+  }
+  setActiveFilters(): void {
+    this.activeFilters = {
+      productTypes: this.productTypeFilters.filter(function(productType){
+        return productType.state;
+      }).map(function(producType){
+        return producType.name;
+      })
+    }
+  }
+
 
   search(): void {
     this.autoCompleteResults = [];
+
+    this.setActiveFilters();
+
     const searchObject = {
       value: this.searchValue,
-      startIndex: 0
+      startIndex: 0,
+      sort: this.selectedSortOption.value,
+      filters: this.activeFilters
     };
 
     this._dataService
@@ -98,7 +175,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   getProductListClass(): string {
-    return this.products.length > 1 ? 'col-sm-4' : 'col-sm-12';
+    return this.products.length > 1 ? 'col-md-4' : 'col-md-12';
   }
 
   ngOnDestroy() {

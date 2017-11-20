@@ -27,6 +27,15 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getProductTypes() {
+    const headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+
+    return this._http.get('http://localhost:3000/api/producttypes', {headers: headers})
+      .map(res => res.json());
+  }
+
   getSpecificProduct() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

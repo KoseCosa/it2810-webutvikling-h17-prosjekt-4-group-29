@@ -43,6 +43,10 @@ const Product = module.exports = mongoose.model('Product', new Schema({
   Vareurl: String
 }));
 
+module.exports.getAllProductTypes = function(callback){
+  Product.find().distinct('Varetype',callback).lean();
+};
+
 module.exports.getOneProduct = function(callback){
   Product.findOne(callback).lean();
 };
@@ -57,15 +61,22 @@ module.exports.getProductsInRange = function(callback){
 
 module.exports.getProducts = function(search, callback) {
   search = JSON.parse(search)
-  const searchRegEx = new RegExp(search.value, "i")
+  const searchRegEx = new RegExp(search.value ? search.value : '', 'i');
+  const land = [];
+  console.log(search)
+  const varetype = search.filters.productTypes;
+
   Product
-  .find(callback)
+  .find({
+    Land: land.length > 0 ? {$in: land} : /.*/g,
+    Varetype: varetype.length > 0 ? {$in: varetype} : /.*/g
+  }, callback)
   .or([
     {Varenavn: {$regex: searchRegEx}},
     {Varetype: {$regex: searchRegEx}},
     {Land: {$regex: searchRegEx}}])
-  .sort('Varenavn')
-  .limit(21)
+  .sort(search.sort ? search.sort : 'Varenavn')
+  .limit(search.limit ? search.limit : 21)
   .skip(search.startIndex)
   .lean();
 };

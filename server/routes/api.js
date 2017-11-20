@@ -6,7 +6,15 @@ const Product = require('../models/product');
 
 const logger = require('../../logger.js');
 
-
+router.get('/producttypes', (req, res) => {
+  Product.getAllProductTypes(function (err, productTypes) {
+    if (err) {
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({productTypes});
+  });
+});
 
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res) => {

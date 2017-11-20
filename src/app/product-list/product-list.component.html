@@ -38,7 +38,7 @@
                 </div>
               </div>
               <br>
-              <div *ngIf="loggedInUser && products.length !== 0">
+              <div *ngIf="loggedInUser['favorites'] && products.length !== 0">
                 <button *ngIf="!loggedInUser['favorites'].includes(product._id); else elseBlock"
                         (click)="addFavorite(product._id)" class="btn btn-sm btn-success">
                   Favorite

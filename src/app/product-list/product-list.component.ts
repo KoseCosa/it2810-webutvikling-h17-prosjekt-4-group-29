@@ -9,28 +9,30 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  // State
-  products = [];
-  autoCompleteResults = [];
-  loadingMore = false;
-  dataAvailable = true;
-  showFilters = true;
-  navSubscription: Subscription;
 
-  productTypeFilters = [];
-  activeFilters = {
-    productTypes: []
-  };
+  // Search
+  searchValue = '';
 
   availableSortOptions = [
     {label: 'Navn', value: 'Varenavn' },
     {label: 'Pris', value: 'Pris'},
     {label: 'Land', value: 'Land'}
   ];
-
-  // Search Values
-  searchValue = '';
   selectedSortOption = this.availableSortOptions[0];
+  productTypeFilters = [];
+  activeFilters = {
+    productTypes: []
+  };
+  // AutoComplete
+  autoCompleteResults = [];
+  // Loading
+  loadingMore = false;
+  dataAvailable = true;
+  products = [];
+  // Subscriptions
+  navSubscription: Subscription;
+  // GUI
+  showFilters = false;
 
   constructor(private _dataService: DataService, private navSearchService: NavSearchService) {
     this.navSubscription  = this.navSearchService
@@ -64,16 +66,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() { }
-
-  setActiveFilters(): void {
-    this.activeFilters = {
-      productTypes: this.productTypeFilters.filter(function(productType){
-        return productType.state;
-      }).map(function(producType){
-        return producType.name;
-      })
-    }
-  }
 
   loadMore(): void {
     if (this.dataAvailable && !this.loadingMore) {

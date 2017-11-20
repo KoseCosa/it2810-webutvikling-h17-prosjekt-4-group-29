@@ -1,7 +1,7 @@
 <br>
 <div class="container-fluid">
-  <div class="card">
-    <form class="card-body" autocomplete="off" (sumbit)="handleListEvent($event)">
+  <div class="container-fluid">
+    <form autocomplete="off" (sumbit)="handleListEvent($event)">
       <div class="row">
         <div class="dropdown col-md-3">
           <div class="input-group">
@@ -41,23 +41,22 @@
     <div class="row row-eq-height">
       <div [class]="getProductListClass()" *ngFor="let product of products">
         <div class="card">
-          <h3 class="card-header">{{product.Varenavn}}</h3>
+          <h5 class="card-header">{{product.Varenavn}}</h5>
           <div class="card-body">
             <div class="row">
-              <div class="col-sm-9">
+              <div class="col-md-4">
                 <h5 class="card-title">Varetype:</h5>
                 <h6 class="card-subtitle text-muted">{{product.Varetype}}</h6>
               </div>
-              <div class="col-sm-9">
+              <div class="col-md-4">
                 <h5 class="card-title">Land:</h5>
                 <h6 class="card-subtitle text-muted">{{product.Land}}</h6>
               </div>
-              <div class="col-sm-9">
+              <div class="col-md-4">
                 <h5 class="card-title">Pris:</h5>
                 <h6 class="card-subtitle text-muted">{{ product.Pris | number : '1.2-2'}},-</h6>
               </div>
-              <br>
-              <div *ngIf="loggedInUser['favorites'] && products.length !== 0">
+              <div class="col-md-2 offset-md-10" *ngIf="loggedInUser['favorites'] && products.length !== 0">
                 <button *ngIf="!loggedInUser['favorites'].includes(product._id); else elseBlock"
                         (click)="addFavorite(product._id)" class="btn btn-sm btn-success">
                   Favorite
@@ -68,9 +67,11 @@
                   </button>
                 </ng-template>
               </div>
+              <br>
             </div>
           </div>
         </div>
+        <br>
       </div>
     </div>
     <br>

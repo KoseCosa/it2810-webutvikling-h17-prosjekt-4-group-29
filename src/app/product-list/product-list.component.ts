@@ -14,7 +14,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   loggedInUser = Object;
   // Search
   searchValue = '';
-
   availableSortOptions = [
     {label: 'Navn', value: 'Varenavn' },
     {label: 'Pris', value: 'Pris'},
@@ -182,7 +181,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   getProductListClass(): string {
-    return this.products.length > 1 ? 'col-md-4' : 'col-md-12';
+    return this.products.length > 1 ? 'col-md-6' : 'col-md-12';
   }
 
   addFavorite(newObjectID) {

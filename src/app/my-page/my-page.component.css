@@ -5,6 +5,8 @@
 .wordCloud {
     margin: auto;
     width: 50%;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 :host{

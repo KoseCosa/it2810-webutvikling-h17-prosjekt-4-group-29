@@ -1,17 +1,19 @@
-<div class="wordCloud">
+<div class="card">
   <div *ngIf="loaded | async; else elseblock">
-    <h3>Favorite Types:</h3>
-    <div
-            AgWordCloud
-            [wordData]="wordData"
-            [options]="options">
+    <h3 class="card-header">Favorite Types:</h3>
+    <div class="wordCloud">
+      <div
+              AgWordCloud
+              [wordData]="wordData"
+              [options]="options">
+      </div>
     </div>
+    <ng-template #elseblock>
+      <br>
+      <h3 class="card-header">Du har ikke nok varer, eller ikke nok variasjon i varene for ordskyen</h3>
+      <br>
+    </ng-template>
   </div>
-  <ng-template #elseblock>
-    <br>
-    <h2>Du har ikke nok varer, eller ikke nok variasjon i varene for ordskyen</h2>
-    <br>
-  </ng-template>
 </div>
 <div class="card">
   <h2 class="card-header">Favorite List</h2>

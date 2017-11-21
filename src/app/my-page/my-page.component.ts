@@ -21,13 +21,13 @@ export class MyPageComponent implements OnInit {
   loaded: Promise<boolean>;
   options = {
     settings: {
-      minFontSize: -100,
-      maxFontSize: 1,
+      minFontSize: 1,
+      maxFontSize: 10,
     },
     margin: {
       top: -15,
-      right: -17,
-      bottom: -15,
+      right: -0,
+      bottom: -0,
       left: -17
     },
   };

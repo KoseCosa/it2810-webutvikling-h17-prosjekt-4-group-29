@@ -70,7 +70,7 @@ describe('DataService', () => {
         // Check the request method
         expect(connection.request.method).toEqual(RequestMethod.Get);
         // Check the url
-        expect(connection.request.url).toEqual('http://localhost:3000/api/products');
+        expect(connection.request.url).toEqual('http://localhost:3000/api/products?search=%22Vodka%22');
         // Check the body
         // Check the request headers
         expect(connection.request.headers.get('Content-Type')).toEqual('application/json');

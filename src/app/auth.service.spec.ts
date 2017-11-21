@@ -1,4 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -32,7 +32,7 @@ describe('AuthService', () => {
     backend = mockBackend;
   }));
 
-  it('#AuthService should login and get success in return', (done) => {
+  it('#AuthService should post login and get success in return', (done) => {
       backend.connections.subscribe((connection: MockConnection) => {
         const options = new ResponseOptions({
           body: '{"success": "true"}',
@@ -75,12 +75,13 @@ describe('AuthService', () => {
       expect(connection.request.headers.get('Content-Type')).toEqual('application/json');
     });
 
-  subject
-    .logout()
-    .subscribe((response) => {
-      // Check the response
-      expect(response.success).toBe('true');
-      done();
-      });
+    subject
+      .logout()
+      .subscribe((response) => {
+        // Check the response
+        expect(response.success).toBe('true');
+        done();
+        });
   });
-  });
+
+});

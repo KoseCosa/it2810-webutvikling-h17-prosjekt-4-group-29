@@ -79,7 +79,7 @@ module.exports.getProducts = function(search, callback) {
     {Varenavn: {$regex: searchRegEx}},
     {Varetype: {$regex: searchRegEx}},
     {Land: {$regex: searchRegEx}}])
-  .sort(search.sort ? search.sort : 'Varenavn')
+  .sort((search.sort ? search.sort : {APK: -1}))
   .limit(search.limit ? search.limit : 20)
   .skip(search.startIndex)
   .lean();

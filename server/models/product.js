@@ -63,7 +63,6 @@ module.exports.getProducts = function(search, callback) {
   search = JSON.parse(search)
   const searchRegEx = new RegExp(search.value ? search.value : '', 'i');
   const land = [];
-  console.log(search)
   const varetype = search.filters.productTypes;
 
   Product

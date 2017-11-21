@@ -36,6 +36,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   navSubscription: Subscription;
   // GUI
   showFilters = false;
+  showProductTypeFilters = false;
+  showCountriesFilters = false;
 
   constructor(
     private _dataService: DataService,
@@ -121,7 +123,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       value: this.searchValue,
       startIndex: 0,
       skip: 0,
-      limit: this.products.length,
+      limit: this.products.length > 20 ? this.products.length : 20,
       sort: this.selectedSortOption.value,
       filters: this.activeFilters
     };

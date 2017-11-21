@@ -158,9 +158,17 @@ router.get('/logout', (req,res) =>{
 });
 
 router.post('/addFavorites', (req, res) => {
-  User.updateFavorites(req.body[0]._id, req.body[1], function(err) {
+  Product.getProductsById(req.body[0]._id, function(err, product) {
     if (err) {
-      console.log(err);
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    } else {
+      User.updateFavorites(req.body[0]._id, req.body[1], function(err) {
+        if (err) {
+          console.log(err);
+        }
+      });
     }
   });
 });

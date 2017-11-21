@@ -13,11 +13,7 @@ export class ValidateService {
     }
   }
   validateRegisterFields(user) {
-    if (user.username === undefined || user.password === undefined || user.email === undefined ||
-      user.name === undefined) {
-      return false;
-    }
-    if (!this.validateEmail(user.email)) {
+    if (user.username === undefined || user.password === undefined) {
       return false;
     }
     if (!this.validatePassword(user.password)) {

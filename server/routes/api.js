@@ -94,22 +94,19 @@ router.get('/autocomplete', (req, res,next) => {
 
 // User registration process + making sure the username isnt taken
 router.post('/registerUser', (req,res) => {
-  if (req.body.email &&
-    req.body.username &&
-    req.body.password &&
-    req.body.password){
+  if (req.body.username && req.body.password){
     let account = new User({
-      name: req.body.name,
-      email: req.body.email,
       password: req.body.password,
       username: req.body.username
     });
     User.insertUser((account),function(err,callback) {
       if (err){
+        console.log('username taken',err);
         res.json({success:false, msg:"Username is allready taken"});
         res.send();
       }
       if (callback){
+        console.log("user registered");
         res.json({success: true, msg: "user registered"});
       }
     });

@@ -5,18 +5,10 @@ const bcrypt = require('bcrypt');
 const logger = require('../../logger.js');
 
 const User = module.exports = mongoose.model('User', new Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  username: {
-    type: String,
-    required: true
   },
   password: {
     type: String,
@@ -38,14 +30,13 @@ module.exports.getSpecificUser = function(query,callback){
 
 module.exports.insertUser = function(user,callback){
   let account = new User({
-    name : user.name,
-    email : user.email,
     password : user.password,
     username : user.username
   });
-
+  console.log('Inserting User');
   bcrypt.genSalt(15, function(error, salt) {
     if (error) {
+      console.log('Something went wrong generating salt:' + error);
       logger.error('Something went wrong generating salt:' + error);
       throw error;
     }
@@ -53,10 +44,12 @@ module.exports.insertUser = function(user,callback){
       bcrypt.hash(account.password, salt, function(err, hash) {
         // Store hash in your password DB.
         if (err) {
+          console.log('Something went wrong generating hash:' + err);
           logger.error('Something went wrong generating hash:' + err);
           throw err;
         }
         if (hash) {
+          console.log('hash made')
           account.password = hash;
           account.save(callback);
         }

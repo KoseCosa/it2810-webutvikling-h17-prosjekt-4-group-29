@@ -40,7 +40,8 @@ const Product = module.exports = mongoose.model('Product', new Schema({
   Distributor: String,
   Emballasjetype: String,
   Korktype: String,
-  Vareurl: String
+  Vareurl: String,
+  APK: SchemaTypes.Double
 }));
 
 module.exports.getAllProductTypes = function(callback){
@@ -103,3 +104,28 @@ module.exports.getProductsById = function(idList, callback) {
     }
   }).exec(callback)
 };
+
+/* setsAPK for all products should not be used unless update is necessary
+module.exports.setApk = function() {
+  Product.find((err, products) => {
+      if(err){
+        console.log('error')
+      } //do something...
+      let count = 0
+      products.map(product => {
+        if (product.Pris && product.Volum && product.Alkohol){
+          count ++
+          console.log(count,' productID: ',product._id,' Pris: ',product.Pris.value,' Volum: ',product.Volum.value,' AlkoholProsent: ',product.Alkohol.value,' APK: ',(((product.Volum.value * 1000) * (product.Alkohol.value / 100)) / product.Pris.value))
+          Product.update(
+           {_id: product._id},
+           {APK : (((product.Volum.value * 1000) * (product.Alkohol.value / 100)) / product.Pris.value)},
+           {multi:true},
+             function(err, numberAffected){
+               console.log(err)
+               console.log(numberAffected)
+          });
+        }
+      })
+  })
+};
+*/

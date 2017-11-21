@@ -101,12 +101,10 @@ router.post('/registerUser', (req,res) => {
     });
     User.insertUser((account),function(err,callback) {
       if (err){
-        console.log('username taken',err);
         res.json({success:false, msg:"Username is allready taken"});
         res.send();
       }
       if (callback){
-        console.log("user registered");
         res.json({success: true, msg: "user registered"});
       }
     });
@@ -158,17 +156,9 @@ router.get('/logout', (req,res) =>{
 });
 
 router.post('/addFavorites', (req, res) => {
-  Product.getProductsById(req.body[0]._id, function(err, product) {
+  User.updateFavorites(req.body[0]._id, req.body[1], function(err) {
     if (err) {
-      logger.error('Error querrying the database:' + err);
-      res.status(501).send(err);
-      throw err;
-    } else {
-      User.updateFavorites(req.body[0]._id, req.body[1], function(err) {
-        if (err) {
-          console.log(err);
-        }
-      });
+      console.log(err);
     }
   });
 });

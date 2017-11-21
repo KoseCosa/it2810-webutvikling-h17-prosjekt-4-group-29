@@ -5,3 +5,8 @@
 :host{
   width: 100%;
 }
+
+.cursor-pointer{
+  cursor: pointer;
+  vertical-align: middle;
+}

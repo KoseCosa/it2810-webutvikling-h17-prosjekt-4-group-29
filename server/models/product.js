@@ -47,6 +47,10 @@ module.exports.getAllProductTypes = function(callback){
   Product.find().distinct('Varetype',callback).lean();
 };
 
+module.exports.getAllCountries = function(callback){
+  Product.find().distinct('Land',callback).lean();
+};
+
 module.exports.getOneProduct = function(callback){
   Product.findOne(callback).lean();
 };
@@ -62,7 +66,7 @@ module.exports.getProductsInRange = function(callback){
 module.exports.getProducts = function(search, callback) {
   search = JSON.parse(search)
   const searchRegEx = new RegExp(search.value ? search.value : '', 'i');
-  const land = [];
+  const land = search.filters.countries;
   const varetype = search.filters.productTypes;
 
   Product

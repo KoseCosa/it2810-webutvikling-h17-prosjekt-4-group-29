@@ -53,9 +53,9 @@ export class MyPageComponent implements OnInit {
           this.wordData = this.populateWordCloud(products.product);
           if (this.wordData[0]) {
             this.loaded = Promise.resolve(true);
+          } else {
+            this.loaded = Promise.resolve(false);
           }
-          console.log(this.wordData);
-          console.log(this.loaded);
         });
       });
     }

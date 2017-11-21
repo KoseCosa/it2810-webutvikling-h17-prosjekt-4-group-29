@@ -62,6 +62,16 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getUserFavoriteObjects(userID) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const params = {user: userID};
+
+    return this._http.get('http://localhost:3000/api/userFavoriteObjects', {headers: headers, params: params})
+      .map(res => res.json());
+  }
+
+
   updateRemoteUser(updateValues) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

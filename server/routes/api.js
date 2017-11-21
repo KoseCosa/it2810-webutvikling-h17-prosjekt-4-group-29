@@ -70,6 +70,20 @@ router.get('/userFavorites', (req, res, next) => {
   });
 });
 
+router.get('/userFavoriteObjects', (req, res) => {
+  User.getFavorites(req.query.user, function(err, favorites) {
+    if (err) {
+      throw err;
+    }
+    Product.getProductsById(favorites.favorites, function(err, products) {
+      if (err) {
+        throw err;
+      }
+      res.json({products});
+    });
+  });
+});
+
 // TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
 router.get('/specificProducts', (req, res) => {
   Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}), function (err, products) {

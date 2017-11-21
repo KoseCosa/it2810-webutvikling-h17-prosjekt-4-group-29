@@ -34,6 +34,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products = [];
   // Subscriptions
   navSubscription: Subscription;
+  userFavoriteSub: Subscription;
   // GUI
   showFilters = false;
   showProductTypeFilters = false;
@@ -85,7 +86,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authService.currentUser.subscribe(observedUser => {
       if (observedUser) {
-        this._dataService.getUserFavorites(observedUser._id).subscribe(userFavorites => {
+        this.userFavoriteSub = this._dataService.getUserFavorites(observedUser._id).subscribe(userFavorites => {
           observedUser['favorites'] = userFavorites.favorites.favorites;
         });
         this.loggedInUser = observedUser;
@@ -203,6 +204,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     if (this.loggedInUser['favorites'].includes(newObjectID)) {
       window.alert('This one is allready among your loved ones!');
     } else {
+      this.userFavoriteSub.unsubscribe();
       // const tempUser = this.loggedInUser;
       this.loggedInUser['favorites'].push(newObjectID);
       // tempUser['favorites'].push(newObjectID);

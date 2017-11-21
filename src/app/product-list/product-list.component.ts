@@ -69,7 +69,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     .getCountries()
     .subscribe(res => {
       this.countryFilters = res.countries.map(function(country, index){
-        return {name: country, state: false}
+        return {name: country, state: false};
       });
     });
 
@@ -77,7 +77,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     .getProductTypes()
     .subscribe(res => {
       this.productTypeFilters = res.productTypes.map(function(productType, index){
-        return {name: productType, state: false}
+        return {name: productType, state: false};
       });
     });
   }
@@ -138,7 +138,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
   setActiveFilters(): void {
-    this.showFilters = !this.showFilters
+    this.showFilters = !this.showFilters;
     this.activeFilters = {
       productTypes: this.productTypeFilters.filter(function(productType){
         return productType.state;
@@ -150,7 +150,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }).map(function(country){
         return country.name;
       }),
-    }
+    };
     this.reload();
   }
 
@@ -203,9 +203,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     if (this.loggedInUser['favorites'].includes(newObjectID)) {
       window.alert('This one is allready among your loved ones!');
     } else {
-      const tempUser = this.loggedInUser;
-      tempUser['favorites'].push(newObjectID);
-      const updateValues = [tempUser, newObjectID];
+      // const tempUser = this.loggedInUser;
+      this.loggedInUser['favorites'].push(newObjectID);
+      // tempUser['favorites'].push(newObjectID);
+      const updateValues = [this.loggedInUser, newObjectID];
       this._dataService.updateRemoteUser(updateValues);
     }
   }

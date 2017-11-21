@@ -21,13 +21,13 @@ export class MyPageComponent implements OnInit {
   loaded: Promise<boolean>;
   options = {
     settings: {
-      minFontSize: -100,
-      maxFontSize: 1,
+      minFontSize: 1,
+      maxFontSize: 10,
     },
     margin: {
       top: -15,
-      right: -17,
-      bottom: -15,
+      right: -0,
+      bottom: -0,
       left: -17
     },
   };
@@ -53,9 +53,9 @@ export class MyPageComponent implements OnInit {
           this.wordData = this.populateWordCloud(products.product);
           if (this.wordData[0]) {
             this.loaded = Promise.resolve(true);
+          } else {
+            this.loaded = Promise.resolve(false);
           }
-          console.log(this.wordData);
-          console.log(this.loaded);
         });
       });
     }

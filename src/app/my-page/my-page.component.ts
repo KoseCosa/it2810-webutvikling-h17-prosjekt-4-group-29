@@ -53,14 +53,8 @@ export class MyPageComponent implements OnInit {
           tempFavorites.push(product._id);
         });
         this.userFavorites = tempFavorites;
-        console.log(this.userFavorites);
         this.wordData = this.populateWordCloud(result.products);
         this.loaded = Promise.resolve(true);
-        /*if (this.wordData[0]) {
-          this.loaded = Promise.resolve(true);
-        } else {
-          this.loaded = Promise.resolve(false);
-        }*/
       });
     }
   }

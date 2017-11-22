@@ -11,6 +11,7 @@ import { HttpModule } from '@angular/http';
 // Custom imports, neded for test to work for the specific component/service
 import { AuthService } from '../auth.service';
 import { ValidateService } from '../validate.service';
+import { DataService } from '../data.service';
 
 // The components which gets tested
 import { RegisterComponent } from './register.component';

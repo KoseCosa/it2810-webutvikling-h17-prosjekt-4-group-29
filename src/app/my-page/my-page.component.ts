@@ -34,6 +34,7 @@ export class MyPageComponent implements OnInit {
       left: -17
     },
   };
+  width = 320;
   constructor(
     private _dataService: DataService,
     private authService: AuthService,

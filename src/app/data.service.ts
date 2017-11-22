@@ -75,8 +75,8 @@ export class DataService {
   updateRemoteUser(updateValues) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this._http.post('http://localhost:8084/api/addFavorites', updateValues,
-      {headers: headers, withCredentials: true}).subscribe();
+    return (this._http.post('http://localhost:8084/api/addFavorites', updateValues,
+      {headers: headers, withCredentials: true}));
   }
 
   removeUserFavorite(updateValues) {

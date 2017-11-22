@@ -174,6 +174,7 @@ router.post('/addFavorites', (req, res) => {
     if (err) {
       console.log(err);
     }
+    res.json({success: true});
   });
 });
 

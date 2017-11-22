@@ -1,10 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); 
 
 const User = require('../models/user');
 const Product = require('../models/product');
 
-const logger = require('../../logger.js');
+const logger = require('../../logger.js'); 
+
 
 router.get('/producttypes', (req, res) => {
   Product.getAllProductTypes(function (err, productTypes) {
@@ -15,6 +16,8 @@ router.get('/producttypes', (req, res) => {
     res.json({productTypes});
   });
 });
+
+
 router.get('/countries', (req, res) => {
   Product.getAllCountries(function (err, countries) {
     if (err) {
@@ -24,6 +27,7 @@ router.get('/countries', (req, res) => {
     res.json({countries});
   });
 });
+
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res) => {
   User.getAllUsers(function (err, user) {
@@ -35,19 +39,10 @@ router.get('/users', (req, res) => {
   });
 });
 
+// Useful to get one product. No query thought (can be added later if needed)
+
 router.get('/products', (req, res,next) => {
   Product.getProducts(req.query.search, function (err, product) {
-    if (err) {
-      logger.error('Error querrying the database:' + err);
-      res.status(501).send(err);
-      throw err;
-    }
-    res.json({product});
-  });
-});
-
-router.get('/specificProduct', (req, res) => {
-  Product.getProductByNumber(req.query.search, function (err, product) {
     if (err) {
       logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
@@ -93,17 +88,6 @@ router.get('/userFavoriteObjects', (req, res) => {
   });
 });
 
-// TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
-router.get('/specificProducts', (req, res) => {
-  Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}), function (err, products) {
-    if (err) {
-      logger.error('Error querrying the database:' + err);
-      res.status(501).send(err);
-      throw err;
-    }
-    res.json({product});
-  });
-});
 
 router.get('/autocomplete', (req, res,next) => {
   Product.getAutoComplete(req.query.search, function (err, product) {

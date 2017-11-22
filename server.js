@@ -10,14 +10,14 @@ const MongoStore = require('connect-mongo')(session); // Storing session in mong
 const app = express();
 var logger = require('./logger.js');  // Usage of winston logger.
 
-// Connection URL
+// Connection URL For Database
 var url = ['mongodb://admin:admin@ds025399.mlab.com:25399/cosa','mongodb://localhost:27017/project4']
 mongoose.connect(url[1], {useMongoClient:true});
 
-// On Connection
+// On Database Connection
 mongoose.connection.on('connected', () => {
 });
-// On Error
+// On Database Error
 mongoose.connection.on('error', (err) => {
   logger.error('Database error:' + err+ 'Trying to connect to:' + url[1] + ' instead.');
   logger.error('Trying to connect to:' + url[1] + ' instead.');
@@ -63,6 +63,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Session middleware w/ MongoStore for storing sessions in MongoDB
 app.use(session({
   secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
   resave: true,
@@ -71,6 +72,7 @@ app.use(session({
   cookie: { secure: false, maxAge:null }
 }));
 
+// Session handling on login route
 app.get('/api/authenticate', function(req, res, next) {
   req.session.auth = true;
 });

@@ -33,8 +33,10 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
       this.dataService
         .getSpecificProduct(this.id)
         .subscribe(value => {
-          this.product = value.json().product;
-          this.titleService.setTitle(this.product.Varenavn);
+          if(value.json().product) {
+            this.product = value.json().product;
+            this.titleService.setTitle(this.product.Varenavn);
+          }
       });
     });
 

@@ -53,6 +53,10 @@
           </div>
         </div>
       </div>
+      <div *ngIf="!product">
+        <h5><b>Produktet finnes ikke.</b></h5>
+        <h6><a routerLink="/" routerLinkActive="active">Klikk her</a> for å gå tilbake til hovedsiden.</h6>
+      </div>
     </div>
   </div>
 </div>

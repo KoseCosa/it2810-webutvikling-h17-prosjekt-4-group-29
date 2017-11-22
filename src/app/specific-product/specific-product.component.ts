@@ -35,7 +35,7 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
       this.dataService
         .getSpecificProduct(this.id)
         .subscribe(value => {
-          if(value.json().product) {
+          if (value.json().product) {
             this.product = value.json().product;
             this.titleService.setTitle(this.product.Varenavn);
             this.setPasserTilOgLand();
@@ -91,10 +91,10 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
 
   arrayToString(array) {
     let result = '';
-    for (let x of array) {
-      if (array.indexOf(x) < array.length-1 && x && array[array.indexOf(x)+1]) {
+    for (const x of array) {
+      if (array.indexOf(x) < array.length - 1 && x && array[array.indexOf(x) + 1]) {
         result += x + ', ';
-      }else{
+      } else {
         result += x || '';
       }
     }

@@ -8,5 +8,14 @@
     <label>Password</label>
     <input type="password" [(ngModel)]="password" name="password" class="form-control">
   </div>
+  <div *ngIf="registerError" class="alert alert-dismissible alert-danger">
+    <h6>The username {{username}} already exists</h6>
+  </div>
+  <div *ngIf="emptyUser" class="alert alert-dismissible alert-danger">
+    <h6>The username is empty</h6>
+  </div>
+  <div *ngIf="emptyPass" class="alert alert-dismissible alert-danger">
+    <h6>The password is empty</h6>
+  </div>
   <input type="submit" class="btn btn-primary" value="Submit">
 </form>

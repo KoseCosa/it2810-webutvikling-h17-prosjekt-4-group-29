@@ -20,14 +20,12 @@ export class AuthService {
 
   register(user) {
     const headers = new Headers();
-    console.log(JSON.stringify(user));
     headers.append('Content-Type', 'application/json');
     return this._http.post('http://localhost:8084/api/registerUser', user, {headers: headers})
       .map(res => res.json());
   }
 
   login(user) {
-    console.log('auth');
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this._http.post('http://localhost:8084/api/authenticate', user,

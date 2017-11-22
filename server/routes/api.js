@@ -88,16 +88,6 @@ router.get('/userFavoriteObjects', (req, res) => {
   });
 });
 
-// TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
-router.get('/specificProducts', (req, res) => {
-  Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}), function (err, products) {
-    if (err) {
-      res.status(501).send(err);
-      throw err;
-    }
-    res.json({products});
-  });
-});
 
 router.get('/autocomplete', (req, res,next) => {
   Product.getAutoComplete(req.query.search, function (err, product) {

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
 import { NavSearchService } from '../nav-search.service';
@@ -47,6 +48,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   showCountriesFilters = false;
 
   constructor(
+    private router: Router,
     private _dataService: DataService,
     private navSearchService: NavSearchService,
     private authService: AuthService
@@ -235,6 +237,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.favoriteRequest = false;
       });
     }
+  }
+
+  redirectToSpecificProduct(productNumber) {
+    const link = '/products/' + productNumber.toString();
+    if (productNumber) {
+     this.router.navigate([link]);
+   }
   }
 
   ngOnDestroy() {

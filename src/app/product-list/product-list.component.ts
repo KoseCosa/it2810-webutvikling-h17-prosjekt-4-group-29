@@ -15,9 +15,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Search
   searchValue = '';
   availableSortOptions = [
-    {label: 'Navn', value: 'Varenavn' },
-    {label: 'Pris', value: 'Pris'},
-    {label: 'Land', value: 'Land'}
+    {label: 'APK - Synkende', value: {APK: -1} },
+    {label: 'APK - Stigende', value: {APK: 1} },
+    {label: 'Navn - Stigende', value: {Navn: 1} },
+    {label: 'Navn - Synkende', value: {Navn: -1}},
+    {label: 'Pris - Stigende', value: {Pris: 1}},
+    {label: 'Pris - Synkende', value: {Pris: -1}},
+    {label: 'Land - Stigende', value: {Land: 1}},
+    {label: 'Land - Synkende', value: {Land: -1}},
   ];
   selectedSortOption = this.availableSortOptions[0];
   productTypeFilters = [];
@@ -25,7 +30,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   activeFilters = {
     productTypes: [],
     countries: []
-  };
+  }
   // AutoComplete
   autoCompleteResults = [];
   // Loading

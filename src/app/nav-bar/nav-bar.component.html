@@ -8,7 +8,7 @@
             <div class="input-group">
               <input class="form-control" type="text" placeholder="Søk" [value]="value" #search (click)="handleKeyUp(search.value)" (keyup)="handleKeyUp(search.value, $event)">
               <div class="input-group-btn">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Søk</button>
+                <button class="btn btn-primary" type="submit">Søk</button>
               </div>
             </div>
             <ul style="padding: 0 !important;cursor: pointer;"class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">

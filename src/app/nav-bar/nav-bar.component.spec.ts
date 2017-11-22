@@ -20,10 +20,6 @@ import { DataService } from '../data.service';
 
 // Targetted test subject - a service or a component
 import { NavBarComponent } from './nav-bar.component';
-import { ProductListComponent } from '../product-list/product-list.component';
-import { RegisterComponent } from '../register/register.component';
-import { LoginComponent } from '../login/login.component';
-import { MyPageComponent } from '../my-page/my-page.component';
 
 // Dummy component for router routes
 @Component({

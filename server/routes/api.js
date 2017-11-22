@@ -52,6 +52,17 @@ router.get('/products', (req, res,next) => {
   });
 });
 
+router.get('/specificProduct', (req, res) => {
+  Product.getProductByNumber(req.query.search, function (err, product) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({product});
+  });
+});
+
 router.get('/productsById', (req, res, next) => {
   Product.getProductsById(req.query.idList, function (err, product) {
     if (err) {

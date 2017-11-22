@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, OnChanges} from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
@@ -16,13 +16,15 @@ export class NavBarComponent implements OnInit, OnDestroy {
   isCollapsed: Boolean;
   value: string;
   navSubscription: Subscription;
+  loggedInUser: object;
   autoCompleteResults = [];
 
   constructor(
-    private navSearchService: NavSearchService,
+    private authService: AuthService,
     private dataService: DataService,
+    private navSearchService: NavSearchService,
     private router: Router
-    ) {
+  ) {
     this.navSubscription  = this.navSearchService
       .getSearchValue()
       .subscribe(value => {
@@ -33,8 +35,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isCollapsed = true;
     this.value = '';
+
+    this.authService.loggedIn();
+    this.authService.currentUser.subscribe(observedUser =>
+      this.loggedInUser = observedUser);
   }
 
+  // Should be used to show search suggestions
   handleKeyUp(value, event) {
     this.value = value;
     const eventKey = event ? event.key : '';
@@ -45,7 +52,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
         .subscribe(result => {
           this.autoCompleteResults = result.product;
         })
-    : this.autoCompleteResults = [];
+      : this.autoCompleteResults = [];
   }
 
   getProducts(query: string) {
@@ -62,5 +69,16 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.navSubscription.unsubscribe();
+  }
+
+  onLogoutClick() {
+    this.authService.logout().subscribe(res => {
+      if (res.success) {
+        console.log('User logged out on serverside successfully');
+        this.authService.changeUser(null);
+        window.location.reload();
+        this.router.navigate(['/']);
+      }
+    });
   }
 }

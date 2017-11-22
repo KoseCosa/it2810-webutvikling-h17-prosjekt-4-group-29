@@ -1,10 +1,12 @@
 // Angular essential imports
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { CollapseModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import {AgWordCloudModule} from 'angular4-word-cloud';
 
 // Custom-made services imports
 import { AuthService } from './auth.service';
@@ -24,13 +26,13 @@ import { RegisterComponent } from './register/register.component';
 import { SpecificProductComponent } from './specific-product/specific-product.component';
 
 const appRoutes: Routes =  [
-  { path: '', component: FrontPageComponent },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent }, // TODO auth: canActivate:[AuthGuard]
   { path: 'mypage', component: MyPageComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'products/:varenummer', component: SpecificProductComponent },
-  { path: '**', component: ProductListComponent }
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -52,9 +54,10 @@ const appRoutes: Routes =  [
       appRoutes
     ),
     FormsModule,
-    CollapseModule
+    CollapseModule,
+    AgWordCloudModule.forRoot()
   ],
-  providers: [DataService, AuthService, ValidateService, NavSearchService],
+  providers: [DataService, AuthService, ValidateService, NavSearchService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

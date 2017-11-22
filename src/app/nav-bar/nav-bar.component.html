@@ -1,41 +1,44 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" routerLink="/" routerLinkActive="active">iDrink</a>
-  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
-    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarColor01" [collapse]="isCollapsed">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
-      </li>
-      <li class="nav-item" *ngIf="!loggedInUser">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
-      </li>
-      <li class="nav-item" *ngIf="loggedInUser">
-        <a class="nav-link" routerLink="/logout" routerLinkActive="active">Logout</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/mypage" routerLinkActive="active">My Page</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0" autocomplete="off" (submit)="getProducts()">
-        <div class="dropdown">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" [value]="value" #search (click)="handleKeyUp(search.value)" (keyup)="handleKeyUp(search.value, $event)">
-        <ul class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">
-          <li class="list-group-item action mr-sm-2" *ngFor="let result of autoCompleteResults" type="submit" (click)="handleListEvent($event)">
-            {{ result.Varenavn }}
-          </li>
-        </ul>
-      </div>
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+<div class="bg-primary">
+  <div class="my-bg bg-primary">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" routerLink="/" routerLinkActive="active">iDrink</a>
+        <form class="form-inline my-2 my-lg-0 mr-auto" autocomplete="off" (submit)="getProducts()">
+          <div class="dropdown">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Search" [value]="value" #search (click)="handleKeyUp(search.value)" (keyup)="handleKeyUp(search.value, $event)">
+              <div class="input-group-btn">
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+              </div>
+            </div>
+            <ul class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">
+              <li class="list-group-item action mr-sm-2" *ngFor="let result of autoCompleteResults" type="submit" (click)="handleListEvent($event)">
+                {{ result.Varenavn }}
+              </li>
+            </ul>
+          </div>
+        </form>
+        <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
+          aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01" [collapse]="isCollapsed">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item" *ngIf="loggedInUser" >
+              <a class="nav-link" routerLink="/mypage" routerLinkActive="active">My Page</a>
+            </li>
+            <li class="nav-item" *ngIf="!loggedInUser">
+              <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+            </li>
+            <li class="nav-item" *ngIf="!loggedInUser">
+              <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedInUser">
+              <a class="nav-link" (click)="onLogoutClick()" routerLink="/">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </div>
-</nav>
+</div>

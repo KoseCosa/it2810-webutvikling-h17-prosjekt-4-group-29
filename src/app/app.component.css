@@ -3,7 +3,7 @@ main {
   margin: auto;
   padding-top: 10px;
   max-width: 1200px;
-  width: 65%;
+  width: 100%;
 }
 
 @media screen and (max-width: 1000px) and (min-width: 600px) {

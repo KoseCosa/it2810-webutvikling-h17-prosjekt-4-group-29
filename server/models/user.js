@@ -5,23 +5,16 @@ const bcrypt = require('bcrypt');
 const logger = require('../../logger.js');
 
 const User = module.exports = mongoose.model('User', new Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true
   },
-  email: {
-    type: String,
-    required: true
-  },
-  username: {
-    type: String,
-    required: true
-  },
   password: {
     type: String,
     required: true
-  }
+  },
+  favorites: []
 }));
 
 
@@ -37,14 +30,13 @@ module.exports.getSpecificUser = function(query,callback){
 
 module.exports.insertUser = function(user,callback){
   let account = new User({
-    name : user.name,
-    email : user.email,
     password : user.password,
     username : user.username
   });
-
+  console.log('Inserting User');
   bcrypt.genSalt(15, function(error, salt) {
     if (error) {
+      console.log('Something went wrong generating salt:' + error);
       logger.error('Something went wrong generating salt:' + error);
       throw error;
     }
@@ -52,10 +44,12 @@ module.exports.insertUser = function(user,callback){
       bcrypt.hash(account.password, salt, function(err, hash) {
         // Store hash in your password DB.
         if (err) {
+          console.log('Something went wrong generating hash:' + err);
           logger.error('Something went wrong generating hash:' + err);
           throw err;
         }
         if (hash) {
+          console.log('hash made')
           account.password = hash;
           account.save(callback);
         }
@@ -68,7 +62,7 @@ module.exports.insertUser = function(user,callback){
 module.exports.checkUsernameTaken = function(query,callback){
   User.findOne(({username:query}),function(error,success){
     if (error){
-      logger.error("Something went wrong finding one username in db:"+ error);
+      logger.error('Something went wrong finding one username in db:'+ error);
       throw error;
     }
     if(!success){
@@ -89,4 +83,24 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
     callback(null, isMatch);
   });
+};
+
+module.exports.updateFavorites = function(_id, favorite, callback) {
+  User.findByIdAndUpdate(
+    {_id},
+    {$push: {'favorites': favorite}},
+    callback
+  )
+};
+
+module.exports.removeFavorites = function(_id, favorite, callback) {
+  User.findByIdAndUpdate(
+    {_id},
+    {$pull: {'favorites': favorite}},
+    callback
+  )
+};
+
+module.exports.getFavorites = function(id, callback) {
+  User.findOne({_id: id}).select('favorites').exec(callback);
 };

@@ -15,12 +15,12 @@ export class AuthService {
   ) { }
 
   changeUser(newUser: any) {
-    console.log('New user beeing added:' + newUser);
     this.user.next(newUser);
   }
 
   register(user) {
     const headers = new Headers();
+    console.log(JSON.stringify(user));
     headers.append('Content-Type', 'application/json');
     return this._http.post('http://localhost:3000/api/registerUser', user, {headers: headers})
       .map(res => res.json());
@@ -38,8 +38,21 @@ export class AuthService {
   loggedIn () {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get('http://localhost:3000/api/loggedIn', {headers: headers,
-      withCredentials: true})
+    const return_value = this._http.get('http://localhost:3000/api/loggedIn', {headers: headers,
+      withCredentials: true}).subscribe(data => {
+        this.user.next(data.json().user);
+      }
+    );
+    return return_value;
+  }
+
+  logout() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/logout',
+      {headers: headers, withCredentials: true})
       .map(res => res.json());
   }
+
+
 }

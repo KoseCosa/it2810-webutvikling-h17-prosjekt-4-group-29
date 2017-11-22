@@ -11,18 +11,24 @@ const app = express();
 var logger = require('./logger.js');  // Usage of winston logger.
 
 // Connection URL
-var url = 'mongodb://admin:admin@ds025399.mlab.com:25399/cosa'; // LocalHost: 'mongodb://localhost:27017/project4'
-//var url  = 'mongodb://localhost:27017/project4';
-mongoose.connect(url, {useMongoClient:true});
+var url = ['mongodb://admin:admin@ds025399.mlab.com:25399/cosa','mongodb://localhost:27017/project4']
+mongoose.connect(url[1], {useMongoClient:true});
 
 // On Connection
 mongoose.connection.on('connected', () => {
-  logger.info('Connected to database on '+ url);
 });
-
 // On Error
 mongoose.connection.on('error', (err) => {
-  logger.error('Database error:' + err);
+  logger.error('Database error:' + err+ 'Trying to connect to:' + url[1] + ' instead.');
+  logger.error('Trying to connect to:' + url[1] + ' instead.');
+  try{
+    mongoose.connect(url[0], {useMongoClient:true});
+    console.log('Connected to database on '+ url[0]);
+  }
+  catch(error){
+    logger.error('Database error:' + err);
+    throw errror;
+  }
 });
 
 // API file for interacting with MongoDB
@@ -60,7 +66,7 @@ app.use(function (req, res, next) {
 app.use(session({
   secret: 'mgd;|*<!w,;|/h/e7r+w;^9?c2f/_',
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection, ttl:2* 60*1000 }),
   cookie: { secure: false, maxAge:null }
 }));

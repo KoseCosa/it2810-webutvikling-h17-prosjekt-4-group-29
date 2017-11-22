@@ -40,8 +40,17 @@ const Product = module.exports = mongoose.model('Product', new Schema({
   Distributor: String,
   Emballasjetype: String,
   Korktype: String,
-  Vareurl: String
+  Vareurl: String,
+  APK: SchemaTypes.Double
 }));
+
+module.exports.getAllProductTypes = function(callback){
+  Product.find().distinct('Varetype',callback).lean();
+};
+
+module.exports.getAllCountries = function(callback){
+  Product.find().distinct('Land',callback).lean();
+};
 
 module.exports.getOneProduct = function(callback){
   Product.findOne(callback).lean();
@@ -57,15 +66,21 @@ module.exports.getProductsInRange = function(callback){
 
 module.exports.getProducts = function(search, callback) {
   search = JSON.parse(search)
-  const searchRegEx = new RegExp(search.value, "i")
+  const searchRegEx = new RegExp(search.value ? search.value : '', 'i');
+  const land = search.filters.countries;
+  const varetype = search.filters.productTypes;
+
   Product
-  .find(callback)
+  .find({
+    Land: land.length > 0 ? {$in: land} : /.*/g,
+    Varetype: varetype.length > 0 ? {$in: varetype} : /.*/g
+  }, callback)
   .or([
     {Varenavn: {$regex: searchRegEx}},
     {Varetype: {$regex: searchRegEx}},
     {Land: {$regex: searchRegEx}}])
-  .sort('Varenavn')
-  .limit(21)
+  .sort((search.sort ? search.sort : {APK: -1}))
+  .limit(search.limit ? search.limit : 20)
   .skip(search.startIndex)
   .lean();
 };
@@ -86,3 +101,36 @@ module.exports.getProductByNumber = (search, callback) => {
   search = parseInt(search);
   Product.findOne({Varenummer: search}, callback).lean();
 };
+
+module.exports.getProductsById = function(idList, callback) {
+  Product.find({
+    '_id': {
+      $in: idList
+    }
+  }).exec(callback)
+};
+
+/* setsAPK for all products should not be used unless update is necessary
+module.exports.setApk = function() {
+  Product.find((err, products) => {
+      if(err){
+        console.log('error')
+      } //do something...
+      let count = 0
+      products.map(product => {
+        if (product.Pris && product.Volum && product.Alkohol){
+          count ++
+          console.log(count,' productID: ',product._id,' Pris: ',product.Pris.value,' Volum: ',product.Volum.value,' AlkoholProsent: ',product.Alkohol.value,' APK: ',(((product.Volum.value * 1000) * (product.Alkohol.value / 100)) / product.Pris.value))
+          Product.update(
+           {_id: product._id},
+           {APK : (((product.Volum.value * 1000) * (product.Alkohol.value / 100)) / product.Pris.value)},
+           {multi:true},
+             function(err, numberAffected){
+               console.log(err)
+               console.log(numberAffected)
+          });
+        }
+      })
+  })
+};
+*/

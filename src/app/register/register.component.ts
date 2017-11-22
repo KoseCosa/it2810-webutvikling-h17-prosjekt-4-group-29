@@ -10,8 +10,11 @@ import { ValidateService } from '../validate.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-    username: String;
-    password: String;
+  username: String;
+  password: String;
+  registerError: boolean;
+  emptyUser: boolean;
+  emptyPass: boolean;
 
   constructor(
     private authService: AuthService,
@@ -28,6 +31,15 @@ export class RegisterComponent implements OnInit {
       password: this.password
     };
 
+
+    if (! this.username || this.username.length === 0) {
+      this.emptyUser = true;
+    }
+
+    if (! this.password || this.password.length === 0) {
+      this.emptyPass = true;
+    }
+
     // Validation of fields
     if (!this.validateService.validateRegisterFields(user)) {
       return false;
@@ -36,16 +48,17 @@ export class RegisterComponent implements OnInit {
     // Register user
     this.authService.register(user).subscribe(response => {
       if (response.success) {
-        this.authService.login(user).subscribe(response => {
-          if (response.success) {
+        this.authService.login(user).subscribe(res => {
+          if (res.success) {
+            this.registerError = false;
             this.authService.changeUser(response.user);
             this.router.navigate(['/mypage']);
           } else {
             console.log('error');
           }
         });
-      }
-      else {
+      } else {
+        this.registerError = true;
         this.router.navigate(['/register']);
       }
     });

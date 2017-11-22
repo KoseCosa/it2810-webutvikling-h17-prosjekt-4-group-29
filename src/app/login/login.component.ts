@@ -15,6 +15,9 @@ export class LoginComponent implements OnInit {
   loggedInUser: any;
   username: String;
   password: String;
+  loginError: boolean;
+  emptyUser: boolean;
+  emptyPass: boolean;
 
   constructor(
     private authService: AuthService,
@@ -35,17 +38,25 @@ export class LoginComponent implements OnInit {
       password: this.password
     };
 
+    if (! this.username || this.username.length === 0) {
+      this.emptyUser = true;
+    }
+
+    if (! this.password || this.password.length === 0) {
+      this.emptyPass = true;
+    }
+
     if (!this.validateService.validateLoginFields(user)) {
-      console.log('err');
       return false;
     }
 
     this.authService.login(user).subscribe(response => {
       if (response.success) {
+        this.loginError = false;
         this.authService.changeUser(response.user);
         this.router.navigate(['/mypage']);
       } else {
-        console.log('error');
+        this.loginError = true;
       }
     });
   }

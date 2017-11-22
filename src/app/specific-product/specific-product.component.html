@@ -30,7 +30,7 @@
               <h5 class="card-title" *ngIf="product.Pris"><b>Pris:</b></h5>
               <h5 class="card-title">{{ product.Pris }},-</h5>
               <h5 class="card-title" *ngIf="product.Volum"><b>Volum:</b></h5>
-              <h5 class="card-title">{{ product.Volum }} liter</h5>
+              <h5 class="card-title">{{ product.Volum * 1000 }} ml</h5>
               <h5 class="card-title" *ngIf="product.Varetype"><b>Varetype:</b></h5>
               <h5 class="card-title">{{ product.Varetype }}</h5>
               <h5 class="card-title" *ngIf="product.Alkohol"><b>Alkoholprosent:</b></h5>

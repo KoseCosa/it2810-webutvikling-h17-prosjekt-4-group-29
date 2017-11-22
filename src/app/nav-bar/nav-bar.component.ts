@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   value: string;
   navSubscription: Subscription;
   loggedInUser: object;
+  username = '';
   autoCompleteResults = [];
 
   constructor(
@@ -37,8 +38,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.value = '';
 
     this.authService.loggedIn().subscribe(res => this.authService.changeUser(res.user));
-    this.authService.currentUser.subscribe(observedUser =>
-      this.loggedInUser = observedUser);
+    this.authService.currentUser.subscribe(observedUser => {
+      this.loggedInUser = observedUser;
+      if (observedUser) {
+        this.username = observedUser.username;
+      }
+    });
   }
 
   // Should be used to show search suggestions

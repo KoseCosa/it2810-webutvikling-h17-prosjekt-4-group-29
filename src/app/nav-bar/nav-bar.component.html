@@ -19,11 +19,14 @@
           </div>
         </form>
         <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
-          aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01" [collapse]="isCollapsed">
           <ul class="navbar-nav ml-auto">
+            <li class="nav-item" *ngIf="loggedInUser">
+              <a class="nav-link active">{{username}}</a>
+            </li>
             <li class="nav-item" *ngIf="loggedInUser" >
               <a class="nav-link" routerLink="/mypage" routerLinkActive="active">Min Side</a>
             </li>

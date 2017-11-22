@@ -10,6 +10,7 @@ import { ValidateService } from '../validate.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  display = false;
   username: String;
   password: String;
   registerError: boolean;
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit {
       if (res.success) {
         this.router.navigate(['/unauthorized']);
       }
+      this.display = true;
     });
   }
 

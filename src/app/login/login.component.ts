@@ -11,7 +11,7 @@ import { ValidateService } from '../validate.service';
 })
 
 export class LoginComponent implements OnInit {
-
+  display = false;
   loggedInUser: any;
   username: String;
   password: String;
@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
     this.authService.currentUser.subscribe(observedUser => this.loggedInUser = observedUser);
     this.authService.loggedIn().subscribe(res => {
       if (res.success) {
-        console.log(res);
         this.router.navigate((['/unauthorized']));
       }
+      this.display = true;
     });
   }
 

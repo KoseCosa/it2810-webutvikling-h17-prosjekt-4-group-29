@@ -15,6 +15,7 @@ import { AuthService } from '../auth.service';
 })
 
 export class MyPageComponent implements OnInit {
+  display = false;
   loggedInUser: any;
   products = [];
   userFavorites = [];
@@ -44,6 +45,7 @@ export class MyPageComponent implements OnInit {
       if (!res.success) {
         this.router.navigate(['unauthorized']);
       }
+      this.display = true;
     });
     this.authService.currentUser.subscribe(observedUser => {
       this.loggedInUser = observedUser;
@@ -93,7 +95,6 @@ export class MyPageComponent implements OnInit {
       }
     });
     if (lowest === highest || tempWordData.length === 1) {
-      console.log(tempWordData.length);
       return [
         {size: 10, text: 'Legg'},
         {size: 11, text: 'Til'},
@@ -105,7 +106,7 @@ export class MyPageComponent implements OnInit {
     }
   }
 
-  onButtonClick(objectID) {
+  removeFavorite(objectID) {
     if (!this.userFavorites.includes(objectID)) {
       window.alert('Something went wrong, this should not be here!?');
     } else {

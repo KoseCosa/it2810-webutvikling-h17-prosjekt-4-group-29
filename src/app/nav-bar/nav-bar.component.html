@@ -12,7 +12,7 @@
               </div>
             </div>
             <ul style="padding: 0 !important;cursor: pointer;"class="list-group dropdown-menu" *ngIf="autoCompleteResults.length > 0">
-              <li class="list-group-item list-group-item-action" *ngFor="let result of autoCompleteResults" (click)="handleListEvent($event)">
+              <li class="list-group-item list-group-item-action" *ngFor="let result of autoCompleteResults" (click)="handleListEvent(result)">
                 {{ result.Varenavn }}
               </li>
             </ul>

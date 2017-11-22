@@ -31,6 +31,10 @@
               <h5 class="card-title">{{ product.Varetype }}</h5>
               <h5 class="card-title" *ngIf="product.Alkohol"><b>Alkoholprosent:</b></h5>
               <h5 class="card-title">{{ product.Alkohol + '%' }}</h5>
+              <h5 class="card-title" *ngIf="passerTil"><b>Passer til:</b></h5>
+              <h5 class="card-title">{{ passerTil }}</h5>
+              <h5 class="card-title" *ngIf="product.Lagringsgrad"><b>Lagringsgrad:</b></h5>
+              <h5 class="card-title">{{ product.Lagringsgrad }}</h5>
               <h5 class="card-title" *ngIf="product.Lukt"><b>Lukt:</b></h5>
               <h5 class="card-title">{{ product.Lukt }}</h5>
               <h5 class="card-title" *ngIf="product.Farge"><b>Farge:</b></h5>
@@ -39,8 +43,8 @@
               <h5 class="card-title">{{ product.Metode }}</h5>
               <h5 class="card-title" *ngIf="product.Produsent"><b>Produsent:</b></h5>
               <h5 class="card-title">{{ product.Produsent }}</h5>
-              <h5 class="card-title"><b>Land og region:</b></h5>
-              <h5 class="card-title">{{ product.Land + ', ' + product.Distrikt + ', ' + product.Underdistrikt }}</h5>
+              <h5 class="card-title" *ngIf="land"><b>Land og region:</b></h5>
+              <h5 class="card-title">{{ land }}</h5>
               <h5 class="card-title" *ngIf="product.Rastoff"><b>Råstoff:</b></h5>
               <h5 class="card-title">{{ product.Rastoff }}</h5>
               <h5 class="card-title" *ngIf="product.Emballasjetype"><b>Emballasje:</b></h5>
@@ -54,7 +58,7 @@
         </div>
       </div>
       <div *ngIf="!product">
-        <h5><b>Produktet finnes ikke.</b></h5>
+        <h5><b>Produktet lastes inn eller finnes ikke.</b></h5>
         <h6><a routerLink="/" routerLinkActive="active">Klikk her</a> for å gå tilbake til hovedsiden.</h6>
       </div>
     </div>

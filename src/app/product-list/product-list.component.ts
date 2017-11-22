@@ -16,10 +16,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Search
   searchValue = '';
   availableSortOptions = [
-    {label: 'APK - Synkende', value: {APK: -1} },
-    {label: 'APK - Stigende', value: {APK: 1} },
-    {label: 'Navn - Stigende', value: {Navn: 1} },
-    {label: 'Navn - Synkende', value: {Navn: -1}},
+    {label: 'APK - Synkende', value: {APK: -1}},
+    {label: 'APK - Stigende', value: {APK: 1}},
+    {label: 'Navn - Stigende', value: {Varenavn: 1}},
+    {label: 'Navn - Synkende', value: {Varenavn: -1}},
     {label: 'Pris - Stigende', value: {Pris: 1}},
     {label: 'Pris - Synkende', value: {Pris: -1}},
     {label: 'Land - Stigende', value: {Land: 1}},

@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+// Third-party angular modules used
 import {AgWordCloudModule} from 'angular4-word-cloud';
 
 // Custom-made services imports
@@ -16,7 +17,6 @@ import { NavSearchService } from './nav-search.service';
 
 // Custom-made component imports
 import { AppComponent } from './app.component';
-import { FrontPageComponent } from './front-page/front-page.component';
 import { LoginComponent } from './login/login.component';
 import { MyPageComponent } from './my-page/my-page.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -24,6 +24,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
 
+// Routes used in Navbar & the angular router module
 const appRoutes: Routes =  [
   { path: '', component: ProductListComponent},
   { path: 'register', component: RegisterComponent },
@@ -39,7 +40,6 @@ const appRoutes: Routes =  [
     NavBarComponent,
     MyPageComponent,
     PageNotFoundComponent,
-    FrontPageComponent,
     LoginComponent,
     RegisterComponent,
     ProductListComponent

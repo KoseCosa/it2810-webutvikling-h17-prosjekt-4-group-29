@@ -40,6 +40,11 @@ export class MyPageComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
+    this.authService.loggedIn().subscribe(res => {
+      if (!res.success) {
+        this.router.navigate(['unauthorized']);
+      }
+    });
     this.authService.currentUser.subscribe(observedUser => {
       this.loggedInUser = observedUser;
       this.updateProductList();

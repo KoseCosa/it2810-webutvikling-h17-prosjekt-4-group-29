@@ -23,6 +23,11 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.loggedIn().subscribe( res => {
+      if (res.success) {
+        this.router.navigate(['/unauthorized']);
+      }
+    });
   }
 
   onSubmitClick() {

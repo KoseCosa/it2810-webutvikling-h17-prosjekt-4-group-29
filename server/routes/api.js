@@ -170,7 +170,7 @@ router.get('/loggedIn', (req, res) => {
   if (req.session.auth) {
     return res.json({success: true, auth: req.session.auth, user: req.session.user});
   } else {
-    return res.json({success: true, msg: "No session found", user: null});
+    return res.json({success: false, msg: "No session found", user: null});
   }
 });
 

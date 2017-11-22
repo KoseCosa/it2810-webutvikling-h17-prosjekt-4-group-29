@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import {AgWordCloudModule} from 'angular4-word-cloud';
+
 // Custom-made services imports
 import { AuthService } from './auth.service';
 import { DataService } from './data.service';
@@ -49,7 +51,8 @@ const appRoutes: Routes =  [
       appRoutes
     ),
     FormsModule,
-    CollapseModule
+    CollapseModule,
+    AgWordCloudModule.forRoot()
   ],
   providers: [DataService, AuthService, ValidateService, NavSearchService],
   bootstrap: [AppComponent]

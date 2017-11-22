@@ -1,4 +1,20 @@
 <div class="card">
+  <div *ngIf="loaded | async; else elseblock">
+    <h3 class="card-header">Favorite Types:</h3>
+    <div class="wordCloud">
+      <div
+              AgWordCloud
+              [wordData]="wordData"
+              [options]="options">
+      </div>
+    </div>
+  </div>
+  <ng-template #elseblock>
+    <h3 class="card-header">Du har ikke nok varer, eller ikke nok variasjon i varene for ordskyen</h3>
+    <br>
+  </ng-template>
+</div>
+<div class="card">
   <h2 class="card-header">Favorite List</h2>
   <div class="card-body">
     <div class="row">

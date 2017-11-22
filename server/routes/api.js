@@ -15,7 +15,15 @@ router.get('/producttypes', (req, res) => {
     res.json({productTypes});
   });
 });
-
+router.get('/countries', (req, res) => {
+  Product.getAllCountries(function (err, countries) {
+    if (err) {
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({countries});
+  });
+});
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res) => {
   User.getAllUsers(function (err, user) {
@@ -86,13 +94,8 @@ router.get('/autocomplete', (req, res,next) => {
 
 // User registration process + making sure the username isnt taken
 router.post('/registerUser', (req,res) => {
-  if (req.body.email &&
-    req.body.username &&
-    req.body.password &&
-    req.body.password){
+  if (req.body.username && req.body.password){
     let account = new User({
-      name: req.body.name,
-      email: req.body.email,
       password: req.body.password,
       username: req.body.username
     });

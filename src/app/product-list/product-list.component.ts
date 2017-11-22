@@ -15,15 +15,22 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Search
   searchValue = '';
   availableSortOptions = [
-    {label: 'Navn', value: 'Varenavn' },
-    {label: 'Pris', value: 'Pris'},
-    {label: 'Land', value: 'Land'}
+    {label: 'APK - Synkende', value: {APK: -1} },
+    {label: 'APK - Stigende', value: {APK: 1} },
+    {label: 'Navn - Stigende', value: {Navn: 1} },
+    {label: 'Navn - Synkende', value: {Navn: -1}},
+    {label: 'Pris - Stigende', value: {Pris: 1}},
+    {label: 'Pris - Synkende', value: {Pris: -1}},
+    {label: 'Land - Stigende', value: {Land: 1}},
+    {label: 'Land - Synkende', value: {Land: -1}},
   ];
   selectedSortOption = this.availableSortOptions[0];
   productTypeFilters = [];
+  countryFilters = [];
   activeFilters = {
-    productTypes: []
-  };
+    productTypes: [],
+    countries: []
+  }
   // AutoComplete
   autoCompleteResults = [];
   // Loading
@@ -34,6 +41,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   navSubscription: Subscription;
   // GUI
   showFilters = false;
+  showProductTypeFilters = false;
+  showCountriesFilters = false;
 
   constructor(
     private _dataService: DataService,
@@ -60,6 +69,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.loadMore();
       }
     };
+
+    this._dataService
+    .getCountries()
+    .subscribe(res => {
+      this.countryFilters = res.countries.map(function(country, index){
+        return {name: country, state: false}
+      });
+    });
 
     this._dataService
     .getProductTypes()
@@ -98,7 +115,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
           this.products = this.products.concat(res.product);
           this.loadingMore = false;
           // TODO: Implement dataAvailable update based on total query hits instead
-          this.dataAvailable = res.product.length < 21 ? false : true;
+          this.dataAvailable = res.product.length < 20 ? false : true;
         });
     }
   }
@@ -107,13 +124,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   reload(): void {
-    this.setActiveFilters();
-
     const searchObject = {
       value: this.searchValue,
       startIndex: 0,
       skip: 0,
-      limit: this.products.length,
+      limit: this.products.length > 20 ? this.products.length : 20,
       sort: this.selectedSortOption.value,
       filters: this.activeFilters
     };
@@ -124,24 +139,29 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.products = res.product;
       this.loadingMore = false;
       // TODO: Implement dataAvailable update based on total query hits instead
-      this.dataAvailable = res.product.length < 21 ? false : true;
+      this.dataAvailable = res.product.length < 20 ? false : true;
     });
   }
   setActiveFilters(): void {
+    this.showFilters = !this.showFilters
     this.activeFilters = {
       productTypes: this.productTypeFilters.filter(function(productType){
         return productType.state;
       }).map(function(producType){
         return producType.name;
-      })
+      }),
+      countries: this.countryFilters.filter(function(country){
+        return country.state;
+      }).map(function(country){
+        return country.name;
+      }),
     }
+    this.reload();
   }
 
 
   search(): void {
     this.autoCompleteResults = [];
-
-    this.setActiveFilters();
 
     const searchObject = {
       value: this.searchValue,
@@ -154,7 +174,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       .getProducts(searchObject)
       .subscribe(res => {
         this.products = res.product;
-        this.dataAvailable = res.product.length < 21 ? false : true;
+        this.dataAvailable = res.product.length < 20 ? false : true;
       });
   }
 

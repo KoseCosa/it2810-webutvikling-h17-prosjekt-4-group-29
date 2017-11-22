@@ -10,9 +10,7 @@ import { ValidateService } from '../validate.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-    name: String;
     username: String;
-    email: String;
     password: String;
 
   constructor(
@@ -26,8 +24,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmitClick() {
     const user = {
-      name: this.name,
-      email: this.email,
       username: this.username,
       password: this.password
     };
@@ -40,8 +36,16 @@ export class RegisterComponent implements OnInit {
     // Register user
     this.authService.register(user).subscribe(response => {
       if (response.success) {
-        this.router.navigate(['/login']);
-      } else {
+        this.authService.login(user).subscribe(response => {
+          if (response.success) {
+            this.authService.changeUser(response.user);
+            this.router.navigate(['/mypage']);
+          } else {
+            console.log('error');
+          }
+        });
+      }
+      else {
         this.router.navigate(['/register']);
       }
     });

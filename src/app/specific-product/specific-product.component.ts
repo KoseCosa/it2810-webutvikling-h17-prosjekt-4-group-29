@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-specific-product',
@@ -13,6 +14,7 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
 
   id: Number;
   loggedInUser = Object;
+  routerSubscription: Subscription;
   product;
 
   constructor(
@@ -26,8 +28,14 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
+    this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       this.id = parseInt(params['varenummer'], 10);
+      this.dataService
+        .getSpecificProduct(this.id)
+        .subscribe(value => {
+          this.product = value.json().product;
+          this.titleService.setTitle(this.product.Varenavn);
+      });
     });
 
     this.authService.currentUser.subscribe(observedUser => {
@@ -38,13 +46,6 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
         this.loggedInUser = observedUser;
       }
     });
-
-    this.dataService
-      .getSpecificProduct(this.id)
-      .subscribe(value => {
-        this.product = value.json().product;
-        this.titleService.setTitle(this.product.Varenavn);
-      });
   }
 
   getImgSrc(productNumber) {
@@ -77,5 +78,6 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.titleService.setTitle('iDrink');
+    this.routerSubscription.unsubscribe();
   }
 }

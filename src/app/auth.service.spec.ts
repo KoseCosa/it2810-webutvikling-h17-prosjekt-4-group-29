@@ -43,7 +43,7 @@ describe('AuthService', () => {
         // Check the request method
         expect(connection.request.method).toEqual(RequestMethod.Post);
         // Check the url
-        expect(connection.request.url).toEqual('http://localhost:3000/api/authenticate');
+        expect(connection.request.url).toEqual('http://localhost:8084/api/authenticate');
         // Check the body
         // Check the request headers
         expect(connection.request.headers.get('Content-Type')).toEqual('application/json');
@@ -69,7 +69,7 @@ describe('AuthService', () => {
       // Check the request method
       expect(connection.request.method).toEqual(RequestMethod.Get);
       // Check the url
-      expect(connection.request.url).toEqual('http://localhost:3000/api/logout');
+      expect(connection.request.url).toEqual('http://localhost:8084/api/logout');
       // Check the body
       // Check the request headers
       expect(connection.request.headers.get('Content-Type')).toEqual('application/json');

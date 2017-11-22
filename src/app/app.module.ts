@@ -24,6 +24,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
 import { SpecificProductComponent } from './specific-product/specific-product.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 // Routes used in Navbar & the angular router module
 const appRoutes: Routes =  [
@@ -33,6 +34,7 @@ const appRoutes: Routes =  [
   { path: 'mypage', component: MyPageComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'products/:varenummer', component: SpecificProductComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -45,7 +47,8 @@ const appRoutes: Routes =  [
     LoginComponent,
     RegisterComponent,
     ProductListComponent,
-    SpecificProductComponent
+    SpecificProductComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,

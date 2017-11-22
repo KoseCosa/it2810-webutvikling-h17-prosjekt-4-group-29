@@ -79,6 +79,32 @@ router.get('/userFavorites', (req, res, next) => {
   });
 });
 
+router.get('/userFavoriteObjects', (req, res) => {
+  User.getFavorites(req.query.user, function(err, favorites) {
+    if (err) {
+      throw err;
+    }
+    Product.getProductsById(favorites.favorites, function(err, products) {
+      if (err) {
+        throw err;
+      }
+      res.json({products});
+    });
+  });
+});
+
+// TODO: Modify the query to be req.querySearch (when angular have implemented it in html)
+router.get('/specificProducts', (req, res) => {
+  Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}), function (err, products) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({product});
+  });
+});
+
 router.get('/autocomplete', (req, res,next) => {
   Product.getAutoComplete(req.query.search, function (err, product) {
     if (err) {
@@ -158,6 +184,7 @@ router.post('/addFavorites', (req, res) => {
     if (err) {
       console.log(err);
     }
+    res.json({success: true});
   });
 });
 

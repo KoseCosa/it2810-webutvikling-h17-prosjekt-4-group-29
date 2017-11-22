@@ -98,7 +98,7 @@ module.exports.getAutoComplete = function(search, callback) {
 };
 
 module.exports.getProductByNumber = (search, callback) => {
-  search = parseInt(search);
+  search = parseInt(search, 10);
   Product.findOne({Varenummer: search}, callback).lean();
 };
 

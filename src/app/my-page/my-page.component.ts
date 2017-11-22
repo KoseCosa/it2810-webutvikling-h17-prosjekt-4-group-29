@@ -45,18 +45,20 @@ export class MyPageComponent implements OnInit {
 
   updateProductList() {
     if (this.loggedInUser) {
-      this._dataService.getUserFavorites(this.loggedInUser._id).subscribe(result => {
-        this.userFavorites = result.favorites.favorites;
-        this._dataService.getProductsById(this.userFavorites).subscribe(products => {
-          this.products = products.product;
-          console.log(this.loaded);
-          this.wordData = this.populateWordCloud(products.product);
-          if (this.wordData[0]) {
-            this.loaded = Promise.resolve(true);
-          } else {
-            this.loaded = Promise.resolve(false);
-          }
+      this._dataService.getUserFavoriteObjects(this.loggedInUser._id).subscribe(result => {
+        this.products = result.products;
+        const tempFavorites = [];
+        result.products.map( function (product) {
+          tempFavorites.push(product._id);
         });
+        this.userFavorites = tempFavorites;
+        console.log(this.userFavorites);
+        this.wordData = this.populateWordCloud(result.products);
+        if (this.wordData[0]) {
+          this.loaded = Promise.resolve(true);
+        } else {
+          this.loaded = Promise.resolve(false);
+        }
       });
     }
   }

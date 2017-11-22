@@ -30,15 +30,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   activeFilters = {
     productTypes: [],
     countries: []
-  }
+  };
   // AutoComplete
   autoCompleteResults = [];
   // Loading
   loadingMore = false;
   dataAvailable = true;
+  favoriteRequest = false;
   products = [];
   // Subscriptions
   navSubscription: Subscription;
+  userFavoriteSub: Subscription;
   // GUI
   showFilters = false;
   showProductTypeFilters = false;
@@ -71,26 +73,26 @@ export class ProductListComponent implements OnInit, OnDestroy {
     };
 
     this._dataService
-    .getCountries()
-    .subscribe(res => {
-      this.countryFilters = res.countries.map(function(country, index){
-        return {name: country, state: false}
+      .getCountries()
+      .subscribe(res => {
+        this.countryFilters = res.countries.map(function(country, index){
+          return {name: country, state: false};
+        });
       });
-    });
 
     this._dataService
-    .getProductTypes()
-    .subscribe(res => {
-      this.productTypeFilters = res.productTypes.map(function(productType, index){
-        return {name: productType, state: false}
+      .getProductTypes()
+      .subscribe(res => {
+        this.productTypeFilters = res.productTypes.map(function(productType, index){
+          return {name: productType, state: false};
+        });
       });
-    });
   }
 
   ngOnInit() {
     this.authService.currentUser.subscribe(observedUser => {
       if (observedUser) {
-        this._dataService.getUserFavorites(observedUser._id).subscribe(userFavorites => {
+        this.userFavoriteSub = this._dataService.getUserFavorites(observedUser._id).subscribe(userFavorites => {
           observedUser['favorites'] = userFavorites.favorites.favorites;
         });
         this.loggedInUser = observedUser;
@@ -134,16 +136,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
     };
 
     this._dataService
-    .getProducts(searchObject)
-    .subscribe(res => {
-      this.products = res.product;
-      this.loadingMore = false;
-      // TODO: Implement dataAvailable update based on total query hits instead
-      this.dataAvailable = res.product.length < 20 ? false : true;
-    });
+      .getProducts(searchObject)
+      .subscribe(res => {
+        this.products = res.product;
+        this.loadingMore = false;
+        // TODO: Implement dataAvailable update based on total query hits instead
+        this.dataAvailable = res.product.length < 20 ? false : true;
+      });
   }
   setActiveFilters(): void {
-    this.showFilters = !this.showFilters
+    this.showFilters = !this.showFilters;
     this.activeFilters = {
       productTypes: this.productTypeFilters.filter(function(productType){
         return productType.state;
@@ -155,7 +157,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }).map(function(country){
         return country.name;
       }),
-    }
+    };
     this.reload();
   }
 
@@ -207,23 +209,30 @@ export class ProductListComponent implements OnInit, OnDestroy {
   addFavorite(newObjectID) {
     if (this.loggedInUser['favorites'].includes(newObjectID)) {
       window.alert('This one is allready among your loved ones!');
-    } else {
-      const tempUser = this.loggedInUser;
-      tempUser['favorites'].push(newObjectID);
-      const updateValues = [tempUser, newObjectID];
-      this._dataService.updateRemoteUser(updateValues);
+    } else if (!this.favoriteRequest) {
+      this.favoriteRequest = true;
+      this.userFavoriteSub.unsubscribe();
+      // const tempUser = this.loggedInUser;
+      this.loggedInUser['favorites'].push(newObjectID);
+      // tempUser['favorites'].push(newObjectID);
+      const updateValues = [this.loggedInUser, newObjectID];
+      this._dataService.updateRemoteUser(updateValues).subscribe( res => {
+        this.favoriteRequest = false;
+      });
     }
   }
 
   removeFavorite(objectID) {
     if (!this.loggedInUser['favorites'].includes(objectID)) {
       window.alert('Something went wrong, this should not be here!?');
-    } else {
+    } else if (!this.favoriteRequest) {
+      this.favoriteRequest = true;
       const tempUser = this.loggedInUser;
       const removeIndex = tempUser['favorites'].indexOf(objectID);
       tempUser['favorites'].splice(removeIndex, 1);
       const updateValues = [tempUser, objectID];
       this._dataService.removeUserFavorite(updateValues).subscribe( res => {
+        this.favoriteRequest = false;
       });
     }
   }

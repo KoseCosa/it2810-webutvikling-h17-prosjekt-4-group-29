@@ -17,8 +17,9 @@ export class MyPageComponent implements OnInit {
   loggedInUser: any;
   products = [];
   userFavorites = [];
-  wordData = [];
   loaded: Promise<boolean>;
+  wordData = [];
+  colors = ['d90a2d', 'ea2d44', 'e6535b', 'e86e59', 'ec7c55', 'ff24ba', 'ff54ba'];
   options = {
     settings: {
       minFontSize: 1,
@@ -45,18 +46,15 @@ export class MyPageComponent implements OnInit {
 
   updateProductList() {
     if (this.loggedInUser) {
-      this._dataService.getUserFavorites(this.loggedInUser._id).subscribe(result => {
-        this.userFavorites = result.favorites.favorites;
-        this._dataService.getProductsById(this.userFavorites).subscribe(products => {
-          this.products = products.product;
-          console.log(this.loaded);
-          this.wordData = this.populateWordCloud(products.product);
-          if (this.wordData[0]) {
-            this.loaded = Promise.resolve(true);
-          } else {
-            this.loaded = Promise.resolve(false);
-          }
+      this._dataService.getUserFavoriteObjects(this.loggedInUser._id).subscribe(result => {
+        this.products = result.products;
+        const tempFavorites = [];
+        result.products.map( function (product) {
+          tempFavorites.push(product._id);
         });
+        this.userFavorites = tempFavorites;
+        this.wordData = this.populateWordCloud(result.products);
+        this.loaded = Promise.resolve(true);
       });
     }
   }
@@ -87,9 +85,15 @@ export class MyPageComponent implements OnInit {
         tempWordData.push({size: 10, text: product.Varetype});
       }
     });
-    if (lowest === highest) {
-      return [false];
-    }else {
+    if (lowest === highest || tempWordData.length === 1) {
+      console.log(tempWordData.length);
+      return [
+        {size: 10, text: 'Legg'},
+        {size: 11, text: 'Til'},
+        {size: 12, text: 'Flere'},
+        {size: 13, text: 'Varer'}
+        ];
+    } else {
       return tempWordData;
     }
   }

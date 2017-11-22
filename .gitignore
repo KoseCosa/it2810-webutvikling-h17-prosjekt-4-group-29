@@ -273,5 +273,7 @@ $RECYCLE.BIN/
 
 databaseBackup/
 
+data/
+
 # Clas ignores
 .!13084!produkter.csv

@@ -22,14 +22,14 @@ export class AuthService {
     const headers = new Headers();
     console.log(JSON.stringify(user));
     headers.append('Content-Type', 'application/json');
-    return this._http.post('http://localhost:3000/api/registerUser', user, {headers: headers})
+    return this._http.post('http://localhost:8084/api/registerUser', user, {headers: headers})
       .map(res => res.json());
   }
 
   login(user) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.post('http://localhost:3000/api/authenticate', user,
+    return this._http.post('http://localhost:8084/api/authenticate', user,
       {headers: headers, withCredentials: true})
       .map(res => res.json());
   }
@@ -37,7 +37,7 @@ export class AuthService {
   loggedIn () {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    const return_value = this._http.get('http://localhost:3000/api/loggedIn', {headers: headers,
+    const return_value = this._http.get('http://localhost:8084/api/loggedIn', {headers: headers,
       withCredentials: true}).subscribe(data => {
         this.user.next(data.json().user);
       }
@@ -48,7 +48,7 @@ export class AuthService {
   logout() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get('http://localhost:3000/api/logout',
+    return this._http.get('http://localhost:8084/api/logout',
       {headers: headers, withCredentials: true})
       .map(res => res.json());
   }

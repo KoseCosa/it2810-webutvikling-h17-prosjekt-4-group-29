@@ -16,7 +16,6 @@ import { NavSearchService } from './nav-search.service';
 
 // Custom-made component imports
 import { AppComponent } from './app.component';
-import { FrontPageComponent } from './front-page/front-page.component';
 import { LoginComponent } from './login/login.component';
 import { MyPageComponent } from './my-page/my-page.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -39,7 +38,6 @@ const appRoutes: Routes =  [
     NavBarComponent,
     MyPageComponent,
     PageNotFoundComponent,
-    FrontPageComponent,
     LoginComponent,
     RegisterComponent,
     ProductListComponent

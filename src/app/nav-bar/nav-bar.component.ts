@@ -36,7 +36,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.isCollapsed = true;
     this.value = '';
 
-    this.authService.loggedIn();
+    this.authService.loggedIn().subscribe(res => this.authService.changeUser(res.user));
     this.authService.currentUser.subscribe(observedUser =>
       this.loggedInUser = observedUser);
   }

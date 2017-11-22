@@ -27,9 +27,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authService.currentUser.subscribe(observedUser => this.loggedInUser = observedUser);
-    if (this.loggedInUser != null) {
-      this.router.navigate(['/mypage']);
-    }
+    this.authService.loggedIn().subscribe(res => {
+      if (res.success) {
+        console.log(res);
+        this.router.navigate((['/unauthorized']));
+      }
+    });
   }
 
   onSubmitClick() {

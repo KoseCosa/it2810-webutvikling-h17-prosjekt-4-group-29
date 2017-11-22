@@ -62,9 +62,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/products']);
   }
 
-  handleListEvent(event) {
-    this.value = event.target.innerText;
-    this.getProducts(this.value);
+  handleListEvent(result) {
+    this.value = result.Varenavn;
+    this.navSearchService.setSearchValue(this.value);
+    this.autoCompleteResults = [];
+
+    const link = '/products/' + result.Varenummer.toString();
+    this.router.navigate([link]);
   }
 
   ngOnDestroy() {

@@ -8,7 +8,7 @@
           <button *ngIf="!showFilters" class="btn btn-primary" (click)="showFilters = !showFilters">Vis Filter</button>
           <button *ngIf="showFilters" class="btn btn-warning" (click)="showFilters = !showFilters">Gjem Filter</button>
         </div>
-        <div class="col-md-3 col-sm-4 offset-md-6 d-flex">
+        <div class="col-md-3 col-sm-4 offset-md-6 d-flex" data-toggle="tooltip" data-placement="left" title="APK = Alkohol per krone (NOK)">
           <label class="mb-auto mt-auto mr-1" style="white-space: nowrap;">Sorter etter: </label>
           <select class="form-control" name="selectedSortOption" [(ngModel)]="selectedSortOption" (change)="sort()">
             <option *ngFor="let sortOption of availableSortOptions" [ngValue]="sortOption">

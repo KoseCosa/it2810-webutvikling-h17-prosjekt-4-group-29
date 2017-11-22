@@ -1,10 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); 
 
 const User = require('../models/user');
 const Product = require('../models/product');
 
-const logger = require('../../logger.js');
+const logger = require('../../logger.js'); 
+
 
 router.get('/producttypes', (req, res) => {
   Product.getAllProductTypes(function (err, productTypes) {
@@ -15,6 +16,8 @@ router.get('/producttypes', (req, res) => {
     res.json({productTypes});
   });
 });
+
+
 router.get('/countries', (req, res) => {
   Product.getAllCountries(function (err, countries) {
     if (err) {
@@ -24,6 +27,7 @@ router.get('/countries', (req, res) => {
     res.json({countries});
   });
 });
+
 // Get users. TODO: Make is useful in the application, this isnt really needed now.
 router.get('/users', (req, res) => {
   User.getAllUsers(function (err, user) {

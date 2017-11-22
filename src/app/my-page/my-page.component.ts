@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AgWordCloudData } from 'angular4-word-cloud';
 import 'rxjs/add/operator/map';
@@ -34,7 +35,8 @@ export class MyPageComponent implements OnInit {
   };
   constructor(
     private _dataService: DataService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {  }
 
   ngOnInit() {
@@ -107,5 +109,12 @@ export class MyPageComponent implements OnInit {
         this.updateProductList();
       });
     }
+  }
+
+  redirectToSpecificProduct(productNumber) {
+    const link = '/products/' + productNumber.toString();
+    if (productNumber) {
+     this.router.navigate([link]);
+   }
   }
 }

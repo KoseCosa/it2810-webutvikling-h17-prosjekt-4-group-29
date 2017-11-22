@@ -10,3 +10,8 @@
   cursor: pointer;
   vertical-align: middle;
 }
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

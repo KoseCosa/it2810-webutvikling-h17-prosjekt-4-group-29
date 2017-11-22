@@ -34,11 +34,20 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getSpecificProduct(search) {
+    const headers = new Headers();
+    const params = new URLSearchParams();
+
+    headers.append('Content-Type', 'application/json');
+    params.set('search', JSON.stringify(search));
+
+    return this._http.get('http://localhost:8084/api/specificProduct', {headers: headers, params: params});
+  }
+
   getProductTypes() {
     const headers = new Headers();
 
     headers.append('Content-Type', 'application/json');
-
     return this._http.get('http://localhost:8084/api/producttypes', {headers: headers})
       .map(res => res.json());
   }
@@ -85,12 +94,6 @@ export class DataService {
     headers.append('Content-Type', 'application/json');
     return this._http.get('http://localhost:8084/api/removeFavorite',
       {headers: headers, params: params, withCredentials: true});
-  }
-  getSpecificProduct() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this._http.get('http://localhost:8084/api/specificProducts', {headers: headers})
-      .map(res => res.json());
   }
 
   getAutoComplete(search) {

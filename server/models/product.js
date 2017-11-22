@@ -97,6 +97,11 @@ module.exports.getAutoComplete = function(search, callback) {
     .lean();
 };
 
+module.exports.getProductByNumber = (search, callback) => {
+  search = parseInt(search, 10);
+  Product.findOne({Varenummer: search}, callback).lean();
+};
+
 module.exports.getProductsById = function(idList, callback) {
   Product.find({
     '_id': {

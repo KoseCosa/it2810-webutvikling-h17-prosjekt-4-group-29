@@ -35,10 +35,19 @@ router.get('/users', (req, res) => {
   });
 });
 
-// Useful to get one product. No query thought (can be added later if needed)
-
 router.get('/products', (req, res,next) => {
   Product.getProducts(req.query.search, function (err, product) {
+    if (err) {
+      logger.error('Error querrying the database:' + err);
+      res.status(501).send(err);
+      throw err;
+    }
+    res.json({product});
+  });
+});
+
+router.get('/specificProduct', (req, res) => {
+  Product.getProductByNumber(req.query.search, function (err, product) {
     if (err) {
       logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
@@ -88,10 +97,11 @@ router.get('/userFavoriteObjects', (req, res) => {
 router.get('/specificProducts', (req, res) => {
   Product.getSpecificProducts(({"Varenavn": "Gilde Non Plus Ultra"}), function (err, products) {
     if (err) {
+      logger.error('Error querrying the database:' + err);
       res.status(501).send(err);
       throw err;
     }
-    res.json({products});
+    res.json({product});
   });
 });
 

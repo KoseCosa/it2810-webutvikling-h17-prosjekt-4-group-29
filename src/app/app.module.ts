@@ -1,5 +1,5 @@
 // Angular essential imports
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { CollapseModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -23,15 +23,17 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { RegisterComponent } from './register/register.component';
+import { SpecificProductComponent } from './specific-product/specific-product.component';
 
 // Routes used in Navbar & the angular router module
 const appRoutes: Routes =  [
-  { path: '', component: ProductListComponent},
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent }, // TODO auth: canActivate:[AuthGuard]
   { path: 'mypage', component: MyPageComponent },
   { path: 'products', component: ProductListComponent },
-  { path: '**', component: ProductListComponent }
+  { path: 'products/:varenummer', component: SpecificProductComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -42,7 +44,8 @@ const appRoutes: Routes =  [
     PageNotFoundComponent,
     LoginComponent,
     RegisterComponent,
-    ProductListComponent
+    ProductListComponent,
+    SpecificProductComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,7 @@ const appRoutes: Routes =  [
     CollapseModule,
     AgWordCloudModule.forRoot()
   ],
-  providers: [DataService, AuthService, ValidateService, NavSearchService],
+  providers: [DataService, AuthService, ValidateService, NavSearchService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

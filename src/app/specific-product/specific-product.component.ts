@@ -16,6 +16,8 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
   loggedInUser = Object;
   routerSubscription: Subscription;
   product;
+  passerTil: string;
+  land: string;
 
   constructor(
     private dataService: DataService,
@@ -33,8 +35,11 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
       this.dataService
         .getSpecificProduct(this.id)
         .subscribe(value => {
-          this.product = value.json().product;
-          this.titleService.setTitle(this.product.Varenavn);
+          if (value.json().product) {
+            this.product = value.json().product;
+            this.titleService.setTitle(this.product.Varenavn);
+            this.setPasserTilOgLand();
+          }
       });
     });
 
@@ -74,6 +79,26 @@ export class SpecificProductComponent implements OnInit, OnDestroy {
       this.dataService.removeUserFavorite(updateValues).subscribe( res => {
       });
     }
+  }
+
+  setPasserTilOgLand() {
+    const passerTilArray = [this.product.Passertil01, this.product.Passertil02, this.product.Passertil03];
+    const landArray = [this.product.Land, this.product.Distrikt, this.product.Underdistrikt];
+    this.passerTil = this.arrayToString(passerTilArray);
+    this.land = this.arrayToString(landArray);
+
+  }
+
+  arrayToString(array) {
+    let result = '';
+    for (const x of array) {
+      if (array.indexOf(x) < array.length - 1 && x && array[array.indexOf(x) + 1]) {
+        result += x + ', ';
+      } else {
+        result += x || '';
+      }
+    }
+    return result;
   }
 
   ngOnDestroy() {

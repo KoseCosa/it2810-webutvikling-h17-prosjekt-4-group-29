@@ -1,9 +1,11 @@
-const Int32 = require('mongoose-int32');
-const mongoose = require('mongoose');
-require('mongoose-double')(mongoose);
+const Int32 = require('mongoose-int32'); // Required to make int32 type in models
+const mongoose = require('mongoose'); // Used to create the model
+require('mongoose-double')(mongoose); // Required to make double type in models
 const Schema = mongoose.Schema;
 const SchemaTypes = mongoose.Schema.Types;
 
+// Model for products from Vinmonopolet. Consist of 37 imported datatypes, + APK (Alkohol per Krone)
+// Which we made. 
 const Product = module.exports = mongoose.model('Product', new Schema({
   Datotid: String,
   Varenummer: Number,
@@ -44,26 +46,26 @@ const Product = module.exports = mongoose.model('Product', new Schema({
   APK: SchemaTypes.Double
 }));
 
+// Product methods used by the API. All methods return the query result as a
+// javascript object on the form {object_id: "a87gy8os7", name: "beer3" ...}
+
+// Find all distinct types of products (Beer, redwine, whiskey, gin etc.)
 module.exports.getAllProductTypes = function(callback){
   Product.find().distinct('Varetype',callback).lean();
 };
 
+// Find all distinct types of products (France, Norway, Spain etc.)
 module.exports.getAllCountries = function(callback){
   Product.find().distinct('Land',callback).lean();
 };
 
+// Find one product only.
 module.exports.getOneProduct = function(callback){
   Product.findOne(callback).lean();
 };
 
-module.exports.getAllProducts = function(callback){
-  Product.find({Varenavn: {$ne: null}}, callback).sort('Varenavn').limit(25).lean();
-};
-
-module.exports.getProductsInRange = function(callback){
-  Product.find({Varenavn: {$ne: null}}, callback).sort('Varenavn').limit(25).lean();
-};
-
+// Recieves a query, with filters and text value, and returns a javascript 
+// object with potentially, 20 products that meet the requirements.
 module.exports.getProducts = function(search, callback) {
   search = JSON.parse(search)
   const searchRegEx = new RegExp(search.value ? search.value : '', 'i');
@@ -85,6 +87,8 @@ module.exports.getProducts = function(search, callback) {
   .lean();
 };
 
+// Takes in a search query, and returns a array of javascript objects, with
+// maximum 5 in length.
 module.exports.getAutoComplete = function(search, callback) {
   search = JSON.parse(search)
   const searchRegEx = new RegExp(search.value, "i")
@@ -102,6 +106,8 @@ module.exports.getProductByNumber = (search, callback) => {
   Product.findOne({Varenummer: search}, callback).lean();
 };
 
+// Takes in a list of objectID's and retrieves an array of javascript objects
+// from the database. 
 module.exports.getProductsById = function(idList, callback) {
   Product.find({
     '_id': {
